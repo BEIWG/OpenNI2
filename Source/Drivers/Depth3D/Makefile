@@ -7,7 +7,8 @@ INC_DIRS = \
 	../../../ThirdParty/PSCommon/XnLib/Include 
 
 SRC_FILES = \
-	*.cpp
+	Depth3D.cpp \
+	uvc.cpp
 
 ifeq ("$(OSTYPE)","Darwin")
 	INC_DIRS += /opt/local/include
