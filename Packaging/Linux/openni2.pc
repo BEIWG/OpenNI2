@@ -1,0 +1,11 @@
+prefix=/usr/local
+exec_prefix=/usr/local
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: openni2 
+Description: Driver for the OpenNI v2
+Version: 2.3.0
+Libs: -L${libdir} -lOpenNI2
+Cflags: -I${includedir}
+
