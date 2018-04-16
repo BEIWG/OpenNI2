@@ -307,13 +307,13 @@ static int check_usb_vfs(const char *dirname)
 
 static const char *find_usbfs_path(void)
 {
-	const char *path = "/proc/bus/usb";
+	const char *path = "/dev/bus/usb";
 	const char *ret = NULL;
 
 	if (check_usb_vfs(path)) {
 		ret = path;
 	} else {
-		path = "/dev/bus/usb";
+		path = "/proc/bus/usb";
 		if (check_usb_vfs(path))
 			ret = path;
 	}
