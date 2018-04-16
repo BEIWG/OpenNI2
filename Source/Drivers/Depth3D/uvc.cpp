@@ -35,6 +35,21 @@
 #include "libuvc/libuvc.h"
 #include "uvc.h"
 
+#ifdef ANDROID
+#include <android/log.h>
+#endif
+
+#define DEBUG 1
+
+#if DEBUG && defined(ANDROID)
+#include <android/log.h>
+#  define  LOGD(x...)  __android_log_print(ANDROID_LOG_INFO,"Depth3D",x)
+#  define  LOGE(x...)  __android_log_print(ANDROID_LOG_ERROR,"Depth3D",x)
+#else
+#  define  LOGD(...)
+#  define  LOGE(...)
+#endif
+
 extern uvc_context_t *ctx;
 extern uvc_error_t res;
 extern uvc_device_t *dev;
@@ -45,22 +60,32 @@ int uvc_dirver_init(int width, int height, int fps, int vid, int pid, const char
 {
   res = uvc_init(&ctx, NULL);
   if (res < 0) {
+  	LOGD("uvc_init failed\n");
     uvc_perror(res, "uvc_init");
     goto ERROR;
   }
+	
+	LOGD("UVC initialized\n");
+  puts("UVC initialized");
 
   res = uvc_find_device(
       ctx, &dev,
       vid, pid, sn);
   if (res < 0) {
+  	LOGD("UVC uvc_find_device failed\n");
     uvc_perror(res, "uvc_find_device");
     goto ERROR;
   } else {
+    puts("Device found");
+
     res = uvc_open(dev, &devh);
     if (res < 0) {
+    	LOGD("uvc_open failed = %d\n", res);
       uvc_perror(res, "uvc_open");
       goto ERROR;
     } else {
+      puts("Device opened");
+
       //uvc_print_diag(devh, stderr);
       res = uvc_get_stream_ctrl_format_size(
           devh, &ctrl, UVC_FRAME_FORMAT_YUYV, width, height, fps
@@ -68,11 +93,13 @@ int uvc_dirver_init(int width, int height, int fps, int vid, int pid, const char
 
       //uvc_print_stream_ctrl(&ctrl, stderr);
       if (res < 0) {
+      	LOGD("get_mode failed\n");
         uvc_perror(res, "get_mode");
         goto ERROR;
       } else {
         res = uvc_start_streaming(devh, &ctrl, cb, NULL, 0);
         if (res < 0) {
+        	LOGD("start_streaming failed\n");
           uvc_perror(res, "start_streaming");
           goto ERROR;
         }

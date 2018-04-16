@@ -23,12 +23,12 @@
 #include "XnHash.h"
 #include "XnEvent.h"
 #include "XnPlatform.h"
+
 #ifdef _MSC_VER
 #include "camerads.h"
 #include "usb_camera.hpp"  
 #else
 #include "uvc.h"
-#include <mutex>
 
 uvc_context_t *ctx;
 uvc_error_t res;
@@ -39,8 +39,8 @@ uvc_stream_ctrl_t ctrl;
 static int frame_drop = 10;
 static char *data_tmp = NULL;
 static int data_flag = 0;
-static std::mutex frame_mutex;
 #endif
+static xnl::CriticalSection m_frameSyncCs;
 
 #define USB_VID                 0x00
 #define USB_PID                 0x00
@@ -55,13 +55,13 @@ static std::mutex frame_mutex;
 #define DEFAULT_FPS             0
 
 #define DEPTH_RESOLUTION_X      640
-#define DEPTH_RESOLUTION_Y      400
+#define DEPTH_RESOLUTION_Y      480
 
 #define IMAGE_RESOLUTION_X      640
-#define IMAGE_RESOLUTION_Y      400
+#define IMAGE_RESOLUTION_Y      480
 
 #define IR_RESOLUTION_X         640
-#define IR_RESOLUTION_Y         400
+#define IR_RESOLUTION_Y         480
 
 #ifndef _MSC_VER
 void uvc_cb(uvc_frame_t *uvc_frame, void *ptr) 
@@ -81,10 +81,10 @@ void uvc_cb(uvc_frame_t *uvc_frame, void *ptr)
             return;
   	    }
 	} else {
-		frame_mutex.lock();
+		m_frameSyncCs.Lock();
 		memcpy((unsigned char*)data_tmp, (unsigned char*)uvc_frame->data, uvc_frame->data_bytes);
 		data_flag = 1;
-		frame_mutex.unlock();
+		m_frameSyncCs.Unlock();
 	}
 }
 #endif
@@ -325,7 +325,7 @@ private:
                  frameId++;
              }			
 #else      
-            frame_mutex.lock();
+            m_frameSyncCs.Lock();
             if (data_flag == 1) 
             {
                 data_flag = 0;
@@ -334,9 +334,9 @@ private:
                 //xnOSMemCopy((pFrame->data), data_tmp/*input_mat.data*/, pFrame->dataSize);
                 xnOSMemCopy((pFrame->data), data_tmp, pFrame->dataSize); 
                 raiseNewFrame(pFrame);
-				frameId++;
+				        frameId++;
             }
-            frame_mutex.unlock();
+            m_frameSyncCs.Unlock();
 #endif
 			getServices().releaseFrame(pFrame);
 			xnOSSleep(33);
@@ -626,8 +626,8 @@ public:
 #else
 			if(0 == uvc_dirver_init(DEPTH_RESOLUTION_X, DEPTH_RESOLUTION_Y, DEFAULT_FPS, USB_VID, USB_PID, USB_SN, uvc_cb))
 			{
-				printf("Init Sensor Driver Failed...\n");
-				return ONI_STATUS_NO_DEVICE;	
+           printf("Init Sensor Driver Failed...\n");
+           return ONI_STATUS_NO_DEVICE;	
 			}
 #endif
 			DriverBase::initialize(deviceConnectedCallback, deviceDisconnectedCallback, deviceStateChangedCallback, pCookie);
