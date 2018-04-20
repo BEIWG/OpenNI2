@@ -146,13 +146,13 @@ JNIEnv *g_env;
 JNIEXPORT void JNICALL Java_org_openni_NativeMethods_oniFrameRelease
 (JNIEnv *, jclass, jlong frame)
   {
-	  oniFrameRelease((OniFrame*)frame);
+	 // oniFrameRelease((OniFrame*)frame);
   }
 
 JNIEXPORT void JNICALL Java_org_openni_NativeMethods_oniFrameAddRef
 (JNIEnv *, jclass, jlong frame)
   {
-	  oniFrameAddRef((OniFrame*)frame);
+	  //oniFrameAddRef((OniFrame*)frame);
   }
 
 static void ONI_CALLBACK_TYPE callback(OniStreamHandle streamHandle, void*)
