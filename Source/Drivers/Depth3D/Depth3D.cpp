@@ -41,7 +41,7 @@
 
 
 #ifdef _MSC_VER
-#include <time.h>
+#include <windows.h>
 #include "camerads.h"
 #include "usb_camera.hpp"  
 #else
@@ -80,6 +80,10 @@ static xnl::CriticalSection m_frameSyncCs;
 #define IR_RESOLUTION_X		640
 #define IR_RESOLUTION_Y		480
 
+#define SECOND_PER_YEAR		365*24*3600
+#define SECOND_PER_MONTH	30*24*3600
+#define SECOND_PER_DAY		24*3600
+
 #ifndef _MSC_VER
 void uvc_cb(uvc_frame_t *uvc_frame, void *ptr) 
 {
@@ -108,13 +112,18 @@ void uvc_cb(uvc_frame_t *uvc_frame, void *ptr)
 
 uint64_t GetTimestamp()
 {
+	uint64_t timestamp = 0;
 #ifdef _MSC_VER
-
+	SYSTEMTIME tv;
+	GetLocalTime(&tv);
+	timestamp = ((tv.wYear - 1970)*SECOND_PER_YEAR + (tv.wMonth - 1)*SECOND_PER_MONTH + (tv.wDay - 1)*SECOND_PER_DAY +
+		tv.wHour*3600 + tv.wMinute*60 + tv.wSecond)*1000 + tv.wMilliseconds;
 #else
 	struct timeval tv;
 	gettimeofday(&tv, NULL);
-	return tv.tv_sec*1e6 + tv.tv_usec;
+	timestamp = tv.tv_sec*1000 + tv.tv_usec/1000;
 #endif	
+	return timestamp;
 }
 
 class OzStream : public oni::driver::StreamBase
