@@ -336,6 +336,29 @@ void CCameraDS::SetCrossBar()
 /*
 The returned image can not be released.
 */
+void CCameraDS::WaitForCompletion(void)
+{
+	long evCode;
+	
+	m_pMediaControl->Run();
+	m_pMediaEvent->WaitForCompletion(INFINITE, &evCode);			
+}
+
+int CCameraDS::ReadFrame(char *frame)
+{
+	long size = 0;
+ 
+	m_pSampleGrabber->GetCurrentBuffer(&size, NULL);
+	//if the buffer size changed
+	if (size != m_nBufferSize)
+	{
+		m_nBufferSize = size;
+	}
+
+	m_pSampleGrabber->GetCurrentBuffer(&m_nBufferSize, (long*)frame);
+	return m_nBufferSize;
+}
+
 int CCameraDS::QueryFrame(char *frame)
 {
 	long evCode;
@@ -348,11 +371,7 @@ int CCameraDS::QueryFrame(char *frame)
 	//if the buffer size changed
 	if (size != m_nBufferSize)
 	{
-		//if (m_pFrame)
-		//	cvReleaseImage(&m_pFrame);
-
 		m_nBufferSize = size;
-		//m_pFrame = cv::Mat(cvSize(m_nWidth, m_nHeight), IPL_DEPTH_8U, 2);
 	}
 
 	m_pSampleGrabber->GetCurrentBuffer(&m_nBufferSize, (long*)frame);
@@ -367,24 +386,24 @@ int CCameraDS::CameraCount()
 
    // enumerate all video capture devices
 	CComPtr<ICreateDevEnum> pCreateDevEnum;
-    HRESULT hr = CoCreateInstance(CLSID_SystemDeviceEnum, NULL, CLSCTX_INPROC_SERVER,
+	HRESULT hr = CoCreateInstance(CLSID_SystemDeviceEnum, NULL, CLSCTX_INPROC_SERVER,
 									IID_ICreateDevEnum, (void**)&pCreateDevEnum);
 
-    CComPtr<IEnumMoniker> pEm;
-    hr = pCreateDevEnum->CreateClassEnumerator(CLSID_VideoInputDeviceCategory,
+	CComPtr<IEnumMoniker> pEm;
+	hr = pCreateDevEnum->CreateClassEnumerator(CLSID_VideoInputDeviceCategory,
         &pEm, 0);
-    if (hr != NOERROR) 
+	if (hr != NOERROR) 
 	{
 		return count;
-    }
+	}
 
-    pEm->Reset();
-    ULONG cFetched;
-    IMoniker *pM;
-    while(hr = pEm->Next(1, &pM, &cFetched), hr==S_OK)
-    {
+	pEm->Reset();
+	ULONG cFetched;
+	IMoniker *pM;
+	while(hr = pEm->Next(1, &pM, &cFetched), hr==S_OK)
+	{
 		count++;
-    }
+	}
 
 	pCreateDevEnum = NULL;
 	pEm = NULL;
@@ -398,20 +417,20 @@ int CCameraDS::CameraName(int nCamID, char* sName, int nBufferSize)
 
    // enumerate all video capture devices
 	CComPtr<ICreateDevEnum> pCreateDevEnum;
-    HRESULT hr = CoCreateInstance(CLSID_SystemDeviceEnum, NULL, CLSCTX_INPROC_SERVER,
+	HRESULT hr = CoCreateInstance(CLSID_SystemDeviceEnum, NULL, CLSCTX_INPROC_SERVER,
 									IID_ICreateDevEnum, (void**)&pCreateDevEnum);
 
-    CComPtr<IEnumMoniker> pEm;
-    hr = pCreateDevEnum->CreateClassEnumerator(CLSID_VideoInputDeviceCategory,
+	CComPtr<IEnumMoniker> pEm;
+	hr = pCreateDevEnum->CreateClassEnumerator(CLSID_VideoInputDeviceCategory,
         &pEm, 0);
-    if (hr != NOERROR) return 0;
+	if (hr != NOERROR) return 0;
 
 
-    pEm->Reset();
-    ULONG cFetched;
-    IMoniker *pM;
-    while(hr = pEm->Next(1, &pM, &cFetched), hr==S_OK)
-    {
+	pEm->Reset();
+	ULONG cFetched;
+	IMoniker *pM;
+	while(hr = pEm->Next(1, &pM, &cFetched), hr==S_OK)
+	{
 		if (count == nCamID)
 		{
 			IPropertyBag *pBag=0;
@@ -421,14 +440,13 @@ int CCameraDS::CameraName(int nCamID, char* sName, int nBufferSize)
 				VARIANT var;
 				var.vt = VT_BSTR;
 				hr = pBag->Read(L"FriendlyName", &var, NULL); //还有其他属性,像描述信息等等...
-	            if(hr == NOERROR)
-		        {
-			        //获取设备名称			
+				if(hr == NOERROR)
+				{
+					//获取设备名称			
 					WideCharToMultiByte(CP_ACP,0,var.bstrVal,-1,sName, nBufferSize ,"",NULL);
-
-	                SysFreeString(var.bstrVal);				
-		        }
-			    pBag->Release();
+					SysFreeString(var.bstrVal);				
+				}
+				pBag->Release();
 			}
 			pM->Release();
 

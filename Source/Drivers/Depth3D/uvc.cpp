@@ -58,57 +58,65 @@ extern uvc_stream_ctrl_t ctrl;
 
 int uvc_dirver_init(int width, int height, int fps, int vid, int pid, const char *sn, uvc_frame_callback_t *cb)
 {
-  res = uvc_init(&ctx, NULL);
-  if (res < 0) {
-  	LOGD("uvc_init failed\n");
-    uvc_perror(res, "uvc_init");
-    goto ERROR;
-  }
+	res = uvc_init(&ctx, NULL);
+	if (res < 0) 
+	{
+  		LOGD("uvc_init failed\n");
+		uvc_perror(res, "uvc_init");
+		goto ERROR;
+	}
 	
 	LOGD("UVC initialized\n");
-  puts("UVC initialized");
+	puts("UVC initialized");
 
-  res = uvc_find_device(
-      ctx, &dev,
-      vid, pid, sn);
-  if (res < 0) {
-  	LOGD("UVC uvc_find_device failed\n");
-    uvc_perror(res, "uvc_find_device");
-    goto ERROR;
-  } else {
-    puts("Device found");
+	res = uvc_find_device(ctx, &dev, vid, pid, sn);
+	if (res < 0) 
+	{
+		LOGD("UVC uvc_find_device failed\n");
+		uvc_perror(res, "uvc_find_device");
+		goto ERROR;
+	} 
+	else 
+	{
+		puts("Device found");
 
-    res = uvc_open(dev, &devh);
-    if (res < 0) {
-    	LOGD("uvc_open failed = %d\n", res);
-      uvc_perror(res, "uvc_open");
-      goto ERROR;
-    } else {
-      puts("Device opened");
+		res = uvc_open(dev, &devh);
+		if (res < 0) 
+		{
+			LOGD("uvc_open failed = %d\n", res);
+			uvc_perror(res, "uvc_open");
+			goto ERROR;
+		} 
+		else 
+		{
+			puts("Device opened");
 
-      //uvc_print_diag(devh, stderr);
-      res = uvc_get_stream_ctrl_format_size(
-          devh, &ctrl, UVC_FRAME_FORMAT_YUYV, width, height, fps
-      );
+		 	//uvc_print_diag(devh, stderr);
+			res = uvc_get_stream_ctrl_format_size(
+			devh, &ctrl, UVC_FRAME_FORMAT_YUYV, width, height, fps);
 
-      //uvc_print_stream_ctrl(&ctrl, stderr);
-      if (res < 0) {
-      	LOGD("get_mode failed\n");
-        uvc_perror(res, "get_mode");
-        goto ERROR;
-      } else {
-        res = uvc_start_streaming(devh, &ctrl, cb, NULL, 0);
-        if (res < 0) {
-        	LOGD("start_streaming failed\n");
-          uvc_perror(res, "start_streaming");
-          goto ERROR;
-        }
-      }
-    }
-  }
+			//uvc_print_stream_ctrl(&ctrl, stderr);
+			if (res < 0) 
+			{
+				LOGD("get_mode failed\n");
+				uvc_perror(res, "get_mode");
+				goto ERROR;
+			} 
+			else 
+			{
+				res = uvc_start_streaming(devh, &ctrl, cb, NULL, 0);
+				if (res < 0) 
+				{
+					LOGD("start_streaming failed\n");
+					uvc_perror(res, "start_streaming");
+					goto ERROR;
+				}
+			}	
+		}
+	}
 
 	return 1;
 ERROR:
-  return 0;
+	return 0;
 }
 

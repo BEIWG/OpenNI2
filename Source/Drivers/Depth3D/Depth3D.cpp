@@ -24,7 +24,24 @@
 #include "XnEvent.h"
 #include "XnPlatform.h"
 
+#ifdef ANDROID
+#include <android/log.h>
+#endif
+
+#define DEBUG 1
+
+#if DEBUG && defined(ANDROID)
+#include <android/log.h>
+#  define  LOGD(x...)  __android_log_print(ANDROID_LOG_INFO,"Depth3D",x)
+#  define  LOGE(x...)  __android_log_print(ANDROID_LOG_ERROR,"Depth3D",x)
+#else
+#  define  LOGD(...)
+#  define  LOGE(...)
+#endif
+
+
 #ifdef _MSC_VER
+#include <time.h>
 #include "camerads.h"
 #include "usb_camera.hpp"  
 #else
@@ -42,32 +59,32 @@ static int data_flag = 0;
 #endif
 static xnl::CriticalSection m_frameSyncCs;
 
-#define USB_VID                 0x00
-#define USB_PID                 0x00
-#define USB_SN                  NULL
+#define USB_VID			0x00
+#define USB_PID			0x00
+#define USB_SN 			NULL
 
-#define DEVICE_VENDOR           "beiwg"
-#define DEVICE_URI              "Depth3D"
+#define DEVICE_VENDOR		"beiwg"
+#define DEVICE_URI		"Depth3D"
 
-#define H_FOV                   60.0
-#define V_FOV                   70.0
+#define H_FOV			60.0
+#define V_FOV			70.0
 
-#define DEFAULT_FPS             0
+#define DEFAULT_FPS		0
 
-#define DEPTH_RESOLUTION_X      640
-#define DEPTH_RESOLUTION_Y      480
+#define DEPTH_RESOLUTION_X	640
+#define DEPTH_RESOLUTION_Y	480
 
-#define IMAGE_RESOLUTION_X      640
-#define IMAGE_RESOLUTION_Y      480
+#define IMAGE_RESOLUTION_X	640
+#define IMAGE_RESOLUTION_Y	480
 
-#define IR_RESOLUTION_X         640
-#define IR_RESOLUTION_Y         480
+#define IR_RESOLUTION_X		640
+#define IR_RESOLUTION_Y		480
 
 #ifndef _MSC_VER
 void uvc_cb(uvc_frame_t *uvc_frame, void *ptr) 
 {
-    uvc_frame_t *bgr;
-    uvc_error_t ret;
+	uvc_frame_t *bgr;
+	uvc_error_t ret;
 
 	if (data_tmp == NULL) 
 	{
@@ -75,11 +92,11 @@ void uvc_cb(uvc_frame_t *uvc_frame, void *ptr)
 			return;
 			
 		data_tmp = (char*)malloc(uvc_frame->data_bytes);
-        if (!data_tmp) 
-        {
-            printf("unable to allocate  frame!");
-            return;
-  	    }
+        	if (!data_tmp) 
+        	{
+			printf("unable to allocate  frame!");
+			return;
+  	    	}
 	} else {
 		m_frameSyncCs.Lock();
 		memcpy((unsigned char*)data_tmp, (unsigned char*)uvc_frame->data, uvc_frame->data_bytes);
@@ -88,6 +105,18 @@ void uvc_cb(uvc_frame_t *uvc_frame, void *ptr)
 	}
 }
 #endif
+
+uint64_t GetTimestamp()
+{
+#ifdef _MSC_VER
+
+#else
+	struct timeval tv;
+	gettimeofday(&tv, NULL);
+	return tv.tv_sec*1e6 + tv.tv_usec;
+#endif	
+}
+
 class OzStream : public oni::driver::StreamBase
 {
 public:
@@ -260,86 +289,93 @@ private:
 	void Mainloop()
 	{
 		int frameId = 1;             
-#ifdef _MSC_VER
+		#ifdef _MSC_VER
 		char szCamName[20] = { 0 };
-        long recv = 0;
-        int openflag = 0;
-             
-
+	        long recv = 0;
+	        int openflag = 0;
+	             
+	
 		CCameraDS m_CamDS;
-        int m_iCamCount = CCameraDS::CameraCount();
-        if (m_iCamCount == 0)
-        {
-            return;
-         }
-
+	        int m_iCamCount = CCameraDS::CameraCount();
+	        if (m_iCamCount == 0)
+	        {
+			return;
+		}
+	
 		for (auto n = 0; n < m_iCamCount; n++)
-        {
+	        {
 			int retval = m_CamDS.CameraName(n, szCamName, sizeof(szCamName));
-            if (retval > 0)
-            {
+			if (retval > 0)
+			{
 				if (!strcmp(szCamName, "FX3 UVC"))
 					if ((m_CamDS.OpenCamera(n, false, DEPTH_RESOLUTION_X, DEPTH_RESOLUTION_Y)))
 					{
-                                openflag = 1;
-                    }
-             }
-         }
-                
-        if (openflag == 0)
-        {
-			printf("DepthStream: open camera failed....\n");
-            return;
+						openflag = 1;
+					}
+			}
 		}
-#endif
+	                
+	        if (openflag == 0)
+	        {
+			printf("DepthStream: open camera failed....\n");
+			return;
+		}
+		#endif
 		while (m_running)
 		{
+				
+			#ifdef _MSC_VER			
+			m_CamDS.WaitForCompletion();
+			#else
+			while (!data_flag) 
+			{
+				xnOSSleep(3);
+			}
+			#endif			
+					
 			OniFrame* pFrame = getServices().acquireFrame();
-
-			if (pFrame == NULL) {printf("Didn't get frame...\n"); continue;}
-
+			if (pFrame == NULL) 
+			{
+				printf("Didn't get frame...\n"); 
+				continue;
+			}
+		
 			// Fill metadata
-			pFrame->frameIndex = frameId;
-
+			pFrame->frameIndex = frameId++;
+		
 			pFrame->videoMode.pixelFormat = ONI_PIXEL_FORMAT_DEPTH_1_MM;
 			pFrame->videoMode.resolutionX = DEPTH_RESOLUTION_X;
 			pFrame->videoMode.resolutionY = DEPTH_RESOLUTION_Y;
 			pFrame->videoMode.fps = DEFAULT_FPS;
-
+		
 			pFrame->width = DEPTH_RESOLUTION_X;
 			pFrame->height = DEPTH_RESOLUTION_Y;
-
+		
 			pFrame->cropOriginX = pFrame->cropOriginY = 0;
 			pFrame->croppingEnabled = FALSE;
-
+			
 			pFrame->sensorType = ONI_SENSOR_DEPTH;
 			pFrame->stride = DEPTH_RESOLUTION_X*sizeof(OniDepthPixel);
-			pFrame->timestamp = frameId*33000;
-			
-            // Fill frame
-#ifdef _MSC_VER
-             recv = m_CamDS.QueryFrame((char*)pFrame->data);
-             if (recv == pFrame->dataSize)
-             {
-                 raiseNewFrame(pFrame);
-                 frameId++;
-             }			
-#else      
-            m_frameSyncCs.Lock();
-            if (data_flag == 1) 
-            {
-                data_flag = 0;
-                //cv::Mat input_mat(DEPTH_RESOLUTION_Y, DEPTH_RESOLUTION_X, CV_16SC1, data_tmp);
-                //cv::filterSpeckles(input_mat, (dMin - 1)*0, 200, diff*16.0);
-                //xnOSMemCopy((pFrame->data), data_tmp/*input_mat.data*/, pFrame->dataSize);
-                xnOSMemCopy((pFrame->data), data_tmp, pFrame->dataSize); 
-                raiseNewFrame(pFrame);
-				        frameId++;
-            }
-            m_frameSyncCs.Unlock();
-#endif
-			getServices().releaseFrame(pFrame);
-			xnOSSleep(33);
+			pFrame->timestamp = GetTimestamp();
+					
+		      // Fill frame
+			#ifdef _MSC_VER
+			recv = m_CamDS.ReadFrame((char*)pFrame->data);
+			if (recv == pFrame->dataSize)
+			{				
+				raiseNewFrame(pFrame);
+			}			
+			#else      
+		        m_frameSyncCs.Lock();
+		        data_flag = 0;
+		        //cv::Mat input_mat(DEPTH_RESOLUTION_Y, DEPTH_RESOLUTION_X, CV_16SC1, data_tmp);
+		        //cv::filterSpeckles(input_mat, (dMin - 1)*0, 200, diff*16.0);
+		        //xnOSMemSet(pFrame->data, 0x01, pFrame->dataSize);
+		        xnOSMemCopy((pFrame->data), data_tmp, pFrame->dataSize); 
+		        raiseNewFrame(pFrame);
+		        m_frameSyncCs.Unlock();
+			#endif
+			getServices().releaseFrame(pFrame);		
 		}
 	}
 };
@@ -375,15 +411,13 @@ private:
                 
 		while (m_running)
 		{
-                        
-			xnOSSleep(33);
 			//			printf("Tick");
 			OniFrame* pFrame = getServices().acquireFrame();
 
 			if (pFrame == NULL) {printf("Didn't get frame...\n"); continue;}
-               
+
 			// Fill metadata
-			pFrame->frameIndex = frameId;
+			pFrame->frameIndex = frameId++;
 
 			pFrame->videoMode.pixelFormat = ONI_PIXEL_FORMAT_RGB888;
 			pFrame->videoMode.resolutionX = IMAGE_RESOLUTION_X;
@@ -398,17 +432,12 @@ private:
 
 			pFrame->sensorType = ONI_SENSOR_COLOR;
 			pFrame->stride = IMAGE_RESOLUTION_X*3;
-			pFrame->timestamp = frameId*33000;
-
+			pFrame->timestamp = GetTimestamp();
 			// Fill fake data frame
-            xnOSMemSet(pFrame->data, 0xc0, pFrame->dataSize);
-			raiseNewFrame(pFrame);
-			frameId++;
-
+			xnOSMemSet(pFrame->data, 0xc0, pFrame->dataSize);     			
 			raiseNewFrame(pFrame);
 			getServices().releaseFrame(pFrame);
-
-			frameId++;
+			xnOSSleep(33);
 		}
 	}
 };
@@ -454,7 +483,7 @@ private:
 			if (pFrame == NULL) {printf("Didn't get frame...\n"); continue;}
 
 			// Fill metadata
-			pFrame->frameIndex = frameId;
+			pFrame->frameIndex = frameId++;
 
 			pFrame->videoMode.pixelFormat = ONI_PIXEL_FORMAT_GRAY8;
 			pFrame->videoMode.resolutionX = IR_RESOLUTION_X;
@@ -469,12 +498,11 @@ private:
 
 			pFrame->sensorType = ONI_SENSOR_IR;
 			pFrame->stride = IR_RESOLUTION_X*sizeof(OniGrayscale8Pixel);
-			pFrame->timestamp = frameId*33000;
 
-            // Fill fake data frame      
-            xnOSMemSet(pFrame->data, 0xc0, pFrame->dataSize);
+      			// Fill fake data frame      
+      			xnOSMemSet(pFrame->data, 0xc0, pFrame->dataSize);
+      			pFrame->timestamp = GetTimestamp();
 			raiseNewFrame(pFrame);
-			frameId++;
               
 			getServices().releaseFrame(pFrame);
 			xnOSSleep(33);
@@ -511,7 +539,7 @@ public:
 		m_sensors[2].pSupportedVideoModes[0].pixelFormat = ONI_PIXEL_FORMAT_GRAY8;
 		m_sensors[2].pSupportedVideoModes[0].fps = DEFAULT_FPS;
 		m_sensors[2].pSupportedVideoModes[0].resolutionX = IR_RESOLUTION_X;
-		m_sensors[2].pSupportedVideoModes[0].resolutionY = IR_RESOLUTION_X;	
+		m_sensors[2].pSupportedVideoModes[0].resolutionY = IR_RESOLUTION_Y;	
 	}
 	OniDeviceInfo* GetInfo()
 	{
@@ -552,7 +580,7 @@ public:
 
 	void destroyStream(oni::driver::StreamBase* pStream)
 	{
-		XN_DELETE(pStream);
+		//XN_DELETE(pStream);
 	}
 
 	OniStatus  getProperty(int propertyId, void* data, int* pDataSize)
@@ -620,25 +648,25 @@ public:
 										oni::driver::DeviceStateChangedCallback deviceStateChangedCallback,					\
 										void* pCookie)
 	{
-#ifdef _MSC_VER
-            if (-1 == camera_init(DEPTH_RESOLUTION_X, DEPTH_RESOLUTION_Y))
+		#ifdef _MSC_VER
+		if (-1 == camera_init(DEPTH_RESOLUTION_X, DEPTH_RESOLUTION_Y))
 			return ONI_STATUS_ERROR;			
-#else
-			if(0 == uvc_dirver_init(DEPTH_RESOLUTION_X, DEPTH_RESOLUTION_Y, DEFAULT_FPS, USB_VID, USB_PID, USB_SN, uvc_cb))
-			{
-           printf("Init Sensor Driver Failed...\n");
-           return ONI_STATUS_NO_DEVICE;	
-			}
-#endif
-			DriverBase::initialize(deviceConnectedCallback, deviceDisconnectedCallback, deviceStateChangedCallback, pCookie);
-			OniDeviceInfo* pInfo = XN_NEW(OniDeviceInfo);
-			xnOSStrCopy(pInfo->uri, DEVICE_URI, ONI_MAX_STR);
-			xnOSStrCopy(pInfo->vendor, DEVICE_VENDOR, ONI_MAX_STR);
-			m_devices[pInfo] = NULL;
+		#else
+		if(0 == uvc_dirver_init(DEPTH_RESOLUTION_X, DEPTH_RESOLUTION_Y, DEFAULT_FPS, USB_VID, USB_PID, USB_SN, uvc_cb))
+		{
+			printf("Init Sensor Driver Failed...\n");
+			return ONI_STATUS_NO_DEVICE;	
+		}
+		#endif
+		DriverBase::initialize(deviceConnectedCallback, deviceDisconnectedCallback, deviceStateChangedCallback, pCookie);
+		OniDeviceInfo* pInfo = XN_NEW(OniDeviceInfo);
+		xnOSStrCopy(pInfo->uri, DEVICE_URI, ONI_MAX_STR);
+		xnOSStrCopy(pInfo->vendor, DEVICE_VENDOR, ONI_MAX_STR);
+		m_devices[pInfo] = NULL;
 
-            deviceConnected(pInfo);
-            deviceStateChanged(pInfo, ONI_DEVICE_STATE_OK);
-            return ONI_STATUS_OK;
+		deviceConnected(pInfo);
+		deviceStateChanged(pInfo, ONI_DEVICE_STATE_OK);
+		return ONI_STATUS_OK;
 	}
 
 	virtual oni::driver::DeviceBase* deviceOpen(const char* uri, const char* /*mode*/)

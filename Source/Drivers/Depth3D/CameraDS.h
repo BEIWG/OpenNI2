@@ -95,9 +95,10 @@ public:
 	//返回图像高度
 	int GetHeight(){return m_nHeight;}
 
-	//抓取一帧，返回的IplImage不可手动释放！
-	//返回图像数据的为RGB模式的Top-down(第一个字节为左上角像素)，即IplImage::origin=0(IPL_ORIGIN_TL)
 	int CCameraDS::QueryFrame(char *frame);
+	
+	void CCameraDS::WaitForCompletion(void);
+	int CCameraDS::ReadFrame(char *frame);
 };
 
 #endif 
