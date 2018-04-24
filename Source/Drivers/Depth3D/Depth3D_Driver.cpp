@@ -3,7 +3,7 @@
 #include "DefaultParameters.h"
 
 #ifdef _MSC_VER
-#include "camerads.h"
+#include "CameraDS.h"
 #include "usb_camera.hpp"  
 #else
 #include "uvc.h"

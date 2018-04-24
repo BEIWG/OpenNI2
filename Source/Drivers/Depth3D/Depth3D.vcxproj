@@ -157,7 +157,7 @@
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);DummyDevice2_EXPORT</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\..\Include;..\..\..\ThirdParty\PSCommon\XnLib\Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\Include;..\..\..\ThirdParty\PSCommon\XnLib\Include;F:\openni\tmp\OpenNI2\Source\Drivers\Depth3D\DirectShow</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
@@ -190,17 +190,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DirectShow/CameraDS.cpp" />
-    <ClCompile Include="Depth3D.cpp" />
-    <ClCompile Include="DirectShow/usb_camera.cpp" />
+    <ClCompile Include="ColorStream.cpp" />
+    <ClCompile Include="Depth3D_Device.cpp" />
+    <ClCompile Include="Depth3D_Driver.cpp" />
+    <ClCompile Include="DepthStream.cpp" />
+    <ClCompile Include="DirectShow\CameraDS.cpp" />
+    <ClCompile Include="DirectShow\usb_camera.cpp" />
+    <ClCompile Include="IRStream.cpp" />
+    <ClCompile Include="SensorStreamProcessor.cpp" />
+    <ClCompile Include="StreamBase.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\Resources\OpenNI.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DirectShow/CameraDS.h" />
+    <ClInclude Include="ColorStream.h" />
+    <ClInclude Include="DefaultParameters.h" />
+    <ClInclude Include="Depth3D_Device.h" />
+    <ClInclude Include="Depth3D_Driver.h" />
+    <ClInclude Include="DepthStream.h" />
     <ClInclude Include="DirectShow/qedit.h" />
-    <ClInclude Include="DirectShow/usb_camera.hpp" />
+    <ClInclude Include="DirectShow\CameraDS.h" />
+    <ClInclude Include="DirectShow\usb_camera.hpp" />
+    <ClInclude Include="IRStream.h" />
+    <ClInclude Include="SensorStreamProcessor.h" />
+    <ClInclude Include="StreamBase.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

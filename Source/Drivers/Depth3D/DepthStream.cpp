@@ -3,7 +3,10 @@
 #include "SensorStreamProcessor.h"
 
 using namespace depth3d;
-#ifndef _MSC_VER
+#ifdef _MSC_VER
+#include "CameraDS.h"
+#include "usb_camera.hpp"  
+#else
 #include "uvc.h"
 
 uvc_context_t *ctx;

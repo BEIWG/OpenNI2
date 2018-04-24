@@ -113,7 +113,7 @@ class Harvest:
             shutil.copy(os.path.join(self.rootDir, 'Config', 'OpenNI2', 'Drivers', 'OniFile.ini'), targetDriversDir)
 
         if self.osName == 'Windows':
-            self.copySharedObject(binDriversDir, 'Kinect', targetDriversDir)
+            #self.copySharedObject(binDriversDir, 'Kinect', targetDriversDir)
             self.copySharedObject(binDriversDir, 'Depth3D', targetDriversDir)
 
     def copySample(self, samplesDir, targetBinDir, name, isLibrary = False, isGL = False, isJava = False, sourceSamplesDir = None):
