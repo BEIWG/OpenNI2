@@ -1,5 +1,5 @@
-#ifndef _UVC_H_
-#define _UVC_H_
+#ifndef __UVC_H_
+#define __UVC_H_
 
 #include "libuvc/libuvc.h"
 

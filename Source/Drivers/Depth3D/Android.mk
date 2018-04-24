@@ -9,9 +9,9 @@ MY_PREFIX := $(LOCAL_PATH)
 
 # list all source files
 MY_SRC_FILES := \
-	$(MY_PREFIX)/Depth3D.cpp \
-	$(MY_PREFIX)/uvc.cpp \
-	$(MY_PREFIX)/src/*.c
+	$(MY_PREFIX)/*.cpp \
+	$(MY_PREFIX)/uvc/*.c \
+	$(MY_PREFIX)/uvc/*.cpp
 
 # expand the wildcards
 MY_SRC_FILE_EXPANDED := $(wildcard $(MY_SRC_FILES))
@@ -22,7 +22,8 @@ LOCAL_SRC_FILES := $(MY_SRC_FILE_EXPANDED:$(LOCAL_PATH)/%=%)
 LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/../../../Include \
 	$(LOCAL_PATH) \
-	$(LOCAL_PATH)/include
+	$(LOCAL_PATH)/include \
+	$(LOCAL_PATH)/uvc
 
 LOCAL_STATIC_LIBRARIES := XnLib
 LOCAL_SHARED_LIBRARIES := libusb 

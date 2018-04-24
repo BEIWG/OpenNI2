@@ -3,12 +3,19 @@ include ../../../ThirdParty/PSCommon/BuildSystem/CommonDefs.mak
 BIN_DIR = ../../../Bin
 
 INC_DIRS = \
+	uvc \
 	../../../Include \
 	../../../ThirdParty/PSCommon/XnLib/Include 
 
 SRC_FILES = \
-	Depth3D.cpp \
-	uvc.cpp
+	Depth3D_Device.cpp \
+	Depth3D_Driver.cpp \
+	StreamBase.cpp \
+	DepthStream.cpp \
+	IRStream.cpp \
+	ColorStream.cpp \
+	SensorStreamProcessor.cpp \
+	uvc/uvc.cpp
 
 ifeq ("$(OSTYPE)","Darwin")
 	INC_DIRS += /opt/local/include

@@ -190,17 +190,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CameraDS.cpp" />
+    <ClCompile Include="DirectShow/CameraDS.cpp" />
     <ClCompile Include="Depth3D.cpp" />
-    <ClCompile Include="usb_camera.cpp" />
+    <ClCompile Include="DirectShow/usb_camera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\Resources\OpenNI.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CameraDS.h" />
-    <ClInclude Include="qedit.h" />
-    <ClInclude Include="usb_camera.hpp" />
+    <ClInclude Include="DirectShow/CameraDS.h" />
+    <ClInclude Include="DirectShow/qedit.h" />
+    <ClInclude Include="DirectShow/usb_camera.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
