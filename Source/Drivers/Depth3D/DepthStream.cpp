@@ -3,6 +3,10 @@
 #include "SensorStreamProcessor.h"
 
 using namespace depth3d;
+
+bool gSoftFilterEnable = true;
+int dMin = 0, dMax = 128, diff = 1;
+
 #ifdef _MSC_VER
 #include "CameraDS.h"
 #include "usb_camera.hpp"  
@@ -15,9 +19,10 @@ uvc_device_t *dev;
 uvc_device_handle_t *devh;
 uvc_stream_ctrl_t ctrl;
 
-static int frame_drop = 10;
-static char *data_tmp = NULL;
-static int data_flag = 0;
+int gDropFrame = 10;
+char *DataCacheBuffer = NULL;
+bool gDataUpdate = false;
+
 xnl::CriticalSection m_frameSyncCs;
 
 void uvc_cb(uvc_frame_t *uvc_frame, void *ptr) 
@@ -25,21 +30,21 @@ void uvc_cb(uvc_frame_t *uvc_frame, void *ptr)
 	uvc_frame_t *bgr;
 	uvc_error_t ret;
 
-	if (data_tmp == NULL) 
+	if (DataCacheBuffer == NULL) 
 	{
-		if (frame_drop--)
+		if (gDropFrame--)
 			return;
 			
-		data_tmp = (char*)malloc(uvc_frame->data_bytes);
-        	if (!data_tmp) 
+		DataCacheBuffer = (char*)malloc(uvc_frame->data_bytes);
+        	if (!DataCacheBuffer) 
         	{
 			printf("unable to allocate  frame!");
 			return;
   	    	}
 	} else {
 		m_frameSyncCs.Lock();
-		memcpy((unsigned char*)data_tmp, (unsigned char*)uvc_frame->data, uvc_frame->data_bytes);
-		data_flag = 1;
+		memcpy((unsigned char*)DataCacheBuffer, (unsigned char*)uvc_frame->data, uvc_frame->data_bytes);
+		gDataUpdate = true;
 		m_frameSyncCs.Unlock();
 	}
 }
@@ -58,8 +63,8 @@ void OzDepthStream::stop()
 	uvc_unref_device(dev);
 	uvc_exit(ctx);	
 
-	if (data_tmp != NULL)
-		free(data_tmp);	
+	if (DataCacheBuffer != NULL)
+		free(DataCacheBuffer);	
 	#endif		
 }
 
@@ -123,7 +128,7 @@ void OzDepthStream::Mainloop()
 		#ifdef _MSC_VER			
 		m_CamDS.WaitForCompletion();
 		#else
-		while (!data_flag) 
+		while (!gDataUpdate) 
 		{
 			xnOSSleep(3);
 		}
@@ -159,15 +164,16 @@ void OzDepthStream::Mainloop()
 		recv = m_CamDS.ReadFrame((char*)pFrame->data);
 		if (recv == pFrame->dataSize)
 		{				
+			if (gSoftFilterEnable)
+				DepthfilterSpeckles<short>((unsigned char*)pFrame->data, pFrame->width, pFrame->height, (dMin - 1) * 16.0, 400, diff * 16.0);
 			raiseNewFrame(pFrame);
 		}			
 		#else      
 	        m_frameSyncCs.Lock();
-	        data_flag = 0;
-	        //cv::Mat input_mat(DEPTH_RESOLUTION_Y, DEPTH_RESOLUTION_X, CV_16SC1, data_tmp);
-	        //cv::filterSpeckles(input_mat, (dMin - 1)*0, 200, diff*16.0);
-	        //xnOSMemSet(pFrame->data, 0x01, pFrame->dataSize);
-	        xnOSMemCopy((pFrame->data), data_tmp, pFrame->dataSize); 
+	        gDataUpdate = false;
+	        xnOSMemCopy((pFrame->data), DataCacheBuffer, pFrame->dataSize); 
+		if (gSoftFilterEnable)
+			DepthfilterSpeckles<short>((unsigned char*)pFrame->data, pFrame->width, pFrame->height, (dMin - 1) * 16.0, 400, diff * 16.0);
 	        raiseNewFrame(pFrame);
 	        m_frameSyncCs.Unlock();
 		#endif

@@ -157,7 +157,7 @@
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);DummyDevice2_EXPORT</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\..\Include;..\..\..\ThirdParty\PSCommon\XnLib\Include;F:\openni\tmp\OpenNI2\Source\Drivers\Depth3D\DirectShow</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\Include;..\..\..\ThirdParty\PSCommon\XnLib\Include;DirectShow</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
