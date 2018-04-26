@@ -18,7 +18,7 @@ public:
 
 	virtual void stop() { m_running = false; }
 
-	virtual OniStatus SetVideoMode(OniVideoMode*) = 0;
+	virtual OniStatus SetVideoMode(OniVideoMode* videoMode) = 0;
 	virtual OniStatus GetVideoMode(OniVideoMode* pVideoMode) = 0;
 
 	OniBool isPropertySupported(int propertyId);
@@ -39,7 +39,7 @@ protected:
 	}
 
 	bool m_running;
-
+	OniVideoMode m_videoMode;
 	XN_THREAD_HANDLE m_threadHandle;
 };
 }

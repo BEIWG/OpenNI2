@@ -3,6 +3,13 @@
 #include "SensorStreamProcessor.h"
 
 using namespace depth3d;
+OzImageStream::OzImageStream()
+{
+	m_videoMode.pixelFormat = ONI_PIXEL_FORMAT_RGB888;
+	m_videoMode.fps = DEFAULT_FPS;
+	m_videoMode.resolutionX = IMAGE_RESOLUTION_X;
+	m_videoMode.resolutionY = IMAGE_RESOLUTION_Y;		
+}
 
 void OzImageStream::stop()
 {
@@ -10,17 +17,15 @@ void OzImageStream::stop()
 	m_running = false;
 }
 
-OniStatus OzImageStream::SetVideoMode(OniVideoMode*) 
+OniStatus OzImageStream::SetVideoMode(OniVideoMode* videoMode) 
 {
+	m_videoMode = *videoMode;
 	return ONI_STATUS_OK;
 }
 
 OniStatus OzImageStream::GetVideoMode(OniVideoMode* pVideoMode)
 {
-	pVideoMode->pixelFormat = ONI_PIXEL_FORMAT_RGB888;
-	pVideoMode->fps = DEFAULT_FPS;
-	pVideoMode->resolutionX = IMAGE_RESOLUTION_X;
-	pVideoMode->resolutionY = IMAGE_RESOLUTION_Y;
+	*pVideoMode = m_videoMode;
 	return ONI_STATUS_OK;
 }
 
@@ -36,20 +41,19 @@ void OzImageStream::Mainloop()
 
 		// Fill metadata
 		pFrame->frameIndex = frameId++;
+		pFrame->videoMode.pixelFormat = m_videoMode.pixelFormat;
+		pFrame->videoMode.resolutionX = m_videoMode.resolutionX;
+		pFrame->videoMode.resolutionY = m_videoMode.resolutionY;
+		pFrame->videoMode.fps = m_videoMode.fps;
 
-		pFrame->videoMode.pixelFormat = ONI_PIXEL_FORMAT_RGB888;
-		pFrame->videoMode.resolutionX = IMAGE_RESOLUTION_X;
-		pFrame->videoMode.resolutionY = IMAGE_RESOLUTION_Y;
-		pFrame->videoMode.fps = DEFAULT_FPS;
-
-		pFrame->width = IMAGE_RESOLUTION_X;
-		pFrame->height = IMAGE_RESOLUTION_Y;
+		pFrame->width = m_videoMode.resolutionX;
+		pFrame->height = m_videoMode.resolutionY;
 
 		pFrame->cropOriginX = pFrame->cropOriginY = 0;
 		pFrame->croppingEnabled = FALSE;
 
 		pFrame->sensorType = ONI_SENSOR_COLOR;
-		pFrame->stride = IMAGE_RESOLUTION_X*3;
+		pFrame->stride = m_videoMode.resolutionX*3;
 		pFrame->timestamp = GetTimestamp();
 		// Fill fake data frame
 		xnOSMemSet(pFrame->data, 0xc0, pFrame->dataSize);     			

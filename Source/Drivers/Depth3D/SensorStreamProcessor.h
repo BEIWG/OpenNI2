@@ -1,7 +1,4 @@
-
-#ifdef _MSC_VER
 #include <algorithm> 
-#endif
 #include "DefaultParameters.h"
 typedef unsigned char uchar;
 

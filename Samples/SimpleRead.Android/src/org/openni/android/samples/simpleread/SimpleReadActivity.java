@@ -47,7 +47,8 @@ public class SimpleReadActivity
 	private Thread mMainLoopThread;
 	private boolean mShouldRun = true;
 	private Device mDevice;
-	private VideoStream mStream;
+	private VideoStream mStream_depth;
+	private VideoStream mStream_rgb;
 	private TextView mStatusLine;
 
 	@Override
@@ -115,8 +116,11 @@ public class SimpleReadActivity
 
 		try {
 			mDevice = aDevice;
-			mStream = VideoStream.create(mDevice, SensorType.DEPTH);
-			mStream.start();
+			mStream_depth = VideoStream.create(mDevice, SensorType.DEPTH);
+			mStream_depth.start();
+			
+			mStream_rgb = VideoStream.create(mDevice, SensorType.COLOR);
+			mStream_rgb.start();
 		} catch (RuntimeException e) {
 			showAlertAndExit("Failed to open stream: " + e.getMessage());
 			return;
@@ -127,16 +131,23 @@ public class SimpleReadActivity
 			@Override
 			public void run() {
 				while (mShouldRun) {
-					VideoFrameRef frame = null;
+					VideoFrameRef frame_depth = null;
+					VideoFrameRef frame_rgb = null;
 					
 					try {
-						frame = mStream.readFrame();
+						frame_depth = mStream_depth.readFrame();
+						frame_rgb = mStream_rgb.readFrame();
 						// get the middle pixel
-						int index = frame.getVideoMode().getResolutionY() / 2 * frame.getVideoMode().getResolutionX() + frame.getVideoMode().getResolutionX() / 2;
-						short depthValue = frame.getData().getShort(index * 2);
-						updateLabel(String.format("Frame Index: %,d | Timestamp: %.6f seconds | Middle depth value: %,d mm", frame.getFrameIndex(), frame.getTimestamp() / 1e6, depthValue));
+						int index = frame_depth.getVideoMode().getResolutionY() / 2 * frame_depth.getVideoMode().getResolutionX() + frame_depth.getVideoMode().getResolutionX() / 2;
+						short depthValue = frame_depth.getData().getShort(index * 2);
+						
+						      index = frame_rgb.getVideoMode().getResolutionY() / 2 * frame_rgb.getVideoMode().getResolutionX() + frame_rgb.getVideoMode().getResolutionX() / 2;
+						 int rgbValue = frame_rgb.getData().getShort(index * 2);
+						updateLabel(String.format("Depth->Frame: %,d \n Timestamp: %.3f seconds \n depth value: %,d mm\n" + "--------------\n" +
+								"RGB->Frame: %,d \n Timestamp: %.3f seconds \n rgb value: %,d", frame_depth.getFrameIndex(), frame_depth.getTimestamp() / 1e3, depthValue, 
+								frame_rgb.getFrameIndex(), frame_rgb.getTimestamp() / 1e3, rgbValue&0xff));
 					} catch (Exception e) {
-						Log.e(TAG, "Failed reading frame: " + e);
+						Log.e(TAG, "Failed reading frame_depth: " + e);
 					}
 				}
 			};
@@ -158,8 +169,12 @@ public class SimpleReadActivity
 			}
 		}
 
-		if (mStream != null) {
-			mStream.stop();
+		if (mStream_depth != null) {
+			mStream_depth.stop();
+		}
+
+		if (mStream_rgb != null) {
+			mStream_rgb.stop();
 		}
 		
 		mStatusLine.setText(R.string.waiting_for_frames);
@@ -193,9 +208,14 @@ public class SimpleReadActivity
 
 		stop();
 		
-		if (mStream != null) {
-			mStream.destroy();
-			mStream = null;
+		if (mStream_depth != null) {
+			mStream_depth.destroy();
+			mStream_depth = null;
+		}
+
+		if (mStream_rgb != null) {
+			mStream_rgb.destroy();
+			mStream_rgb = null;
 		}
 		
 		if (mDevice != null) {

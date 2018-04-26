@@ -7,6 +7,8 @@ namespace depth3d {
 class OzImageStream : public OzStream
 {
 public: 
+	OzImageStream();
+	
 	void stop();
 	
 	OniStatus SetVideoMode(OniVideoMode*);

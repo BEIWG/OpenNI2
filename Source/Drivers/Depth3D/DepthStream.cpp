@@ -50,6 +50,14 @@ void uvc_cb(uvc_frame_t *uvc_frame, void *ptr)
 }
 #endif
 
+OzDepthStream::OzDepthStream()
+{
+	m_videoMode.pixelFormat = ONI_PIXEL_FORMAT_DEPTH_1_MM;
+	m_videoMode.fps = DEFAULT_FPS;
+	m_videoMode.resolutionX = DEPTH_RESOLUTION_X;
+	m_videoMode.resolutionY = DEPTH_RESOLUTION_Y;	
+}
+
 void OzDepthStream::stop()
 {
 	printf("OzDepthStream::stop()....\n");
@@ -68,17 +76,15 @@ void OzDepthStream::stop()
 	#endif		
 }
 
-OniStatus OzDepthStream::SetVideoMode(OniVideoMode*) 
+OniStatus OzDepthStream::SetVideoMode(OniVideoMode* videoMode) 
 {
+	m_videoMode = *videoMode;
 	return ONI_STATUS_OK;
 }
 
 OniStatus OzDepthStream::GetVideoMode(OniVideoMode* pVideoMode)
 {
-	pVideoMode->pixelFormat = ONI_PIXEL_FORMAT_DEPTH_1_MM;
-	pVideoMode->fps = DEFAULT_FPS;
-	pVideoMode->resolutionX = DEPTH_RESOLUTION_X;
-	pVideoMode->resolutionY = DEPTH_RESOLUTION_Y;
+	*pVideoMode = m_videoMode;
 	return ONI_STATUS_OK;
 }
 
@@ -143,20 +149,19 @@ void OzDepthStream::Mainloop()
 	
 		// Fill metadata
 		pFrame->frameIndex = frameId++;
+		pFrame->videoMode.pixelFormat = m_videoMode.pixelFormat;
+		pFrame->videoMode.resolutionX = m_videoMode.resolutionX;
+		pFrame->videoMode.resolutionY = m_videoMode.resolutionY;
+		pFrame->videoMode.fps = m_videoMode.fps;
 	
-		pFrame->videoMode.pixelFormat = ONI_PIXEL_FORMAT_DEPTH_1_MM;
-		pFrame->videoMode.resolutionX = DEPTH_RESOLUTION_X;
-		pFrame->videoMode.resolutionY = DEPTH_RESOLUTION_Y;
-		pFrame->videoMode.fps = DEFAULT_FPS;
-	
-		pFrame->width = DEPTH_RESOLUTION_X;
-		pFrame->height = DEPTH_RESOLUTION_Y;
+		pFrame->width = m_videoMode.resolutionX;
+		pFrame->height = m_videoMode.resolutionY;
 	
 		pFrame->cropOriginX = pFrame->cropOriginY = 0;
 		pFrame->croppingEnabled = FALSE;
 		
 		pFrame->sensorType = ONI_SENSOR_DEPTH;
-		pFrame->stride = DEPTH_RESOLUTION_X*sizeof(OniDepthPixel);
+		pFrame->stride = m_videoMode.resolutionX*sizeof(OniDepthPixel);
 		pFrame->timestamp = GetTimestamp();
 				
 	      // Fill frame
