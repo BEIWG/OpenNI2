@@ -169,11 +169,12 @@ void OzDepthStream::Mainloop()
 						
 	      // Fill frame
 		#ifdef _MSC_VER
+		xnOSSleep(30);
 		recv = m_CamDS.ReadFrame((char*)pFrame->data);
 		if (recv == pFrame->dataSize)
 		{				
 			if (gSoftFilterEnable)
-				DepthfilterSpeckles<short>((unsigned char*)pFrame->data, pFrame->width, pFrame->height, (dMin - 1) * 16.0, 400, diff * 16.0);
+				DepthfilterSpeckles((unsigned char*)pFrame->data, pFrame->width, pFrame->height, (dMin - 1) * 16.0, 400, diff * 16.0);
 			raiseNewFrame(pFrame);
 		}			
 		#else      
@@ -181,7 +182,7 @@ void OzDepthStream::Mainloop()
 	        gDataUpdate = false;
 	        xnOSMemCopy((pFrame->data), DataCacheBuffer, pFrame->dataSize); 
 		if (gSoftFilterEnable)
-			DepthfilterSpeckles<short>((unsigned char*)pFrame->data, pFrame->width, pFrame->height, (dMin - 1) * 16.0, 400, diff * 16.0);
+			DepthfilterSpeckles((unsigned char*)pFrame->data, pFrame->width, pFrame->height, (dMin - 1) * 16.0, 400, diff * 16.0);
 		
 	        raiseNewFrame(pFrame);
 	        m_frameSyncCs.Unlock();
