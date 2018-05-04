@@ -1,3 +1,4 @@
+#include <XnLog.h>
 #include "IRStream.h"
 #include "DefaultParameters.h"
 #include "SensorStreamProcessor.h"
@@ -33,7 +34,8 @@ OniStatus OzIRStream::GetVideoMode(OniVideoMode* pVideoMode)
 void OzIRStream::Mainloop()
 {
 
-	int frameId = 1;             
+	int frameId = 1;
+	XnStatus nRetVal = XN_STATUS_OK;             
 
 	while (m_running)
 	{
@@ -42,6 +44,14 @@ void OzIRStream::Mainloop()
 		if (pFrame == NULL) {printf("Didn't get frame...\n"); continue;}
 
 		// Fill metadata
+		XnUInt64 nTimestamp = 0;
+		nRetVal = xnOSGetHighResTimeStamp(&nTimestamp);
+		if (nRetVal != XN_STATUS_OK)
+		{
+			xnLogWarning("Depth3D Driver", "Failed to get timestamp from os: %s", xnGetStatusString(nRetVal));
+		}
+	
+		pFrame->timestamp = nTimestamp;	
 		pFrame->frameIndex = frameId++;
 		pFrame->videoMode.pixelFormat = m_videoMode.pixelFormat;
 		pFrame->videoMode.resolutionX = m_videoMode.resolutionX;
@@ -59,7 +69,6 @@ void OzIRStream::Mainloop()
 
 		// Fill fake data frame      
 		xnOSMemSet(pFrame->data, 0xc0, pFrame->dataSize);
-		pFrame->timestamp = GetTimestamp();
 		raiseNewFrame(pFrame);
       
 		getServices().releaseFrame(pFrame);

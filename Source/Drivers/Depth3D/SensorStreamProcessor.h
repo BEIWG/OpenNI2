@@ -1,8 +1,6 @@
 #include "DefaultParameters.h"
 typedef unsigned char uchar;
 
-uint64_t GetTimestamp();
-
 struct Point2s{
         short x;
         short y;

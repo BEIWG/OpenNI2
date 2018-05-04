@@ -1,3 +1,4 @@
+#include <XnLog.h>
 #include "ColorStream.h"
 #include "DefaultParameters.h"
 #include "SensorStreamProcessor.h"
@@ -32,6 +33,7 @@ OniStatus OzImageStream::GetVideoMode(OniVideoMode* pVideoMode)
 void OzImageStream::Mainloop()
 {
 	int frameId = 1;
+	XnStatus nRetVal = XN_STATUS_OK;
         
 	while (m_running)
 	{
@@ -40,6 +42,14 @@ void OzImageStream::Mainloop()
 		if (pFrame == NULL) {printf("Didn't get frame...\n"); continue;}
 
 		// Fill metadata
+		XnUInt64 nTimestamp = 0;
+		nRetVal = xnOSGetHighResTimeStamp(&nTimestamp);
+		if (nRetVal != XN_STATUS_OK)
+		{
+			xnLogWarning("Depth3D Driver", "Failed to get timestamp from os: %s", xnGetStatusString(nRetVal));
+		}
+	
+		pFrame->timestamp = nTimestamp;	
 		pFrame->frameIndex = frameId++;
 		pFrame->videoMode.pixelFormat = m_videoMode.pixelFormat;
 		pFrame->videoMode.resolutionX = m_videoMode.resolutionX;
@@ -54,7 +64,7 @@ void OzImageStream::Mainloop()
 
 		pFrame->sensorType = ONI_SENSOR_COLOR;
 		pFrame->stride = m_videoMode.resolutionX*3;
-		pFrame->timestamp = GetTimestamp();
+
 		// Fill fake data frame
 		xnOSMemSet(pFrame->data, 0xc0, pFrame->dataSize);     			
 		raiseNewFrame(pFrame);

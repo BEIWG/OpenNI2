@@ -1,3 +1,4 @@
+#include <XnLog.h>
 #include "DepthStream.h"
 #include "DefaultParameters.h"
 #include "SensorStreamProcessor.h"
@@ -95,19 +96,17 @@ OniStatus OzDepthStream::convertDepthToColorCoordinates(StreamBase* colorStream,
 
 void OzDepthStream::Mainloop()
 {
-	int frameId = 1;             
+	int frameId = 1;
+	XnStatus nRetVal = XN_STATUS_OK;
+	    
 	#ifdef _MSC_VER
 	char szCamName[20] = { 0 };
         long recv = 0;
         int openflag = 0;
              
-
 	CCameraDS m_CamDS;
         int m_iCamCount = CCameraDS::CameraCount();
-        if (m_iCamCount == 0)
-        {
-		return;
-	}
+        if (m_iCamCount == 0) return;
 
 	for (auto n = 0; n < m_iCamCount; n++)
         {
@@ -116,9 +115,7 @@ void OzDepthStream::Mainloop()
 		{
 			if (!strcmp(szCamName, "FX3 UVC"))
 				if ((m_CamDS.OpenCamera(n, false, DEPTH_RESOLUTION_X, DEPTH_RESOLUTION_Y)))
-				{
-					openflag = 1;
-				}
+					openflag = 1;				
 		}
 	}
                 
@@ -129,8 +126,7 @@ void OzDepthStream::Mainloop()
 	}
 	#endif
 	while (m_running)
-	{
-			
+	{			
 		#ifdef _MSC_VER			
 		m_CamDS.WaitForCompletion();
 		#else
@@ -148,6 +144,14 @@ void OzDepthStream::Mainloop()
 		}
 	
 		// Fill metadata
+		XnUInt64 nTimestamp = 0;
+		nRetVal = xnOSGetHighResTimeStamp(&nTimestamp);
+		if (nRetVal != XN_STATUS_OK)
+		{
+			xnLogWarning("Depth3D Driver", "Failed to get timestamp from os: %s", xnGetStatusString(nRetVal));
+		}
+	
+		pFrame->timestamp = nTimestamp;		
 		pFrame->frameIndex = frameId++;
 		pFrame->videoMode.pixelFormat = m_videoMode.pixelFormat;
 		pFrame->videoMode.resolutionX = m_videoMode.resolutionX;
@@ -162,8 +166,7 @@ void OzDepthStream::Mainloop()
 		
 		pFrame->sensorType = ONI_SENSOR_DEPTH;
 		pFrame->stride = m_videoMode.resolutionX*sizeof(OniDepthPixel);
-		pFrame->timestamp = GetTimestamp();
-				
+						
 	      // Fill frame
 		#ifdef _MSC_VER
 		recv = m_CamDS.ReadFrame((char*)pFrame->data);
@@ -179,6 +182,7 @@ void OzDepthStream::Mainloop()
 	        xnOSMemCopy((pFrame->data), DataCacheBuffer, pFrame->dataSize); 
 		if (gSoftFilterEnable)
 			DepthfilterSpeckles<short>((unsigned char*)pFrame->data, pFrame->width, pFrame->height, (dMin - 1) * 16.0, 400, diff * 16.0);
+		
 	        raiseNewFrame(pFrame);
 	        m_frameSyncCs.Unlock();
 		#endif
