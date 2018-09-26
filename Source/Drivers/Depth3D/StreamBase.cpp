@@ -2,9 +2,10 @@
 #ifndef _MSC_VER
 #include<sys/time.h>
 #endif
-
+#include <XnLog.h>
 using namespace depth3d;
 
+#define XN_MASK_DEVICE_SENSOR "Depth3D"
 OzStream::~OzStream()
 {
 	stop();
@@ -20,6 +21,8 @@ OniStatus OzStream::start()
 OniBool OzStream::isPropertySupported(int propertyId)
 {
 	OniBool status;
+
+	xnLogVerbose(XN_MASK_DEVICE_SENSOR, "isPropertySupported %d", propertyId);
 	switch(propertyId)
 	{
 		case ONI_STREAM_PROPERTY_VIDEO_MODE:
@@ -29,6 +32,9 @@ OniBool OzStream::isPropertySupported(int propertyId)
 		case ONI_STREAM_PROPERTY_AUTO_EXPOSURE:
 		case ONI_STREAM_PROPERTY_EXPOSURE:
 		case ONI_STREAM_PROPERTY_GAIN:
+		case ONI_STREAM_PROPERTY_MAX_VALUE:
+		case ONI_STREAM_PROPERTY_MIN_VALUE:
+		case ONI_STREAM_PROPERTY_MIRRORING:
 		{
 				status = true;
 				break;
@@ -43,8 +49,9 @@ OniBool OzStream::isPropertySupported(int propertyId)
 
 OniStatus OzStream::getProperty(int propertyId, void* data, int* pDataSize)
 {
-	
 	OniStatus status = ONI_STATUS_NOT_SUPPORTED;
+
+	xnLogVerbose(XN_MASK_DEVICE_SENSOR, "getProperty %d", propertyId);
 	switch(propertyId)
 	{
 		case ONI_STREAM_PROPERTY_VIDEO_MODE:
@@ -78,6 +85,22 @@ OniStatus OzStream::getProperty(int propertyId, void* data, int* pDataSize)
 				status = ONI_STATUS_OK;
 				break;
 			}
+		case ONI_STREAM_PROPERTY_MAX_VALUE:
+			{
+				int *val = (int*)data;
+				*val = 0x0ffff;
+				status = ONI_STATUS_OK;
+				break;
+			}
+
+		case ONI_STREAM_PROPERTY_MIN_VALUE:
+			{
+				int *val = (int*)data;
+				*val = 500;
+				status = ONI_STATUS_OK;
+				break;
+			}
+			
 			
 		default:
 			status = ONI_STATUS_NOT_SUPPORTED;
@@ -89,6 +112,7 @@ OniStatus OzStream::getProperty(int propertyId, void* data, int* pDataSize)
 
 OniStatus OzStream::setProperty(int propertyId, const void* data, int dataSize)
 {
+	xnLogVerbose(XN_MASK_DEVICE_SENSOR, "setProperty %d", propertyId);
 	if (propertyId == ONI_STREAM_PROPERTY_VIDEO_MODE)
 	{
 		if (dataSize != sizeof(OniVideoMode))

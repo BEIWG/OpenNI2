@@ -63,8 +63,8 @@ oni::driver::StreamBase* OzDevice::createStream(OniSensorType sensorType)
 
 	if (sensorType == ONI_SENSOR_IR)
 	{
-		//OzIRStream* pImage = XN_NEW(OzIRStream);
-		//return pImage;
+		OzIRStream* pImage = XN_NEW(OzIRStream);
+		return pImage;
 	}
 		
 	m_driverServices.errorLoggerAppend("OzDevice: Can't create a stream of type %d", sensorType);

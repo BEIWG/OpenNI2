@@ -37,11 +37,11 @@ void uvc_cb(uvc_frame_t *uvc_frame, void *ptr)
 			return;
 			
 		DataCacheBuffer = (char*)malloc(uvc_frame->data_bytes);
-        	if (!DataCacheBuffer) 
-        	{
+		if (!DataCacheBuffer) 
+		{
 			printf("unable to allocate  frame!");
 			return;
-  	    	}
+		}
 	} else {
 		m_frameSyncCs.Lock();
 		memcpy((unsigned char*)DataCacheBuffer, (unsigned char*)uvc_frame->data, uvc_frame->data_bytes);
@@ -100,16 +100,18 @@ void OzDepthStream::Mainloop()
 	XnStatus nRetVal = XN_STATUS_OK;
 	    
 	#ifdef _MSC_VER
+	DWORD  duration, delay;
+	DWORD start, finish; 
 	char szCamName[20] = { 0 };
-        long recv = 0;
-        int openflag = 0;
+	long recv = 0;
+	int openflag = 0;
              
 	CCameraDS m_CamDS;
-        int m_iCamCount = CCameraDS::CameraCount();
-        if (m_iCamCount == 0) return;
+	int m_iCamCount = CCameraDS::CameraCount();
+	if (m_iCamCount == 0) return;
 
 	for (auto n = 0; n < m_iCamCount; n++)
-        {
+	{
 		int retval = m_CamDS.CameraName(n, szCamName, sizeof(szCamName));
 		if (retval > 0)
 		{
@@ -119,8 +121,8 @@ void OzDepthStream::Mainloop()
 		}
 	}
                 
-        if (openflag == 0)
-        {
+	if (openflag == 0)
+	{
 		printf("DepthStream: open camera failed....\n");
 		return;
 	}
@@ -128,7 +130,7 @@ void OzDepthStream::Mainloop()
 	while (m_running)
 	{			
 		#ifdef _MSC_VER			
-		m_CamDS.WaitForCompletion();
+		start = GetTickCount();
 		#else
 		while (!gDataUpdate) 
 		{
@@ -169,23 +171,33 @@ void OzDepthStream::Mainloop()
 						
 	      // Fill frame
 		#ifdef _MSC_VER
-		xnOSSleep(30);
-		recv = m_CamDS.ReadFrame((char*)pFrame->data);
+		recv = m_CamDS.QueryFrame((char*)pFrame->data);
 		if (recv == pFrame->dataSize)
-		{				
+		{		
+
 			if (gSoftFilterEnable)
 				DepthfilterSpeckles((unsigned char*)pFrame->data, pFrame->width, pFrame->height, (dMin - 1) * 16.0, 400, diff * 16.0);
+
+			finish = GetTickCount();
+			duration =1000/m_videoMode.fps;
+			if (duration > (finish - start))
+			{
+				delay = duration - (finish - start);
+				xnOSSleep(delay);
+			}
+
 			raiseNewFrame(pFrame);
-		}			
+		}
+
 		#else      
-	        m_frameSyncCs.Lock();
-	        gDataUpdate = false;
-	        xnOSMemCopy((pFrame->data), DataCacheBuffer, pFrame->dataSize); 
+		m_frameSyncCs.Lock();
+		gDataUpdate = false;
+		xnOSMemCopy((pFrame->data), DataCacheBuffer, pFrame->dataSize); 
 		if (gSoftFilterEnable)
 			DepthfilterSpeckles((unsigned char*)pFrame->data, pFrame->width, pFrame->height, (dMin - 1) * 16.0, 400, diff * 16.0);
 		
-	        raiseNewFrame(pFrame);
-	        m_frameSyncCs.Unlock();
+		raiseNewFrame(pFrame);
+		m_frameSyncCs.Unlock();
 		#endif
 		getServices().releaseFrame(pFrame);		
 	}
