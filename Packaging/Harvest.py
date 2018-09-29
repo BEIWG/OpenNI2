@@ -466,7 +466,6 @@ $(OUTPUT_FILE): copy-redist
             # install script
             shutil.copy(os.path.join(self.rootDir, 'Packaging', 'Linux', 'install.sh'), self.outDir)
             shutil.copy(os.path.join(self.rootDir, 'Packaging', 'Linux', 'beiwg-usb.rules'), self.outDir)
-            shutil.copy(os.path.join(self.rootDir, 'Packaging', 'Linux', 'install_system.sh'), self.outDir)
             shutil.copy(os.path.join(self.rootDir, 'Packaging', 'Linux', 'openni2.pc'), self.outDir)
             shutil.copy(os.path.join(self.rootDir, 'Packaging', 'Linux', 'libuvc.so.0'), os.path.join(self.outDir, 'Redist/OpenNI2/Drivers'))
             shutil.copy(os.path.join(self.rootDir, 'Packaging', 'Linux', 'libuvc.so.0'), os.path.join(self.outDir, 'Tools/OpenNI2/Drivers'))

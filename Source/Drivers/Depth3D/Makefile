@@ -3,6 +3,7 @@ include ../../../ThirdParty/PSCommon/BuildSystem/CommonDefs.mak
 BIN_DIR = ../../../Bin
 
 INC_DIRS = \
+	include \
 	uvc \
 	../../../Include \
 	../../../ThirdParty/PSCommon/XnLib/Include 
@@ -25,7 +26,13 @@ endif
 
 LIB_NAME = Depth3D
 
-LIB_DIRS = ../../../ThirdParty/PSCommon/XnLib/Bin/$(PLATFORM)-$(CFG)
+ifeq ("$(PLATFORM)","AARCH64")
+	LIB_DIRS = ../../../ThirdParty/PSCommon/XnLib/Bin/$(PLATFORM)-$(CFG) \
+		./ 
+else
+	LIB_DIRS = ../../../ThirdParty/PSCommon/XnLib/Bin/$(PLATFORM)-$(CFG)
+endif
+
 	
 USED_LIBS = XnLib dl pthread uvc
 						

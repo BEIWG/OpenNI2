@@ -38,8 +38,8 @@ if [ "`uname -s`" != "Darwin" ]; then
     cp ${SCRIPT_PATH}/beiwg-usb.rules /etc/udev/rules.d/557-beiwg-usb.rules 
 fi
 
-OUT_FILE="$SCRIPT_PATH/OpenNIDevEnvironment"
+sudo cp ${SCRIPT_PATH}/Include /usr/local/include/openni2 -rf
+sudo cp ${SCRIPT_PATH}/Redist/* /usr/local/lib/ -rf
+sudo cp ${SCRIPT_PATH}/openni2.pc /usr/local/lib/pkgconfig
 
-echo "export OPENNI2_INCLUDE=$SCRIPT_PATH/Include" > $OUT_FILE
-echo "export OPENNI2_REDIST=$SCRIPT_PATH/Redist" >> $OUT_FILE
-chmod a+r $OUT_FILE
+echo "Install OpenNI2 to System Ok...."

@@ -42,12 +42,12 @@ CXX_MAIN_SUBDIRS = \
 	$(CORE) \
 	ThirdParty/PSCommon/XnLib/Source \
 	Source/DepthUtils \
-	Source/Drivers/Depth3D \
-	Source/Drivers/PS1080 \
-	Source/Drivers/PSLink \
-	Source/Drivers/OniFile \
-	Source/Drivers/PS1080/PS1080Console \
-	Source/Drivers/PSLink/PSLinkConsole
+	Source/Drivers/Depth3D
+#	Source/Drivers/PS1080 \
+#	Source/Drivers/PSLink \
+#	Source/Drivers/OniFile \
+#	Source/Drivers/PS1080/PS1080Console \
+#	Source/Drivers/PSLink/PSLinkConsole
 
 CXX_SAMPLES_SUBDIRS = \
 	Samples/SimpleRead \
@@ -148,13 +148,13 @@ $(CORE): $(XNLIB)
 Wrappers/java:                        Wrappers/java/jni
 Wrappers/java/jni:                    $(CORE)
 
-Source/Drivers/Depth3D:           		$(CORE)
-Source/Drivers/RawDevice:             $(CORE)
-Source/Drivers/PS1080:                $(CORE) $(DEPTH_UTILS)
-Source/Drivers/PS1080/PS1080Console:  $(CORE)
-Source/Drivers/PSLink:                $(CORE)
-Source/Drivers/PSLink/PSLinkConsole:  $(CORE)
-Source/Drivers/OniFile:               $(CORE)
+Source/Drivers/Depth3D:                $(CORE)
+#Source/Drivers/RawDevice:             $(CORE)
+#Source/Drivers/PS1080:                $(CORE) $(DEPTH_UTILS)
+#Source/Drivers/PS1080/PS1080Console:  $(CORE)
+#Source/Drivers/PSLink:                $(CORE)
+#Source/Drivers/PSLink/PSLinkConsole:  $(CORE)
+#Source/Drivers/OniFile:               $(CORE)
 
 Source/Tools/NiViewer:                $(CORE)
 

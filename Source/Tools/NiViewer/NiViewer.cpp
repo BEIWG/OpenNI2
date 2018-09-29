@@ -68,7 +68,7 @@
 #if (ONI_PLATFORM == ONI_PLATFORM_WIN32)
 	#include <conio.h>
 	#include <direct.h>	
-#elif (ONI_PLATFORM == ONI_PLATFORM_LINUX_X86 || ONI_PLATFORM == ONI_PLATFORM_LINUX_ARM || ONI_PLATFORM == ONI_PLATFORM_MACOSX)
+#elif (ONI_PLATFORM == ONI_PLATFORM_LINUX_X86 || ONI_PLATFORM == ONI_PLATFORM_LINUX_ARM || ONI_PLATFORM == ONI_PLATFORM_MACOSX || ONI_PLATFORM == ONI_PLATFORM_LINUX_AARCH64)
 	#define _getch() getchar()
 #endif
 
@@ -685,7 +685,7 @@ int main(int argc, char **argv)
 	glutInitDisplayString("stencil double rgb");
 	glutInitWindowSize(1280, 1024);
 	glutCreateWindow("OpenNI Viewer");
-	//glutFullScreen(); 
+	glutFullScreen();
 	glutSetCursor(GLUT_CURSOR_NONE);
 
 	init_opengl();

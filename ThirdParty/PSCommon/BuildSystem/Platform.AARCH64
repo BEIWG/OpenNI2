@@ -1,0 +1,17 @@
+ifeq "$(CFG)" "Release"
+
+    # Hardware specifying flags
+    #CFLAGS += -mcpu=cortex-a53   #-march=native -mtune=native
+    CFLAGS += -I/home/cyt/work/gcc/sysroot-glibc-linaro-2.23-2017.05-aarch64-linux-gnu/usr/include
+    
+    CFLAGS += -I/home/cyt/work/openni/OpenNI2/ThirdParty/PSCommon/XnLib/ThirdParty/libusb-1.0.22/libusb
+    
+    # Optimization level, minus currently buggy optimizing methods (which break bit-exact)
+    CFLAGS += -O3 -fno-tree-pre -fno-strict-aliasing
+
+    # More optimization flags
+    CFLAGS += -ftree-vectorize -ffast-math -funsafe-math-optimizations #-fsingle-precision-constant
+
+    #DEFINES += XN_NEON
+    CFLAGS += -flax-vector-conversions
+endif

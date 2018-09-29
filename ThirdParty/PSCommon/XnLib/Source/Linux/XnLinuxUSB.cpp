@@ -23,7 +23,7 @@
 //---------------------------------------------------------------------------
 #include <XnUSB.h>
 
-#if (XN_PLATFORM == XN_PLATFORM_ANDROID_ARM) || defined(XN_PLATFORM_MACOSX_XCODE) || defined(XN_PLATFORM_IOS)
+#if (XN_PLATFORM == XN_PLATFORM_ANDROID_ARM) || (XN_PLATFORM == XN_PLATFORM_LINUX_AARCH64) || defined(XN_PLATFORM_MACOSX_XCODE) || defined(XN_PLATFORM_IOS)
 #include <libusb.h>
 #else
 #include <libusb-1.0/libusb.h>
@@ -36,8 +36,8 @@
 #include <XnOSCpp.h>
 #include <XnList.h>
 
-#if (XN_PLATFORM == XN_PLATFORM_LINUX_X86 || XN_PLATFORM == XN_PLATFORM_LINUX_ARM)
-#include <libudev.h>
+#if (XN_PLATFORM == XN_PLATFORM_LINUX_X86 || XN_PLATFORM == XN_PLATFORM_LINUX_ARM || XN_PLATFORM == XN_PLATFORM_LINUX_AARCH64)
+#include </usr/include/libudev.h>
 #define XN_USE_UDEV
 #endif
 

@@ -1,0 +1,1 @@
+AARCH64_STAGING=/home/cyt/work/gcc/sysroot-glibc-linaro-2.23-2017.05-aarch64-linux-gnu  AARCH64_CXX=/home/cyt/work/gcc/linaro-aarch64-gcc/bin/aarch64-linux-gnu-g++ PLATFORM=AARCH64 make
