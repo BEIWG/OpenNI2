@@ -17,8 +17,8 @@ namespace depth3d {
 #define DEVICE_VENDOR		"beiwg"
 #define DEVICE_URI		"Depth3D"
 
-#define H_FOV			60.0
-#define V_FOV			70.0
+#define H_FOV			50.0
+#define V_FOV			40.0
 
 #define DEFAULT_FPS		30
 #define IMAGE_RESOLUTION_X	1024

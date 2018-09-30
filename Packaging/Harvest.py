@@ -102,15 +102,15 @@ class Harvest:
             targetDriversDir = targetDir
             self.copySharedObject(binDriversDir, 'usb', targetDriversDir)
 
-        self.copySharedObject(binDriversDir, 'OniFile', targetDriversDir)
-        self.copySharedObject(binDriversDir, 'PS1080', targetDriversDir)
-        self.copySharedObject(binDriversDir, 'PSLink', targetDriversDir)
+        #self.copySharedObject(binDriversDir, 'OniFile', targetDriversDir)
+        #self.copySharedObject(binDriversDir, 'PS1080', targetDriversDir)
+        #self.copySharedObject(binDriversDir, 'PSLink', targetDriversDir)
         self.copySharedObject(binDriversDir, 'Depth3D', targetDriversDir)
 
-        if self.osName != 'Android':
-            shutil.copy(os.path.join(self.rootDir, 'Config', 'OpenNI2', 'Drivers', 'PS1080.ini'), targetDriversDir)
-            shutil.copy(os.path.join(self.rootDir, 'Config', 'OpenNI2', 'Drivers', 'PSLink.ini'), targetDriversDir)
-            shutil.copy(os.path.join(self.rootDir, 'Config', 'OpenNI2', 'Drivers', 'OniFile.ini'), targetDriversDir)
+       # if self.osName != 'Android':
+            #shutil.copy(os.path.join(self.rootDir, 'Config', 'OpenNI2', 'Drivers', 'PS1080.ini'), targetDriversDir)
+            #shutil.copy(os.path.join(self.rootDir, 'Config', 'OpenNI2', 'Drivers', 'PSLink.ini'), targetDriversDir)
+            #shutil.copy(os.path.join(self.rootDir, 'Config', 'OpenNI2', 'Drivers', 'OniFile.ini'), targetDriversDir)
 
         if self.osName == 'Windows':
             #self.copySharedObject(binDriversDir, 'Kinect', targetDriversDir)
@@ -347,10 +347,10 @@ $(OUTPUT_FILE): copy-redist
 
     def copyAssets(self, targetDir):
         os.makedirs(targetDir)
-        shutil.copy(os.path.join(self.rootDir, 'Config', 'OpenNI.ini'), targetDir)
-        shutil.copy(os.path.join(self.rootDir, 'Config', 'OpenNI2', 'Drivers', 'PS1080.ini'), targetDir)
-        shutil.copy(os.path.join(self.rootDir, 'Config', 'OpenNI2', 'Drivers', 'PSLink.ini'), targetDir)
-        shutil.copy(os.path.join(self.rootDir, 'Config', 'OpenNI2', 'Drivers', 'OniFile.ini'), targetDir)
+        #shutil.copy(os.path.join(self.rootDir, 'Config', 'OpenNI.ini'), targetDir)
+        #shutil.copy(os.path.join(self.rootDir, 'Config', 'OpenNI2', 'Drivers', 'PS1080.ini'), targetDir)
+        #shutil.copy(os.path.join(self.rootDir, 'Config', 'OpenNI2', 'Drivers', 'PSLink.ini'), targetDir)
+        #shutil.copy(os.path.join(self.rootDir, 'Config', 'OpenNI2', 'Drivers', 'OniFile.ini'), targetDir)
         
     def createNativeMakefile(self, nativeDir, redistDir):
         nativeAndroidMk = open(os.path.join(nativeDir, 'Android.mk'), 'w')
@@ -417,8 +417,8 @@ $(OUTPUT_FILE): copy-redist
             self.copyRedistFiles(toolsDir)
             self.copyGLUT(toolsDir)
             self.copyTool(toolsDir, 'NiViewer', isGL = True)
-            self.copyTool(toolsDir, 'PS1080Console')
-            self.copyTool(toolsDir, 'PSLinkConsole')
+            #self.copyTool(toolsDir, 'PS1080Console')
+            #self.copyTool(toolsDir, 'PSLinkConsole')
         else:
             toolsSourceDir = os.path.join(self.rootDir, 'Source', 'Tools')
             toolsBinDir = os.path.join(toolsDir, 'Prebuilt')

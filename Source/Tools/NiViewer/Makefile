@@ -3,9 +3,10 @@ include ../../../ThirdParty/PSCommon/BuildSystem/CommonDefs.mak
 BIN_DIR = ../../../Bin
 
 INC_DIRS = \
+	/usr/include/ \
 	../../../Include \
-	../../../ThirdParty/PSCommon/XnLib/Include \
-	../../../ThirdParty/GL/
+	../../../ThirdParty/PSCommon/XnLib/Include 
+#	../../../ThirdParty/GL/
 
 SRC_FILES = \
 	Device.cpp  \

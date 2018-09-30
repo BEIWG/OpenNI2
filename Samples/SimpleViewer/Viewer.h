@@ -23,7 +23,7 @@
 
 #include <OpenNI.h>
 
-#define MAX_DEPTH 10000
+#define MAX_DEPTH 0xffff
 
 enum DisplayModes
 {
