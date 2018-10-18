@@ -28,21 +28,60 @@ T abs(T a, T b)
 		return (b - a);
 }
 
-int GetDepthDataFromStream(char* stream, char* depth)
+int GetColorFromStream(char* stream, char* color)
 {
+	int i;
+	long count = 0;
+	char *pcolor = color;
+	char *pstream = stream;
+	
+	if (!pstream || !pcolor) return -1;
+		
+	pstream += IMAGE_RESOLUTION_X*2;
+	for (i = 0; i < IMAGE_RESOLUTION_Y; i++)
+	{
+		xnOSMemCopy(pcolor, pstream, IMAGE_RESOLUTION_X*2);
+		pcolor += IMAGE_RESOLUTION_X*2;
+		pstream += IMAGE_RESOLUTION_X*4;
+	}
+	
 	return 0;
 }
 
-int GetColorDataFromStream(char* stream, char* depth)
+int GetDepthFromStream(char* stream, char* depth)
 {
+	int i;
+	char *pdpth = depth;
+	char *pstream = stream;
+	
+	if (!pstream || !pdpth) return -1;
+		
+	for (i = 0; i < IMAGE_RESOLUTION_Y; i++)
+	{
+		xnOSMemCopy(pdpth, pstream, IMAGE_RESOLUTION_X*2);
+		pstream += IMAGE_RESOLUTION_X*4;
+		pdpth += IMAGE_RESOLUTION_X*2;			
+	}
+	
 	return 0;
 }
 
-int GetIRDataFromStream(char* stream, char* depth)
+int GetIRFromStream(char* stream, char* IR)
 {
-	return 0;	
+	int i;
+	char *pIR = IR;
+	
+	if (!stream || !IR) return -1;
+		
+	for (i = 0; i < IMAGE_RESOLUTION_Y; i++)
+	{
+		xnOSMemCopy(pIR, stream, IMAGE_RESOLUTION_X);
+		stream += IMAGE_RESOLUTION_X;
+		pIR += IMAGE_RESOLUTION_X;			
+	}
+	
+	return 0;
 }
-
 
 void  DepthfilterSpeckles(uchar* img, int width, int height, int newVal, int maxSpeckleSize, int maxDiff)
 {

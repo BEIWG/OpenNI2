@@ -4,6 +4,9 @@
 #include "SensorStreamProcessor.h"
 
 using namespace depth3d;
+extern char *gStreamBuffer;
+extern bool gIRDataUpdate;
+extern bool bStreamIRRun;
 
 OzIRStream::OzIRStream()
 {
@@ -16,7 +19,9 @@ OzIRStream::OzIRStream()
 void OzIRStream::stop()
 {
 	printf("OzIRStream::stop()....\n");
+	bStreamIRRun = false;
 	m_running = false;
+	xnOSSleep(100);
 }
 
 OniStatus OzIRStream::SetVideoMode(OniVideoMode* videoMode) 
@@ -35,14 +40,31 @@ void OzIRStream::Mainloop()
 {
 
 	int frameId = 1;
-	XnStatus nRetVal = XN_STATUS_OK;             
-
+	XnStatus nRetVal = XN_STATUS_OK;
+	#ifdef _MSC_VER
+	DWORD  duration, delay;
+	DWORD start, finish; 
+	#endif
+	
+	bStreamIRRun = true;
 	while (m_running)
-	{
+	{	
+		while (!gIRDataUpdate) 
+		{
+			xnOSSleep(1);
+		}	
+
+		#ifdef _MSC_VER			
+		start = GetTickCount();
+		#endif
+				
 		OniFrame* pFrame = getServices().acquireFrame();
-
-		if (pFrame == NULL) {printf("Didn't get frame...\n"); continue;}
-
+		if (pFrame == NULL) 
+		{
+			printf("Didn't get frame...\n"); 
+			continue;
+		}
+	
 		// Fill metadata
 		XnUInt64 nTimestamp = 0;
 		nRetVal = xnOSGetHighResTimeStamp(&nTimestamp);
@@ -68,10 +90,24 @@ void OzIRStream::Mainloop()
 		pFrame->stride = m_videoMode.resolutionX*sizeof(OniGrayscale8Pixel);
 
 		// Fill fake data frame      
-		xnOSMemSet(pFrame->data, 0xc0, pFrame->dataSize);
-		raiseNewFrame(pFrame);
-      
-		getServices().releaseFrame(pFrame);
-		xnOSSleep(33);
+		if (gIRDataUpdate)
+		{	
+			gIRDataUpdate = false;
+			GetColorFromStream(gStreamBuffer, (char*)pFrame->data);	
+		    
+		    #ifdef _MSC_VER	    
+			finish = GetTickCount();
+			duration =1000/m_videoMode.fps;
+			if (duration > (finish - start))
+			{
+				delay = duration - (finish - start);
+				xnOSSleep(delay);
+			}
+			#endif
+			raiseNewFrame(pFrame);
+		}
+
+		getServices().releaseFrame(pFrame);		
 	}
 }
+

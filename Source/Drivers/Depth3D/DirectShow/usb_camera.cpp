@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "camerads.h"
 
-int camera_init(int width, int height)
+int camera_init(void)
 {
 	int connect_flag = -1;
 	CCameraDS m_CamDS;

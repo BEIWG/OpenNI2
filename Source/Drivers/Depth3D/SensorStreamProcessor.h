@@ -2,11 +2,9 @@
 #define __SENSOR_STREAM_PROCESS_
 #include "DefaultParameters.h"
 
-int GetDepthDataFromStream(char* stream, char* depth);
-
-int GetColorDataFromStream(char* stream, char* color);
-
-int GetIRDataFromStream(char* stream, char* ir);
+int GetDepthFromStream(char* stream, char* depth);
+int GetIRFromStream(char* stream, char* IR);
+int GetColorFromStream(char* stream, char* color);
 
 void  DepthfilterSpeckles(unsigned char* img, int width, int height, int newVal, int maxSpeckleSize, int maxDiff);
 #endif
