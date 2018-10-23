@@ -1,9 +1,12 @@
+//#include "opencv2/imgproc/imgproc.hpp"
+
 #ifdef _MSC_VER
 #include <windows.h>
 #else
 #include <sys/time.h>
 #endif
 
+#include "Bayer.h"
 #include "SensorStreamProcessor.h"
 
 typedef unsigned char uchar;
@@ -30,39 +33,77 @@ T abs(T a, T b)
 
 int GetColorFromStream(char* stream, char* color)
 {
-	int i;
+	int i, j;
 	long count = 0;
-	char *pcolor = color;
 	char *pstream = stream;
 	
-	if (!pstream || !pcolor) return -1;
+	if (!pstream || !color) return -1;
+	
+	char *tmp = (char*)malloc(IMAGE_RESOLUTION_X*IMAGE_RESOLUTION_Y*2);
+	if (!tmp)
+	{
+		printf("GetColorFromStream malloc1 failed!\n");
+		return -1;
+	}
+
+	char *bayer = (char*)malloc(IMAGE_RESOLUTION_X*IMAGE_RESOLUTION_Y);
+	if (!bayer)
+	{
+		free(tmp);
+		printf("GetColorFromStream malloc2 failed!\n");
+		return -1;
+	}
 		
+	char *ptmp = tmp;
 	pstream += IMAGE_RESOLUTION_X*2;
 	for (i = 0; i < IMAGE_RESOLUTION_Y; i++)
 	{
-		xnOSMemCopy(pcolor, pstream, IMAGE_RESOLUTION_X*2);
-		pcolor += IMAGE_RESOLUTION_X*2;
+		xnOSMemCopy(ptmp, pstream, IMAGE_RESOLUTION_X*2);
+		ptmp += IMAGE_RESOLUTION_X*2;
 		pstream += IMAGE_RESOLUTION_X*4;
 	}
-	
+
+	unsigned short *p = (unsigned short*)tmp;
+        char *pbayer = bayer;
+	for (i = 0; i < IMAGE_RESOLUTION_Y; i++)
+	{
+		for (j = 0; j < IMAGE_RESOLUTION_X; j++)
+		{
+			*pbayer++ = *p++ & 0xff;
+		}	
+	}
+
+        Bayer2RGB888((XnUInt8*)bayer, (XnUInt8*)color, IMAGE_RESOLUTION_X, IMAGE_RESOLUTION_Y, 1);
+
+	free(tmp);
+	free(bayer);
 	return 0;
 }
 
 int GetDepthFromStream(char* stream, char* depth)
 {
-	int i;
+	int i, j;
 	char *pdpth = depth;
 	char *pstream = stream;
 	
 	if (!pstream || !pdpth) return -1;
-		
+	
 	for (i = 0; i < IMAGE_RESOLUTION_Y; i++)
 	{
 		xnOSMemCopy(pdpth, pstream, IMAGE_RESOLUTION_X*2);
 		pstream += IMAGE_RESOLUTION_X*4;
 		pdpth += IMAGE_RESOLUTION_X*2;			
 	}
-	
+        
+        unsigned short *p = (unsigned short*)depth;
+        for (i = 0; i < IMAGE_RESOLUTION_Y; i++)
+        {
+            for (j = 0; j < IMAGE_RESOLUTION_X; j++)
+            {
+                *p++ >>= 3; 
+            }
+        }
+
 	return 0;
 }
 
@@ -72,7 +113,7 @@ int GetIRFromStream(char* stream, char* IR)
 	char *pIR = IR;
 	
 	if (!stream || !IR) return -1;
-		
+
 	for (i = 0; i < IMAGE_RESOLUTION_Y; i++)
 	{
 		xnOSMemCopy(pIR, stream, IMAGE_RESOLUTION_X);

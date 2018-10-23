@@ -1,0 +1,841 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <DirectoryRef Id="INSTALLLOCATION">
+            <Component Id="cmp5AAE32F252A69028C671E1047092E75D" Guid="*">
+                <File Id="fil80068C198D14216A8C1E079C263A521A" KeyPath="yes" Source="$(var.RedistDir)\CHANGES.txt" />
+            </Component>
+            <Component Id="cmp82A894F85400B01299B18256E9BE5C13" Guid="*">
+                <File Id="fil180FAFFE2C2659BF558C56659A153A3B" KeyPath="yes" Source="$(var.RedistDir)\LICENSE" />
+            </Component>
+            <Component Id="cmp8055B9FAD5F3AF7D5F8F5372296B4939" Guid="*">
+                <File Id="filC343397CB2028AB37728616F0E952C37" KeyPath="yes" Source="$(var.RedistDir)\NOTICE" />
+            </Component>
+            <Component Id="cmpB939B6F3A7B8A21F2BA0CCA42284AE97" Guid="*">
+                <File Id="fil0B27F3F5B8037D1B80C49C748AE3D8BB" KeyPath="yes" Source="$(var.RedistDir)\ReleaseNotes.txt" />
+            </Component>
+            <Directory Id="dir92B9ABBABF306D83F0D5E96961961C38" Name="Documentation">
+                <Component Id="cmp809CBC00191C0F151389825D881E3CEC" Guid="*">
+                    <File Id="fil525CCDBAD9C993DAED9AB7EC9A799C21" KeyPath="yes" Source="$(var.RedistDir)\Documentation\OpenNI.chm" />
+                </Component>
+                <Directory Id="dir7A19C6A435970EA11D31D9B049CB9D06" Name="java">
+                    <Component Id="cmp320E5F83203C6277B9CF2B271A96A0EE" Guid="*">
+                        <File Id="fil29E9EF4312FCC00EA8FC7A119C0ADBA3" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\allclasses-frame.html" />
+                    </Component>
+                    <Component Id="cmp1DF29CC756F104CDCA646AFA8729904C" Guid="*">
+                        <File Id="filAD5C268AD21700719C2C3A3D6E1EA453" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\allclasses-noframe.html" />
+                    </Component>
+                    <Component Id="cmpF107D546DD2E4180FDD5C03F43939556" Guid="*">
+                        <File Id="fil78A025B2EAA63A3BD0CE0238B96C1040" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\constant-values.html" />
+                    </Component>
+                    <Component Id="cmp8A2F184B6616923E40389FC560117E42" Guid="*">
+                        <File Id="filFCE143CD76F77C6D8F469B3506F18624" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\deprecated-list.html" />
+                    </Component>
+                    <Component Id="cmp1A462E8A02C58F51D041AAE920772CF4" Guid="*">
+                        <File Id="filFCBF112B984D3DDF2F85D5DC70AE5D66" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\help-doc.html" />
+                    </Component>
+                    <Component Id="cmp13B39D42EE67EE5F71DC104FC59D18D4" Guid="*">
+                        <File Id="fil527BD3D538042DFDB9C00567BDFE2009" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\index-all.html" />
+                    </Component>
+                    <Component Id="cmp97B21740EA5B836ECCE4EDC05551E638" Guid="*">
+                        <File Id="filD16ED8D5FF6EE7261D94F2B996B2EE0B" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\index.html" />
+                    </Component>
+                    <Component Id="cmp665012A15641322D6A3B0FEAFE3D9CAE" Guid="*">
+                        <File Id="fil51D0BF7F68BD49241B14A97008B89A80" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\overview-frame.html" />
+                    </Component>
+                    <Component Id="cmp061C56A35B95F33E6254C5C90B89F3F6" Guid="*">
+                        <File Id="fil619EEEBCD5595444EA30B02C52465227" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\overview-summary.html" />
+                    </Component>
+                    <Component Id="cmp15B9F2E54DA7BF25CFD73F7F0E9BC76C" Guid="*">
+                        <File Id="filF8CB71070BDDC17CE3C4D1345D74F542" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\overview-tree.html" />
+                    </Component>
+                    <Component Id="cmpB3A8D8BC95221507D65E5AC3BD86A2F2" Guid="*">
+                        <File Id="fil277AAE7B82FC01EF79D590A5281CBA9E" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\package-list" />
+                    </Component>
+                    <Component Id="cmp1D2D178028DAC96A17878128AFFBF7FB" Guid="*">
+                        <File Id="fil01AFF4CE8668639B59AD8DD33C341320" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\script.js" />
+                    </Component>
+                    <Component Id="cmpD392B05F2B0AD3A7E11FCC2B60A4E319" Guid="*">
+                        <File Id="filFDBD302E2C453E0409CA6066969EAAD6" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\stylesheet.css" />
+                    </Component>
+                    <Directory Id="dirADE5079E8C3FFB4D0A8BA51E01155656" Name="org">
+                        <Directory Id="dir93D45C5CFDBD79ECB975CE50CE43B2B3" Name="openni">
+                            <Component Id="cmp60B771527354BF9EF5FDD567355A22E0" Guid="*">
+                                <File Id="fil13834A588119505243325918A6DEC1B7" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\org\openni\CoordinateConverter.html" />
+                            </Component>
+                            <Component Id="cmpCE54417DC941543E38FC98A76D524A38" Guid="*">
+                                <File Id="filCF2F3469C81B46A37ECCBB17433420AA" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\org\openni\CropArea.html" />
+                            </Component>
+                            <Component Id="cmp53CCD46DA142B7E074D5B537547778BA" Guid="*">
+                                <File Id="fil40C5B8F0E9A2A049F92A8FE7BA22A8DC" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\org\openni\Device.html" />
+                            </Component>
+                            <Component Id="cmp735AE9201C19BC0EAE7BD6C14B2CE68B" Guid="*">
+                                <File Id="fil042F0B2B474F418ADAD5C2E4DA1B822F" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\org\openni\DeviceInfo.html" />
+                            </Component>
+                            <Component Id="cmp647373BFC0487139ED44D44FC1B6101F" Guid="*">
+                                <File Id="fil04236645CF43E5AF4488580B80D909D1" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\org\openni\ImageRegistrationMode.html" />
+                            </Component>
+                            <Component Id="cmp539A930765A28A418B0D3656D1CCA5DA" Guid="*">
+                                <File Id="fil00F86F02E30CAFD72C3C7941B7ABB5C4" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\org\openni\OpenNI.DeviceConnectedListener.html" />
+                            </Component>
+                            <Component Id="cmpC1E7BACAF20E70588460D73A34C8F65C" Guid="*">
+                                <File Id="fil2B18F52B27ED03A08A1EDD7FC43C6011" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\org\openni\OpenNI.DeviceDisconnectedListener.html" />
+                            </Component>
+                            <Component Id="cmp571164C8013F5D588AEBA511540F2BB0" Guid="*">
+                                <File Id="filB56EB8545D0FF994EA1B5947B25F7B2D" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\org\openni\OpenNI.DeviceStateChangedListener.html" />
+                            </Component>
+                            <Component Id="cmp6910322ACBC1EBB6FED06159EB76BFA7" Guid="*">
+                                <File Id="filFF67DCD52699EF038C193495CF987ED9" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\org\openni\OpenNI.html" />
+                            </Component>
+                            <Component Id="cmp8CD523FE5C8CDEC1E80C252A41FB6824" Guid="*">
+                                <File Id="fil106B8FCE2E025E52889DC9BFC108C611" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\org\openni\package-frame.html" />
+                            </Component>
+                            <Component Id="cmp0E69B661E288A4FF75AA795B9349A91C" Guid="*">
+                                <File Id="fil31BF49FBD3DDAE3E23BD43B2D7226AF7" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\org\openni\package-summary.html" />
+                            </Component>
+                            <Component Id="cmp1E7CD40380F405299D7A90F178400BBD" Guid="*">
+                                <File Id="filD07BB05CBF57C0E57EDA571C814A3D37" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\org\openni\package-tree.html" />
+                            </Component>
+                            <Component Id="cmpBB90645391076A51F8BCAD9FA129547E" Guid="*">
+                                <File Id="fil0E2008648D53D90A2FC5BEB86D700860" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\org\openni\PixelFormat.html" />
+                            </Component>
+                            <Component Id="cmpF891C1F74978D481ED275E2CDA6D35CD" Guid="*">
+                                <File Id="filA925DE135B58A031E9039810414736DD" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\org\openni\PlaybackControl.html" />
+                            </Component>
+                            <Component Id="cmp20A6A7FA3216DA9C2B673DB3DA3DC788" Guid="*">
+                                <File Id="fil0CA34741BFF24F48430855550A3E26B3" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\org\openni\Point2D.html" />
+                            </Component>
+                            <Component Id="cmpB8B2718C355889A468D1EC428F203D5C" Guid="*">
+                                <File Id="fil80273AB1A734DA455B84C8B34BBAF8FD" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\org\openni\Point3D.html" />
+                            </Component>
+                            <Component Id="cmp9FD6390A4A2C3E6BC51F6EC594980F42" Guid="*">
+                                <File Id="fil4C1AEE78099D791D7118906DB9819A7D" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\org\openni\Recorder.html" />
+                            </Component>
+                            <Component Id="cmpAEE45B42C644CF302BDD64860F140C4C" Guid="*">
+                                <File Id="fil1B6DD602AC5B94309C3BA741FA827979" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\org\openni\SensorInfo.html" />
+                            </Component>
+                            <Component Id="cmp234E2726FD60B44347D4097DBE5CC85F" Guid="*">
+                                <File Id="filDF2AE9D96E5A8270B8442AA7E846C048" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\org\openni\SensorType.html" />
+                            </Component>
+                            <Component Id="cmp6167139DC211E364F78D1B90D35E5A44" Guid="*">
+                                <File Id="fil439D3F64E611C479CF3D79F7E3D34FF2" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\org\openni\Version.html" />
+                            </Component>
+                            <Component Id="cmpC8B2F8103AA146FFF904C7410E137646" Guid="*">
+                                <File Id="fil560A32B5976B042745FE82E1B77FAC93" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\org\openni\VideoFrameRef.html" />
+                            </Component>
+                            <Component Id="cmp1F797A284A6B8A7B5CBBECB790DC1FD5" Guid="*">
+                                <File Id="fil760E5110B86E886628772650F4FFE7A0" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\org\openni\VideoMode.html" />
+                            </Component>
+                            <Component Id="cmp354D37B3910426A6A4BC43F172D15B6D" Guid="*">
+                                <File Id="fil3D1077AE52EF5D6FFB845EB3F2A4372F" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\org\openni\VideoStream.CameraSettings.html" />
+                            </Component>
+                            <Component Id="cmp26B2F9D9941353DB0F53C6B89E7D3BBE" Guid="*">
+                                <File Id="filE75D6F971946A325D0641053BEC08EAF" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\org\openni\VideoStream.html" />
+                            </Component>
+                            <Component Id="cmpE7453DB062DACA16F758C78495CF2BEC" Guid="*">
+                                <File Id="filA8E93A355519CF59704E555DE1856435" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\org\openni\VideoStream.NewFrameListener.html" />
+                            </Component>
+                            <Directory Id="dir258EAD816E517C6DBD85960CFAA67F5E" Name="android">
+                                <Component Id="cmp89FE2366B9032632F5C0C0480A085051" Guid="*">
+                                    <File Id="fil08FC7B26546E96F5C470D72D216B8690" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\org\openni\android\OpenNIHelper.DeviceOpenListener.html" />
+                                </Component>
+                                <Component Id="cmp4180DF0B16AC361B5C166DA22AD24172" Guid="*">
+                                    <File Id="fil29F4FCBB55CB37D2B4237C8D58B5E96F" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\org\openni\android\OpenNIHelper.html" />
+                                </Component>
+                                <Component Id="cmp54063BFB403CBAA9A89BF8AC24FB692F" Guid="*">
+                                    <File Id="fil1D3D2E11877F79E11C7700771305977B" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\org\openni\android\OpenNIView.html" />
+                                </Component>
+                                <Component Id="cmpDB419007F963BDB0357EB48CB6743FCD" Guid="*">
+                                    <File Id="filC519654CB85264F9B300AB8A9B00F409" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\org\openni\android\package-frame.html" />
+                                </Component>
+                                <Component Id="cmp76FE4426ED886B6EF4162A6162423A22" Guid="*">
+                                    <File Id="fil8529C4352332084774F0AA6A59A3C3F9" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\org\openni\android\package-summary.html" />
+                                </Component>
+                                <Component Id="cmp5E0B17247DB551FCA1A5481F4C7DCCB4" Guid="*">
+                                    <File Id="filD798106BE54525606538BBD6CCCDDE52" KeyPath="yes" Source="$(var.RedistDir)\Documentation\java\org\openni\android\package-tree.html" />
+                                </Component>
+                            </Directory>
+                        </Directory>
+                    </Directory>
+                </Directory>
+            </Directory>
+            <Directory Id="dir80E123015D0DE85FDA6E8AE3782EF58C" Name="Driver">
+                <Component Id="cmpCAA1FAF214C86FA1899E1E90458C2299" Guid="*">
+                    <File Id="fil5E7F1D7524A6D9945C6F32A897ACAB2E" KeyPath="yes" Source="$(var.RedistDir)\Driver\dpinst-amd64.exe" />
+                </Component>
+                <Component Id="cmpA9CB01745AF66B6E14433425954BE725" Guid="*">
+                    <File Id="fil93A2B26732B731AD14F14A35992DA281" KeyPath="yes" Source="$(var.RedistDir)\Driver\dpinst-x86.exe" />
+                </Component>
+                <Component Id="cmp11273A4339C86516370EFF0C07EC49C8" Guid="*">
+                    <File Id="fil7AB62A2C3A9E0C1EF8875CE84BAAAEB5" KeyPath="yes" Source="$(var.RedistDir)\Driver\dpinst.xml" />
+                </Component>
+                <Component Id="cmp9B45967B5014E2F11806A96B6DEFDD3D" Guid="*">
+                    <File Id="filCCDC4FCEC0114768FE35A6C4393C6D45" KeyPath="yes" Source="$(var.RedistDir)\Driver\psdrv3.cat" />
+                </Component>
+                <Component Id="cmp188E6D2D7FA189F17C7907C635D2211F" Guid="*">
+                    <File Id="fil5CB44F6FBA0EA0B70742E4BAB3E6D05C" KeyPath="yes" Source="$(var.RedistDir)\Driver\psdrv3.ico" />
+                </Component>
+                <Component Id="cmp84974347AA3ADF00BAC600F41571FD54" Guid="*">
+                    <File Id="filE8A8D41F10867D9F61C756F08D2EF120" KeyPath="yes" Source="$(var.RedistDir)\Driver\psdrv3.inf" />
+                </Component>
+                <Directory Id="dirA9723C179E8A0552262F479646DEE5FD" Name="amd64">
+                    <Component Id="cmpA1ED919EAE75E805F0748892AB997354" Guid="*">
+                        <File Id="fil8640AA549985C0CA97E1122B8462C1E6" KeyPath="yes" Source="$(var.RedistDir)\Driver\amd64\psdrv3.sys" />
+                    </Component>
+                    <Component Id="cmpEA561852FEC263C62CE1A2EDA07D83E0" Guid="*">
+                        <File Id="fil675979718A167BEDEBEBD10BAD7EEEFF" KeyPath="yes" Source="$(var.RedistDir)\Driver\amd64\WdfCoInstaller01009.dll" />
+                    </Component>
+                </Directory>
+                <Directory Id="dir031BC9D00AF68A07CB4CD6F1F4152B0B" Name="x86">
+                    <Component Id="cmpFF853DD7E979E3092E7E380171803075" Guid="*">
+                        <File Id="fil0E977B72965B071387B3801543E39853" KeyPath="yes" Source="$(var.RedistDir)\Driver\x86\psdrv3.sys" />
+                    </Component>
+                    <Component Id="cmp9E610F547D7354E0834B9213E03C35CB" Guid="*">
+                        <File Id="fil59B75A5F2F9D7F5EA55D94D0290D103B" KeyPath="yes" Source="$(var.RedistDir)\Driver\x86\WdfCoInstaller01009.dll" />
+                    </Component>
+                </Directory>
+            </Directory>
+            <Directory Id="dir0FA7A3FD83B52B0F5BB081A76F3B00A6" Name="Include">
+                <Component Id="cmp4AA04B2434B1A713B1376577EE208A0A" Guid="*">
+                    <File Id="fil9D520ED59465DA83BFA6A66FF2D2610F" KeyPath="yes" Source="$(var.RedistDir)\Include\KinectProperties.h" />
+                </Component>
+                <Component Id="cmp995009CAD0BD9E9D820E4B54BE9D968B" Guid="*">
+                    <File Id="fil0E5A8C803F25FA188EDFC013CD66E0AB" KeyPath="yes" Source="$(var.RedistDir)\Include\OniCAPI.h" />
+                </Component>
+                <Component Id="cmp809D58F226DC472A6D5172615E214834" Guid="*">
+                    <File Id="fil2DCB237D44269CFA8FAB32ACD7A2F104" KeyPath="yes" Source="$(var.RedistDir)\Include\OniCEnums.h" />
+                </Component>
+                <Component Id="cmp6C3AB55B2556C962473ABCE8AE2CE018" Guid="*">
+                    <File Id="fil191736151FD4666882C19D979EE149DF" KeyPath="yes" Source="$(var.RedistDir)\Include\OniCProperties.h" />
+                </Component>
+                <Component Id="cmpF557BB8467C5A58B5264C8B057E4AE56" Guid="*">
+                    <File Id="fil9BF448C3838E3564B97A3E66963147C5" KeyPath="yes" Source="$(var.RedistDir)\Include\OniCTypes.h" />
+                </Component>
+                <Component Id="cmp60E105C2E5F17DBD82EB9C39755420DE" Guid="*">
+                    <File Id="fil4BFFE3187016EF4B988E5DB702CBF7A3" KeyPath="yes" Source="$(var.RedistDir)\Include\OniEnums.h" />
+                </Component>
+                <Component Id="cmpE73D656465B3B581EFBF44D594B0AE8F" Guid="*">
+                    <File Id="filFC0D583F3C2C32A1A2A67E88E343E7DD" KeyPath="yes" Source="$(var.RedistDir)\Include\OniPlatform.h" />
+                </Component>
+                <Component Id="cmpEFBFE93AE2D20EF11121D947393B073F" Guid="*">
+                    <File Id="fil9C3F4CFA281E6A7930F40D3E0A020D84" KeyPath="yes" Source="$(var.RedistDir)\Include\OniProperties.h" />
+                </Component>
+                <Component Id="cmp581D45E26962C497D0A26F0C5D41653A" Guid="*">
+                    <File Id="filED1BA7E6C15CFF4D289D266E0BDCB561" KeyPath="yes" Source="$(var.RedistDir)\Include\OniTest.h" />
+                </Component>
+                <Component Id="cmp9FBCBD261348B5B713BF67D3BD435D0D" Guid="*">
+                    <File Id="fil1195F3C341334910C6C05A6941A26ADB" KeyPath="yes" Source="$(var.RedistDir)\Include\OniVersion.h" />
+                </Component>
+                <Component Id="cmp24BC2FEA8448A3EAAAA05187CE3A9FD5" Guid="*">
+                    <File Id="fil878E0324F7BE9F0DEF6FEAF562708550" KeyPath="yes" Source="$(var.RedistDir)\Include\OpenNI.h" />
+                </Component>
+                <Component Id="cmp40016553D71644D0887CE5E2099ABD4F" Guid="*">
+                    <File Id="fil51BEBD2C02FE5D8D0F762245CE8AF99D" KeyPath="yes" Source="$(var.RedistDir)\Include\PrimeSense.h" />
+                </Component>
+                <Component Id="cmp937CACEDD26F88025099DA550F773A4E" Guid="*">
+                    <File Id="fil47F28FF948359A5B446BA969269592FE" KeyPath="yes" Source="$(var.RedistDir)\Include\PS1080.h" />
+                </Component>
+                <Component Id="cmp8BBF35F9F6A8A82D25973A12C07710B3" Guid="*">
+                    <File Id="filDAAE221CD52E4E181FBAA209F6C5E4EE" KeyPath="yes" Source="$(var.RedistDir)\Include\PSLink.h" />
+                </Component>
+                <Directory Id="dirD9E72824D31D4BEF94485478C939433A" Name="Android-Arm">
+                    <Component Id="cmp6863CF9A486FB5D6223EE95395448E4A" Guid="*">
+                        <File Id="fil17A69938D6D8A3EDE0F955DD927F5114" KeyPath="yes" Source="$(var.RedistDir)\Include\Android-Arm\OniPlatformAndroid-Arm.h" />
+                    </Component>
+                </Directory>
+                <Directory Id="dir99D4ED3A3DD2865D6D38E3B05E0A198F" Name="Driver">
+                    <Component Id="cmpD90F416F23C45AC81DABE45708CF3348" Guid="*">
+                        <File Id="filC6B82DA3497747F8C6488492D02EAA9C" KeyPath="yes" Source="$(var.RedistDir)\Include\Driver\OniDriverAPI.h" />
+                    </Component>
+                    <Component Id="cmpC818C4AD7A9B9BE36CFF0E7D6459B1BB" Guid="*">
+                        <File Id="fil27747927D82026A98DFB58FA46B18934" KeyPath="yes" Source="$(var.RedistDir)\Include\Driver\OniDriverTypes.h" />
+                    </Component>
+                </Directory>
+                <Directory Id="dir5256CA75B295D4711D0159AB1F83E390" Name="Linux-Arm">
+                    <Component Id="cmpCA87942273F86238115388BF3B086EAA" Guid="*">
+                        <File Id="fil8CE68D9EBC494DCC3B389CE1F480B3D0" KeyPath="yes" Source="$(var.RedistDir)\Include\Linux-Arm\OniPlatformLinux-Arm.h" />
+                    </Component>
+                </Directory>
+                <Directory Id="dir85AA8A4E9468DC0725A43A0FBD814ACE" Name="Linux-x86">
+                    <Component Id="cmp8D2A35410BFA077719013973DCC3349C" Guid="*">
+                        <File Id="filC7805C2FE7A53930F220A9931A560993" KeyPath="yes" Source="$(var.RedistDir)\Include\Linux-x86\OniPlatformLinux-x86.h" />
+                    </Component>
+                </Directory>
+                <Directory Id="dir7E42AEAA822EF4180FF172508C28EA4F" Name="MacOSX">
+                    <Component Id="cmpC0BDBE9B276BA41064163FCAA4F14094" Guid="*">
+                        <File Id="filCFB8FD3BA18DC8F981F2FCE2C845787B" KeyPath="yes" Source="$(var.RedistDir)\Include\MacOSX\OniPlatformMacOSX.h" />
+                    </Component>
+                </Directory>
+                <Directory Id="dirC5D252C6BFC7DE5780CDDC7760C8CBF6" Name="Win32">
+                    <Component Id="cmpD2088D2E77A58BF7FCB45E8724C2B280" Guid="*">
+                        <File Id="fil83C054B81CB84A194E43DEA21CCB9C79" KeyPath="yes" Source="$(var.RedistDir)\Include\Win32\OniPlatformWin32.h" />
+                    </Component>
+                </Directory>
+            </Directory>
+            <Directory Id="dir810DCA2B64B7D17DA7C08E7B0FC303C5" Name="Lib">
+                <Component Id="cmp5C1D0776B6D63F17DB5637FE8ED768DF" Guid="*">
+                    <File Id="fil3BF6A2528B144FE24C694053B661B778" KeyPath="yes" Source="$(var.RedistDir)\Lib\OpenNI2.lib" />
+                </Component>
+            </Directory>
+            <Directory Id="dir68E2E664CCB5E15F09CC79D04B6A581C" Name="Redist">
+                <Component Id="cmp6558214637271FDC861DA9C2B8FC9B21" Guid="*">
+                    <File Id="fil0B08EF4BC7FAEEDBE3C36F6A3256B86E" KeyPath="yes" Source="$(var.RedistDir)\Redist\OpenNI.ini" />
+                </Component>
+                <Component Id="cmpACB89EA1E79A3C3D3C26EE0DE097F850" Guid="*">
+                    <File Id="filA985FBB5725ECCEAEED153DCD119B504" KeyPath="yes" Source="$(var.RedistDir)\Redist\OpenNI2.dll" />
+                </Component>
+                <Component Id="cmp4A9DBED873D8681ADC6A3E84F4CF5FAD" Guid="*">
+                    <File Id="fil2F39BA74C82BE3DE4913C6A4B5BA8559" KeyPath="yes" Source="$(var.RedistDir)\Redist\OpenNI2.jni.dll" />
+                </Component>
+                <Component Id="cmp6E43B45FF4684FAEC4B05676D183406A" Guid="*">
+                    <File Id="fil324C1BDF7BD36F896F5AA5192B788675" KeyPath="yes" Source="$(var.RedistDir)\Redist\OpenNI2.jni.pdb" />
+                </Component>
+                <Component Id="cmpD648AC6401161276A2AC6D7D0E521C39" Guid="*">
+                    <File Id="filBA4EE4C1CF24DA2E8D8AA318086C7FAA" KeyPath="yes" Source="$(var.RedistDir)\Redist\OpenNI2.pdb" />
+                </Component>
+                <Component Id="cmpB5AC3620B1ECA19D145209C72024BD9F" Guid="*">
+                    <File Id="filD73742E83134337A7EB0D091EE8327CC" KeyPath="yes" Source="$(var.RedistDir)\Redist\org.openni.jar" />
+                </Component>
+                <Directory Id="dirF82CF335A969DF90A90C03FAC0DDA730" Name="OpenNI2">
+                    <Directory Id="dir5B4E3FEC01A55427BC736FC345BB1F56" Name="Drivers">
+                        <Component Id="cmpE5C36E9DB879A2BF9A67CC00ADAFD09C" Guid="*">
+                            <File Id="filFE3165867D16028D55233C99FA908F2F" KeyPath="yes" Source="$(var.RedistDir)\Redist\OpenNI2\Drivers\Depth3D.dll" />
+                        </Component>
+                        <Component Id="cmp997BA67BA26C1CF587A648A807A51484" Guid="*">
+                            <File Id="fil91D1A2DE4FDC09E3C5B397F1085B213A" KeyPath="yes" Source="$(var.RedistDir)\Redist\OpenNI2\Drivers\Depth3D.pdb" />
+                        </Component>
+                    </Directory>
+                </Directory>
+            </Directory>
+            <Directory Id="dirD3AC54E6C4EE00C595A963A6D025CB1B" Name="Samples">
+                <Directory Id="dir6E2BD24A096474EFCEC958BD722BA39A" Name="Bin">
+                    <Component Id="cmp998DC1851DFB2C8499CA4964D4F1111D" Guid="*">
+                        <File Id="fil00902A0287126473684863C57E98B8D5" KeyPath="yes" Source="$(var.RedistDir)\Samples\Bin\ClosestPointViewer.exe" />
+                    </Component>
+                    <Component Id="cmp7DE8E46582CF2C3BB91C4A92AD3D250B" Guid="*">
+                        <File Id="fil9F9828E23B8C80AB759BB959E1BB7258" KeyPath="yes" Source="$(var.RedistDir)\Samples\Bin\ClosestPointViewer.pdb" />
+                    </Component>
+                    <Component Id="cmp5FD7371B38F9DEE8B465C87137101CD2" Guid="*">
+                        <File Id="filEACE9E4DCA4CC11B06DED2144D0FA494" KeyPath="yes" Source="$(var.RedistDir)\Samples\Bin\EventBasedRead.exe" />
+                    </Component>
+                    <Component Id="cmp6B7D3EDEB0C1702317054520D3BC35B1" Guid="*">
+                        <File Id="fil77AB92FF8BF79742BF039465E5DF8CEE" KeyPath="yes" Source="$(var.RedistDir)\Samples\Bin\EventBasedRead.pdb" />
+                    </Component>
+                    <Component Id="cmp37EF895B74F20BA725F6B430306F6C75" Guid="*">
+                        <File Id="fil75317CE3D743CDC9CFA5E0E17C688200" KeyPath="yes" Source="$(var.RedistDir)\Samples\Bin\glut64.dll" />
+                    </Component>
+                    <Component Id="cmpFE2F6B77695AC917245D631116C12665" Guid="*">
+                        <File Id="filF2CFD9E0199A136F49024BF88BBB20D2" KeyPath="yes" Source="$(var.RedistDir)\Samples\Bin\MultiDepthViewer.exe" />
+                    </Component>
+                    <Component Id="cmp4B8029D11A842DC55A1EE822B8F77B29" Guid="*">
+                        <File Id="fil4C1A5C3721BFEF17EE5A20A63FA8A706" KeyPath="yes" Source="$(var.RedistDir)\Samples\Bin\MultiDepthViewer.pdb" />
+                    </Component>
+                    <Component Id="cmp2E5F36A26ED68E7463269EEBB90B735C" Guid="*">
+                        <File Id="filED47FA54526CCCE9197781386C964726" KeyPath="yes" Source="$(var.RedistDir)\Samples\Bin\MultipleStreamRead.exe" />
+                    </Component>
+                    <Component Id="cmpB7494469870D17647C966D8EE9369EA6" Guid="*">
+                        <File Id="filB527BED969CCF368E0A8087BF2A6B355" KeyPath="yes" Source="$(var.RedistDir)\Samples\Bin\MultipleStreamRead.pdb" />
+                    </Component>
+                    <Component Id="cmp77BFF49AF8D4C80B0FFF165AA52D48A7" Guid="*">
+                        <File Id="filEF7EA912A4AFE39F313A9FA68CF3C05F" KeyPath="yes" Source="$(var.RedistDir)\Samples\Bin\MWClosestPoint.dll" />
+                    </Component>
+                    <Component Id="cmpF86D3C8A3192453A6132E05F4B723C4A" Guid="*">
+                        <File Id="fil8F9CCA71AEE46D5E002B310C0A21AB75" KeyPath="yes" Source="$(var.RedistDir)\Samples\Bin\MWClosestPoint.lib" />
+                    </Component>
+                    <Component Id="cmp5B7957E7D628B9083024D892BC7FD615" Guid="*">
+                        <File Id="fil5A519FD4CD1A86A6E634D9DF26AA2D44" KeyPath="yes" Source="$(var.RedistDir)\Samples\Bin\MWClosestPoint.pdb" />
+                    </Component>
+                    <Component Id="cmpB472187C539544115BDF37036295ED74" Guid="*">
+                        <File Id="fil7B572754C385824EEC63389A9A966E6B" KeyPath="yes" Source="$(var.RedistDir)\Samples\Bin\MWClosestPointApp.exe" />
+                    </Component>
+                    <Component Id="cmpBBCDCB7730D0C4A57B3B4C2BBF634443" Guid="*">
+                        <File Id="filD32CFF573043BD52EA2F52ABB88D7AE8" KeyPath="yes" Source="$(var.RedistDir)\Samples\Bin\MWClosestPointApp.pdb" />
+                    </Component>
+                    <Component Id="cmp148EF7E0FDCD3610AFA9BCD1B550DA88" Guid="*">
+                        <File Id="filA63D465FB5A91DA40DDAB4DBE280216A" KeyPath="yes" Source="$(var.RedistDir)\Samples\Bin\OpenNI.ini" />
+                    </Component>
+                    <Component Id="cmp60AE858C1140D340BB1372FF564648E9" Guid="*">
+                        <File Id="fil597035EF20D19A66087EA962685012E3" KeyPath="yes" Source="$(var.RedistDir)\Samples\Bin\OpenNI2.dll" />
+                    </Component>
+                    <Component Id="cmp309A93E8CDFE31294313DD5E871ABAAA" Guid="*">
+                        <File Id="fil287B4D1EC6AAF00A1645C7059BBF732E" KeyPath="yes" Source="$(var.RedistDir)\Samples\Bin\OpenNI2.jni.dll" />
+                    </Component>
+                    <Component Id="cmp7B53ABD8868D56FD7FC5A21DADA5F3C0" Guid="*">
+                        <File Id="fil587E1DA4C2D3D6B8E0F3876AC709385B" KeyPath="yes" Source="$(var.RedistDir)\Samples\Bin\OpenNI2.jni.pdb" />
+                    </Component>
+                    <Component Id="cmp6CB859B905F476D2C644C1A040F2FF70" Guid="*">
+                        <File Id="fil1942FFFFB04F08E3753ADE0215AC2310" KeyPath="yes" Source="$(var.RedistDir)\Samples\Bin\OpenNI2.pdb" />
+                    </Component>
+                    <Component Id="cmp58D16AF5BEE22DE87176DA965952B6E1" Guid="*">
+                        <File Id="fil12E683FA2ED3C03DE5B6FDA8C0A0516B" KeyPath="yes" Source="$(var.RedistDir)\Samples\Bin\org.openni.jar" />
+                    </Component>
+                    <Component Id="cmpF330266D7B42255C979CB43363FC6A72" Guid="*">
+                        <File Id="fil3C3E9829443E626C5A8F6CCD4DA83C48" KeyPath="yes" Source="$(var.RedistDir)\Samples\Bin\org.openni.Samples.SimpleViewer.bat" />
+                    </Component>
+                    <Component Id="cmpD24FB3A0FBCF364B3B9966FA5B946853" Guid="*">
+                        <File Id="fil6EA9D459801AFB0F76A232D4143D0DD2" KeyPath="yes" Source="$(var.RedistDir)\Samples\Bin\org.openni.Samples.SimpleViewer.jar" />
+                    </Component>
+                    <Component Id="cmpA4DF95E7EE98816ED5CFD8B50F599F09" Guid="*">
+                        <File Id="fil790C4ECE5A3706D937DE3A22528EE88D" KeyPath="yes" Source="$(var.RedistDir)\Samples\Bin\SimpleRead.exe" />
+                    </Component>
+                    <Component Id="cmp161B9CF8AE197FCA0005A713B468B5ED" Guid="*">
+                        <File Id="fil6EFEC7993644A7C59605321E017100B7" KeyPath="yes" Source="$(var.RedistDir)\Samples\Bin\SimpleRead.pdb" />
+                    </Component>
+                    <Component Id="cmpC78E9A7833A1A5B2809E25F70A86F517" Guid="*">
+                        <File Id="filCD3C3F35E4057F6B06F4254D7A343987" KeyPath="yes" Source="$(var.RedistDir)\Samples\Bin\SimpleViewer.exe" />
+                    </Component>
+                    <Component Id="cmp15A1154ABD1E4B00365E8CFC92A488F0" Guid="*">
+                        <File Id="fil36A2EF198373B699A94D5C1F70640190" KeyPath="yes" Source="$(var.RedistDir)\Samples\Bin\SimpleViewer.pdb" />
+                    </Component>
+                    <Directory Id="dirA824E167006A65691781A1E80E0D1BCF" Name="OpenNI2">
+                        <Directory Id="dir7CAFBF8FBB98087F63DEF9189760D633" Name="Drivers">
+                            <Component Id="cmp2B1EEDF8022263963295176192891464" Guid="*">
+                                <File Id="fil44A82ECABA47FE14004D90E110B2B6B5" KeyPath="yes" Source="$(var.RedistDir)\Samples\Bin\OpenNI2\Drivers\Depth3D.dll" />
+                            </Component>
+                            <Component Id="cmp7A6955317830E50C359B6294730CDDD5" Guid="*">
+                                <File Id="filE6DF32BE240841ED731AEF1E6562CEFF" KeyPath="yes" Source="$(var.RedistDir)\Samples\Bin\OpenNI2\Drivers\Depth3D.pdb" />
+                            </Component>
+                        </Directory>
+                    </Directory>
+                </Directory>
+                <Directory Id="dir1EE6957D4743058A87C455355E568D39" Name="ClosestPointViewer">
+                    <Component Id="cmpDB5070B453403894797C445D20A7AA14" Guid="*">
+                        <File Id="filF03B79CA451A8F5C3D21832DD450B7B3" KeyPath="yes" Source="$(var.RedistDir)\Samples\ClosestPointViewer\ClosestPointViewer.vcxproj" />
+                    </Component>
+                    <Component Id="cmpC78DFD1604115C0486E0B2D4EC6DC454" Guid="*">
+                        <File Id="fil1BD14F12D362919415A99F644715E8FA" KeyPath="yes" Source="$(var.RedistDir)\Samples\ClosestPointViewer\glut32.dll" />
+                    </Component>
+                    <Component Id="cmp98EE44697E857AA172D138D475DB99F8" Guid="*">
+                        <File Id="filE8D4C5F311AE2FFB50D9C400D19831FE" KeyPath="yes" Source="$(var.RedistDir)\Samples\ClosestPointViewer\glut32.lib" />
+                    </Component>
+                    <Component Id="cmp7D6B5D93427A39C2D03DB9916DADCEB7" Guid="*">
+                        <File Id="fil91772FAB4F12E45554767714DF421D0D" KeyPath="yes" Source="$(var.RedistDir)\Samples\ClosestPointViewer\glut64.dll" />
+                    </Component>
+                    <Component Id="cmp4D961649486FA6E68D4C9A251CD63CBE" Guid="*">
+                        <File Id="filE187DE56328D950E522944F2EC6C930F" KeyPath="yes" Source="$(var.RedistDir)\Samples\ClosestPointViewer\glut64.lib" />
+                    </Component>
+                    <Component Id="cmpEC2ED2310895823D03CE9F4845DD0133" Guid="*">
+                        <File Id="filA388EF5A14F537E6B4D123A2546FF4BE" KeyPath="yes" Source="$(var.RedistDir)\Samples\ClosestPointViewer\main.cpp" />
+                    </Component>
+                    <Component Id="cmpD0F3DA2D3DB480EEDEC0C39044549E72" Guid="*">
+                        <File Id="fil2CEE902451C72F0F42AB4960DBD539E6" KeyPath="yes" Source="$(var.RedistDir)\Samples\ClosestPointViewer\OniSampleUtilities.h" />
+                    </Component>
+                    <Component Id="cmpF53B2915F2380291E1DB36FD6C8D9026" Guid="*">
+                        <File Id="filCAA5F97D794063E31D10AC0431DA11F1" KeyPath="yes" Source="$(var.RedistDir)\Samples\ClosestPointViewer\Viewer.cpp" />
+                    </Component>
+                    <Component Id="cmpA363427AA3143E81A6F6F67544264350" Guid="*">
+                        <File Id="filC384E08809DFB005DF7FE3ED23F064D1" KeyPath="yes" Source="$(var.RedistDir)\Samples\ClosestPointViewer\Viewer.h" />
+                    </Component>
+                    <Directory Id="dirF1266A8B087730398ACC69BD9529344D" Name="GL">
+                        <Component Id="cmp9B938AA0BD3CF1351D6589684E721165" Guid="*">
+                            <File Id="fil382BC82D570CC08436D2624FD74A9D2B" KeyPath="yes" Source="$(var.RedistDir)\Samples\ClosestPointViewer\GL\gl.h" />
+                        </Component>
+                        <Component Id="cmpEE901057B905CDD062F506B8303B11B0" Guid="*">
+                            <File Id="filEB63C660F2A086996A48A3BD2387A2B1" KeyPath="yes" Source="$(var.RedistDir)\Samples\ClosestPointViewer\GL\glext.h" />
+                        </Component>
+                        <Component Id="cmpA3DC1B625342D673B1F1A7ABC78CB512" Guid="*">
+                            <File Id="fil7BA4033C8E47B1B224F60895CAF874FD" KeyPath="yes" Source="$(var.RedistDir)\Samples\ClosestPointViewer\GL\glut.h" />
+                        </Component>
+                        <Component Id="cmp44F2DE47461C1A4385BAD8ED07F2EFDF" Guid="*">
+                            <File Id="fil20CC68402EC7AC6B7D1524A0612328BC" KeyPath="yes" Source="$(var.RedistDir)\Samples\ClosestPointViewer\GL\wglext.h" />
+                        </Component>
+                    </Directory>
+                </Directory>
+                <Directory Id="dir2E3257DDC411462992BA2929629265F9" Name="EventBasedRead">
+                    <Component Id="cmp04F78C845534C37C8B4986414A452378" Guid="*">
+                        <File Id="filA07CCE8C4E9CA85C9F434477D9B5E38A" KeyPath="yes" Source="$(var.RedistDir)\Samples\EventBasedRead\EventBasedRead.vcxproj" />
+                    </Component>
+                    <Component Id="cmpFC3E341B801C8165B456283FFB3D0575" Guid="*">
+                        <File Id="fil540DFD4976212DAD2A5013F0894A1426" KeyPath="yes" Source="$(var.RedistDir)\Samples\EventBasedRead\main.cpp" />
+                    </Component>
+                    <Component Id="cmp39BA4748D0705EFB00364E7B36266902" Guid="*">
+                        <File Id="fil9F1FCB2872E06A82D2D1A52950B597B5" KeyPath="yes" Source="$(var.RedistDir)\Samples\EventBasedRead\OniSampleUtilities.h" />
+                    </Component>
+                </Directory>
+                <Directory Id="dir4D49E46F087DBB475925CB593796739A" Name="MultiDepthViewer">
+                    <Component Id="cmp39B08C5E8D2C5E90A2A558B3D54CD2B0" Guid="*">
+                        <File Id="filC8FC7868C16129DD5BC5C8A1E4148410" KeyPath="yes" Source="$(var.RedistDir)\Samples\MultiDepthViewer\glut32.dll" />
+                    </Component>
+                    <Component Id="cmp7B3DD5F8E5E127C6238815FADC8ADCB5" Guid="*">
+                        <File Id="fil9CC5E20F83E3CC0B1F0306AD9C44A334" KeyPath="yes" Source="$(var.RedistDir)\Samples\MultiDepthViewer\glut32.lib" />
+                    </Component>
+                    <Component Id="cmp9F3A22ED0858447F2DFD87784C096B59" Guid="*">
+                        <File Id="fil0D57FC356FF4C87D9D446EF92002AE30" KeyPath="yes" Source="$(var.RedistDir)\Samples\MultiDepthViewer\glut64.dll" />
+                    </Component>
+                    <Component Id="cmp1ED6F7BF35F3029AA9A6E85E4E501B72" Guid="*">
+                        <File Id="filD35E8D9BE0DD55DA8856545C51F1C216" KeyPath="yes" Source="$(var.RedistDir)\Samples\MultiDepthViewer\glut64.lib" />
+                    </Component>
+                    <Component Id="cmpAD586B1E6129CF1CC6339804384A879C" Guid="*">
+                        <File Id="fil11A6995734E3AB4649B91D9A063ADD1D" KeyPath="yes" Source="$(var.RedistDir)\Samples\MultiDepthViewer\main.cpp" />
+                    </Component>
+                    <Component Id="cmpE13A00D1F9FA62E862FB1B795E6C7F87" Guid="*">
+                        <File Id="fil53E52217C14202AF217DC8AFDB8869D9" KeyPath="yes" Source="$(var.RedistDir)\Samples\MultiDepthViewer\MultiDepthViewer.vcxproj" />
+                    </Component>
+                    <Component Id="cmp0370289F71BE95AA46CF42D5D734D180" Guid="*">
+                        <File Id="fil8503B654842B02023B73FB1BEC0DAB44" KeyPath="yes" Source="$(var.RedistDir)\Samples\MultiDepthViewer\OniSampleUtilities.h" />
+                    </Component>
+                    <Component Id="cmp36EB0D36523B7C80FAD79081CA0E87DD" Guid="*">
+                        <File Id="filBF4B5EF56372BB91C1C672EA69386E63" KeyPath="yes" Source="$(var.RedistDir)\Samples\MultiDepthViewer\Viewer.cpp" />
+                    </Component>
+                    <Component Id="cmp235888156269C83525A319C04F84F6AC" Guid="*">
+                        <File Id="filC79318F829AD20F6924DB2FD4187AC88" KeyPath="yes" Source="$(var.RedistDir)\Samples\MultiDepthViewer\Viewer.h" />
+                    </Component>
+                    <Directory Id="dirE35C2CD274693D54C48FA372402F84D7" Name="GL">
+                        <Component Id="cmp842E10FC32FD4470C11F89E3C6F5111C" Guid="*">
+                            <File Id="filB67673A7F6E597ECBD513BD70959A485" KeyPath="yes" Source="$(var.RedistDir)\Samples\MultiDepthViewer\GL\gl.h" />
+                        </Component>
+                        <Component Id="cmp2B0807FBA6524D485783AC81F9399CA1" Guid="*">
+                            <File Id="filB8B6C590CE19B07822DEBDB92C1B3FCC" KeyPath="yes" Source="$(var.RedistDir)\Samples\MultiDepthViewer\GL\glext.h" />
+                        </Component>
+                        <Component Id="cmp593AFF90ECD16C70070EB3A19B0676ED" Guid="*">
+                            <File Id="fil9C7D0469840DB453A34DB03D8E6B7C47" KeyPath="yes" Source="$(var.RedistDir)\Samples\MultiDepthViewer\GL\glut.h" />
+                        </Component>
+                        <Component Id="cmpDD5E8E9C5DE898B4E18C19681E437714" Guid="*">
+                            <File Id="fil3FF7FAA59B399C001D9AEB424A9D64F1" KeyPath="yes" Source="$(var.RedistDir)\Samples\MultiDepthViewer\GL\wglext.h" />
+                        </Component>
+                    </Directory>
+                </Directory>
+                <Directory Id="dir3A8AFFA055BA536E3CE84577C5ECD7B9" Name="MultipleStreamRead">
+                    <Component Id="cmpCC54D1C2A513D938BB2D020B1CA48D81" Guid="*">
+                        <File Id="fil02FA2954A92FD4AA66F119D741858E9C" KeyPath="yes" Source="$(var.RedistDir)\Samples\MultipleStreamRead\main.cpp" />
+                    </Component>
+                    <Component Id="cmp51515C4CD94791FF4BCC9B2FF35E43B5" Guid="*">
+                        <File Id="filE40798FE00B48426E3BF91142143AB83" KeyPath="yes" Source="$(var.RedistDir)\Samples\MultipleStreamRead\MultipleStreamRead.vcxproj" />
+                    </Component>
+                    <Component Id="cmp398A24E3C0285797E0A7F5B956FB59D0" Guid="*">
+                        <File Id="filE52D1E5B720B5640549588D033DD9696" KeyPath="yes" Source="$(var.RedistDir)\Samples\MultipleStreamRead\OniSampleUtilities.h" />
+                    </Component>
+                </Directory>
+                <Directory Id="dir861FA3121D270750A07EA8D63E5C2F0D" Name="MWClosestPoint">
+                    <Component Id="cmp226A959F798A4F4EE9905F5DF8F98E68" Guid="*">
+                        <File Id="fil79120FB782697507FA10C2DB2B0FDCB8" KeyPath="yes" Source="$(var.RedistDir)\Samples\MWClosestPoint\MWClosestPoint.cpp" />
+                    </Component>
+                    <Component Id="cmpB95CD59460DFFAAF3CE808B1E4C989F8" Guid="*">
+                        <File Id="fil9F7EC48895F57996C615D0656EBF9735" KeyPath="yes" Source="$(var.RedistDir)\Samples\MWClosestPoint\MWClosestPoint.h" />
+                    </Component>
+                    <Component Id="cmpD1847E40D059B6FCF9479DEAAB79A0E1" Guid="*">
+                        <File Id="fil31578890012C62EAF68AF12F1CA67E30" KeyPath="yes" Source="$(var.RedistDir)\Samples\MWClosestPoint\MWClosestPoint.vcxproj" />
+                    </Component>
+                </Directory>
+                <Directory Id="dirEA59766D631FA63D7E5C7479C2E9F4C6" Name="MWClosestPointApp">
+                    <Component Id="cmpCD6B347681B0598B8DF6D102C0CE960F" Guid="*">
+                        <File Id="fil73AC5590F512AB934EED646377AFA4E0" KeyPath="yes" Source="$(var.RedistDir)\Samples\MWClosestPointApp\main.cpp" />
+                    </Component>
+                    <Component Id="cmp7F809A64F0A2FB84ECF82D38C65AB991" Guid="*">
+                        <File Id="fil2BED514C2F6EBF30E7578EB8FA20C467" KeyPath="yes" Source="$(var.RedistDir)\Samples\MWClosestPointApp\MWClosestPointApp.vcxproj" />
+                    </Component>
+                    <Component Id="cmpAB5343FFB4E2C403314E5F99A39ACFD3" Guid="*">
+                        <File Id="fil50A2E1BEF343D451BBCA8E3BA65C036D" KeyPath="yes" Source="$(var.RedistDir)\Samples\MWClosestPointApp\OniSampleUtilities.h" />
+                    </Component>
+                </Directory>
+                <Directory Id="dirC3C163C626B6190841A66CD789FE0015" Name="SimpleRead">
+                    <Component Id="cmp38383645CE695DEECD73EC27AA8A1C4E" Guid="*">
+                        <File Id="fil0EAB50F4096468A04CF273B6EA43AE89" KeyPath="yes" Source="$(var.RedistDir)\Samples\SimpleRead\main.cpp" />
+                    </Component>
+                    <Component Id="cmp76EEB29544738987ABA2C08BE33DCEC8" Guid="*">
+                        <File Id="filD2AEA1B8F9213F4C65D891B24D95870D" KeyPath="yes" Source="$(var.RedistDir)\Samples\SimpleRead\OniSampleUtilities.h" />
+                    </Component>
+                    <Component Id="cmp217FC7206437139B61954D4FA665D2ED" Guid="*">
+                        <File Id="fil3E6C09B4D5202DD97ABBD7F67C5E1330" KeyPath="yes" Source="$(var.RedistDir)\Samples\SimpleRead\SimpleRead.vcxproj" />
+                    </Component>
+                </Directory>
+                <Directory Id="dirB24AF35396F0FBD77889A7EECA56950C" Name="SimpleViewer">
+                    <Component Id="cmpF50394EA3FB88F5AF5D89C05783AB625" Guid="*">
+                        <File Id="filDC79FFCE41037CAC689EE7F709CF53EA" KeyPath="yes" Source="$(var.RedistDir)\Samples\SimpleViewer\glut32.dll" />
+                    </Component>
+                    <Component Id="cmpA8258971993682777AB976586EECCBA5" Guid="*">
+                        <File Id="filD2479EBF976A489C581F96D04EEC3345" KeyPath="yes" Source="$(var.RedistDir)\Samples\SimpleViewer\glut32.lib" />
+                    </Component>
+                    <Component Id="cmp606437CEEE3C9DEBAF3840B2819F2D1C" Guid="*">
+                        <File Id="fil401452B4C94825466D45D0610695BE5D" KeyPath="yes" Source="$(var.RedistDir)\Samples\SimpleViewer\glut64.dll" />
+                    </Component>
+                    <Component Id="cmp99E6EC07D76FF320677C7E301A600A74" Guid="*">
+                        <File Id="fil78970AFBCE53BB020F8178D65C48025D" KeyPath="yes" Source="$(var.RedistDir)\Samples\SimpleViewer\glut64.lib" />
+                    </Component>
+                    <Component Id="cmpE978CA9FD23A226B44DC75558C411FDE" Guid="*">
+                        <File Id="fil8E27467B8EDAEFA880F5D81C514F1F24" KeyPath="yes" Source="$(var.RedistDir)\Samples\SimpleViewer\main.cpp" />
+                    </Component>
+                    <Component Id="cmp7F1FB245D4EA43035D75B59DAA7D4631" Guid="*">
+                        <File Id="filED88FBE92A902525A92BE609768F0F5F" KeyPath="yes" Source="$(var.RedistDir)\Samples\SimpleViewer\OniSampleUtilities.h" />
+                    </Component>
+                    <Component Id="cmp34089831A7DA7647CCD632CCDD2E96CB" Guid="*">
+                        <File Id="fil4620BFE57E1CD2010835D35CE33456AC" KeyPath="yes" Source="$(var.RedistDir)\Samples\SimpleViewer\SimpleViewer.vcxproj" />
+                    </Component>
+                    <Component Id="cmp030F22F658B00F3C5C92DAF423A043F1" Guid="*">
+                        <File Id="fil23A5E5F698114680D05A62F2904A19AF" KeyPath="yes" Source="$(var.RedistDir)\Samples\SimpleViewer\Viewer.cpp" />
+                    </Component>
+                    <Component Id="cmpABB4956EA4568058579D54205F417246" Guid="*">
+                        <File Id="fil6205B7C9F9AFD2E29A5F733598504BA4" KeyPath="yes" Source="$(var.RedistDir)\Samples\SimpleViewer\Viewer.h" />
+                    </Component>
+                    <Directory Id="dirAF68E926A8D9BA7E9858E7C10DE42F3E" Name="GL">
+                        <Component Id="cmp9A19C6BFFB499CE80072A9086DCD9DA0" Guid="*">
+                            <File Id="fil373646ECC736BBC2406F169B1A0D5127" KeyPath="yes" Source="$(var.RedistDir)\Samples\SimpleViewer\GL\gl.h" />
+                        </Component>
+                        <Component Id="cmp4131AA057B7D5A775690186FDF2F5C9B" Guid="*">
+                            <File Id="fil75E78D07989688EE5701AD37CE307801" KeyPath="yes" Source="$(var.RedistDir)\Samples\SimpleViewer\GL\glext.h" />
+                        </Component>
+                        <Component Id="cmpE279E1F38C9CF5A5C8A0B979DFB92A68" Guid="*">
+                            <File Id="filBA9E425A029F2D633B6F4067FCD0E570" KeyPath="yes" Source="$(var.RedistDir)\Samples\SimpleViewer\GL\glut.h" />
+                        </Component>
+                        <Component Id="cmp37EF49242B9729E64FC52A479285F0CD" Guid="*">
+                            <File Id="filF8B6018A3E0926DF246458DF74B389AE" KeyPath="yes" Source="$(var.RedistDir)\Samples\SimpleViewer\GL\wglext.h" />
+                        </Component>
+                    </Directory>
+                </Directory>
+                <Directory Id="dirA48F99C040005D1475543D0D6DDB5989" Name="SimpleViewer.java">
+                    <Component Id="cmpED52B0ADB526C08B3C0318BD8A9D1EF4" Guid="*">
+                        <File Id="filDA5D9DED2EF735D90E60C655A2F6BE34" KeyPath="yes" Source="$(var.RedistDir)\Samples\SimpleViewer.java\Build.bat" />
+                    </Component>
+                    <Component Id="cmp9B487BCDE3757E22A65B2EC829AB8F20" Guid="*">
+                        <File Id="fil505E90CEEB954FC47719DB54FFDB9A6D" KeyPath="yes" Source="$(var.RedistDir)\Samples\SimpleViewer.java\BuildJavaWindows.py" />
+                    </Component>
+                    <Directory Id="dir6B922096DA45DE9E28EBB4DFF89B3F8A" Name="src">
+                        <Directory Id="dirE0B35F8798DCAB9E380713E562116A73" Name="org">
+                            <Directory Id="dirC9E63E59E78C48CC40C48BBD4FD03904" Name="openni">
+                                <Directory Id="dirC6BE484EF7B9EA3160CB1F51C462D66E" Name="Samples">
+                                    <Directory Id="dir31148F0553ABD639F22E95CDE86EEC3C" Name="SimpleViewer">
+                                        <Component Id="cmpAD7C519D7337B3C544239BE5D501C83B" Guid="*">
+                                            <File Id="fil95E81DEEDF397646EE5EF3B905DF9E87" KeyPath="yes" Source="$(var.RedistDir)\Samples\SimpleViewer.java\src\org\openni\Samples\SimpleViewer\SimpleViewer.java" />
+                                        </Component>
+                                        <Component Id="cmpCE9E0282D3D11DA4BB308BBB9A35AAD6" Guid="*">
+                                            <File Id="fil0AF0E4977C1CBBD6697DF6695261530C" KeyPath="yes" Source="$(var.RedistDir)\Samples\SimpleViewer.java\src\org\openni\Samples\SimpleViewer\SimpleViewerApplication.java" />
+                                        </Component>
+                                    </Directory>
+                                </Directory>
+                            </Directory>
+                        </Directory>
+                    </Directory>
+                </Directory>
+            </Directory>
+            <Directory Id="dir695E21DFB508ADBDA338D759B02CC608" Name="Tools">
+                <Component Id="cmp1FB72D3D1DC55C89D6895FD7CB39CABC" Guid="*">
+                    <File Id="fil096E5DF699E8AB5A1440049AC7F5A9EA" KeyPath="yes" Source="$(var.RedistDir)\Tools\glut64.dll" />
+                </Component>
+                <Component Id="cmp562BCA10E4193F629A38791288B1B9D4" Guid="*">
+                    <File Id="fil09C63E44B9233315BE2FDCEBDBFC87BB" KeyPath="yes" Source="$(var.RedistDir)\Tools\NiViewer.exe" />
+                </Component>
+                <Component Id="cmpF8756B8B84DAA35F45B3DF392E63FFC6" Guid="*">
+                    <File Id="fil03521C5C689539008E1294226F066363" KeyPath="yes" Source="$(var.RedistDir)\Tools\NiViewer.pdb" />
+                </Component>
+                <Component Id="cmp462ED2D97C176F6746E9DDC7010E7F83" Guid="*">
+                    <File Id="fil2E160D7250A414C2A94CA90D35DE83C7" KeyPath="yes" Source="$(var.RedistDir)\Tools\OpenNI.ini" />
+                </Component>
+                <Component Id="cmp0D930E6C23481D3D550E9678EC29C30C" Guid="*">
+                    <File Id="filBFE30EC8447712B7C12A32B7C88DC47F" KeyPath="yes" Source="$(var.RedistDir)\Tools\OpenNI2.dll" />
+                </Component>
+                <Component Id="cmp0DC92095529198FA6FDDD664767CE536" Guid="*">
+                    <File Id="fil05612E631216E2AAC439A6CEEC103162" KeyPath="yes" Source="$(var.RedistDir)\Tools\OpenNI2.jni.dll" />
+                </Component>
+                <Component Id="cmp433C0D21B214126F220BF105DC9CF608" Guid="*">
+                    <File Id="fil8D6AC331B86807F9788D64A8F081D1BC" KeyPath="yes" Source="$(var.RedistDir)\Tools\OpenNI2.jni.pdb" />
+                </Component>
+                <Component Id="cmp9ECE1F86578B539C38DEDEC8CF50D199" Guid="*">
+                    <File Id="fil74C1A124EBA71209C045731A76C9CD8B" KeyPath="yes" Source="$(var.RedistDir)\Tools\OpenNI2.pdb" />
+                </Component>
+                <Component Id="cmp1EA3484FF503591A781F35376671D3CC" Guid="*">
+                    <File Id="filC86A4C5E1DC21D5226B0F35AB427E0EA" KeyPath="yes" Source="$(var.RedistDir)\Tools\org.openni.jar" />
+                </Component>
+                <Directory Id="dirC1B512FF1BE4DCEBD22C1C30B34B89EB" Name="OpenNI2">
+                    <Directory Id="dir2D095ACBEA53FAF600D19B63F1B18FF9" Name="Drivers">
+                        <Component Id="cmp38CCBC365D1C19CF3814222EF4AD489F" Guid="*">
+                            <File Id="filFC4FD348AEC9C38821EB81F7E5D6C8A2" KeyPath="yes" Source="$(var.RedistDir)\Tools\OpenNI2\Drivers\Depth3D.dll" />
+                        </Component>
+                        <Component Id="cmp5895DEFB4C98ED0E7EFD77A553056424" Guid="*">
+                            <File Id="filE3DBC5FB062876F6A0A1114F03931C1D" KeyPath="yes" Source="$(var.RedistDir)\Tools\OpenNI2\Drivers\Depth3D.pdb" />
+                        </Component>
+                    </Directory>
+                </Directory>
+            </Directory>
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <ComponentGroup Id="RedistComponentGroup">
+            <ComponentRef Id="cmp5AAE32F252A69028C671E1047092E75D" />
+            <ComponentRef Id="cmp82A894F85400B01299B18256E9BE5C13" />
+            <ComponentRef Id="cmp8055B9FAD5F3AF7D5F8F5372296B4939" />
+            <ComponentRef Id="cmpB939B6F3A7B8A21F2BA0CCA42284AE97" />
+            <ComponentRef Id="cmp809CBC00191C0F151389825D881E3CEC" />
+            <ComponentRef Id="cmp320E5F83203C6277B9CF2B271A96A0EE" />
+            <ComponentRef Id="cmp1DF29CC756F104CDCA646AFA8729904C" />
+            <ComponentRef Id="cmpF107D546DD2E4180FDD5C03F43939556" />
+            <ComponentRef Id="cmp8A2F184B6616923E40389FC560117E42" />
+            <ComponentRef Id="cmp1A462E8A02C58F51D041AAE920772CF4" />
+            <ComponentRef Id="cmp13B39D42EE67EE5F71DC104FC59D18D4" />
+            <ComponentRef Id="cmp97B21740EA5B836ECCE4EDC05551E638" />
+            <ComponentRef Id="cmp665012A15641322D6A3B0FEAFE3D9CAE" />
+            <ComponentRef Id="cmp061C56A35B95F33E6254C5C90B89F3F6" />
+            <ComponentRef Id="cmp15B9F2E54DA7BF25CFD73F7F0E9BC76C" />
+            <ComponentRef Id="cmpB3A8D8BC95221507D65E5AC3BD86A2F2" />
+            <ComponentRef Id="cmp1D2D178028DAC96A17878128AFFBF7FB" />
+            <ComponentRef Id="cmpD392B05F2B0AD3A7E11FCC2B60A4E319" />
+            <ComponentRef Id="cmp60B771527354BF9EF5FDD567355A22E0" />
+            <ComponentRef Id="cmpCE54417DC941543E38FC98A76D524A38" />
+            <ComponentRef Id="cmp53CCD46DA142B7E074D5B537547778BA" />
+            <ComponentRef Id="cmp735AE9201C19BC0EAE7BD6C14B2CE68B" />
+            <ComponentRef Id="cmp647373BFC0487139ED44D44FC1B6101F" />
+            <ComponentRef Id="cmp539A930765A28A418B0D3656D1CCA5DA" />
+            <ComponentRef Id="cmpC1E7BACAF20E70588460D73A34C8F65C" />
+            <ComponentRef Id="cmp571164C8013F5D588AEBA511540F2BB0" />
+            <ComponentRef Id="cmp6910322ACBC1EBB6FED06159EB76BFA7" />
+            <ComponentRef Id="cmp8CD523FE5C8CDEC1E80C252A41FB6824" />
+            <ComponentRef Id="cmp0E69B661E288A4FF75AA795B9349A91C" />
+            <ComponentRef Id="cmp1E7CD40380F405299D7A90F178400BBD" />
+            <ComponentRef Id="cmpBB90645391076A51F8BCAD9FA129547E" />
+            <ComponentRef Id="cmpF891C1F74978D481ED275E2CDA6D35CD" />
+            <ComponentRef Id="cmp20A6A7FA3216DA9C2B673DB3DA3DC788" />
+            <ComponentRef Id="cmpB8B2718C355889A468D1EC428F203D5C" />
+            <ComponentRef Id="cmp9FD6390A4A2C3E6BC51F6EC594980F42" />
+            <ComponentRef Id="cmpAEE45B42C644CF302BDD64860F140C4C" />
+            <ComponentRef Id="cmp234E2726FD60B44347D4097DBE5CC85F" />
+            <ComponentRef Id="cmp6167139DC211E364F78D1B90D35E5A44" />
+            <ComponentRef Id="cmpC8B2F8103AA146FFF904C7410E137646" />
+            <ComponentRef Id="cmp1F797A284A6B8A7B5CBBECB790DC1FD5" />
+            <ComponentRef Id="cmp354D37B3910426A6A4BC43F172D15B6D" />
+            <ComponentRef Id="cmp26B2F9D9941353DB0F53C6B89E7D3BBE" />
+            <ComponentRef Id="cmpE7453DB062DACA16F758C78495CF2BEC" />
+            <ComponentRef Id="cmp89FE2366B9032632F5C0C0480A085051" />
+            <ComponentRef Id="cmp4180DF0B16AC361B5C166DA22AD24172" />
+            <ComponentRef Id="cmp54063BFB403CBAA9A89BF8AC24FB692F" />
+            <ComponentRef Id="cmpDB419007F963BDB0357EB48CB6743FCD" />
+            <ComponentRef Id="cmp76FE4426ED886B6EF4162A6162423A22" />
+            <ComponentRef Id="cmp5E0B17247DB551FCA1A5481F4C7DCCB4" />
+            <ComponentRef Id="cmpCAA1FAF214C86FA1899E1E90458C2299" />
+            <ComponentRef Id="cmpA9CB01745AF66B6E14433425954BE725" />
+            <ComponentRef Id="cmp11273A4339C86516370EFF0C07EC49C8" />
+            <ComponentRef Id="cmp9B45967B5014E2F11806A96B6DEFDD3D" />
+            <ComponentRef Id="cmp188E6D2D7FA189F17C7907C635D2211F" />
+            <ComponentRef Id="cmp84974347AA3ADF00BAC600F41571FD54" />
+            <ComponentRef Id="cmpA1ED919EAE75E805F0748892AB997354" />
+            <ComponentRef Id="cmpEA561852FEC263C62CE1A2EDA07D83E0" />
+            <ComponentRef Id="cmpFF853DD7E979E3092E7E380171803075" />
+            <ComponentRef Id="cmp9E610F547D7354E0834B9213E03C35CB" />
+            <ComponentRef Id="cmp4AA04B2434B1A713B1376577EE208A0A" />
+            <ComponentRef Id="cmp995009CAD0BD9E9D820E4B54BE9D968B" />
+            <ComponentRef Id="cmp809D58F226DC472A6D5172615E214834" />
+            <ComponentRef Id="cmp6C3AB55B2556C962473ABCE8AE2CE018" />
+            <ComponentRef Id="cmpF557BB8467C5A58B5264C8B057E4AE56" />
+            <ComponentRef Id="cmp60E105C2E5F17DBD82EB9C39755420DE" />
+            <ComponentRef Id="cmpE73D656465B3B581EFBF44D594B0AE8F" />
+            <ComponentRef Id="cmpEFBFE93AE2D20EF11121D947393B073F" />
+            <ComponentRef Id="cmp581D45E26962C497D0A26F0C5D41653A" />
+            <ComponentRef Id="cmp9FBCBD261348B5B713BF67D3BD435D0D" />
+            <ComponentRef Id="cmp24BC2FEA8448A3EAAAA05187CE3A9FD5" />
+            <ComponentRef Id="cmp40016553D71644D0887CE5E2099ABD4F" />
+            <ComponentRef Id="cmp937CACEDD26F88025099DA550F773A4E" />
+            <ComponentRef Id="cmp8BBF35F9F6A8A82D25973A12C07710B3" />
+            <ComponentRef Id="cmp6863CF9A486FB5D6223EE95395448E4A" />
+            <ComponentRef Id="cmpD90F416F23C45AC81DABE45708CF3348" />
+            <ComponentRef Id="cmpC818C4AD7A9B9BE36CFF0E7D6459B1BB" />
+            <ComponentRef Id="cmpCA87942273F86238115388BF3B086EAA" />
+            <ComponentRef Id="cmp8D2A35410BFA077719013973DCC3349C" />
+            <ComponentRef Id="cmpC0BDBE9B276BA41064163FCAA4F14094" />
+            <ComponentRef Id="cmpD2088D2E77A58BF7FCB45E8724C2B280" />
+            <ComponentRef Id="cmp5C1D0776B6D63F17DB5637FE8ED768DF" />
+            <ComponentRef Id="cmp6558214637271FDC861DA9C2B8FC9B21" />
+            <ComponentRef Id="cmpACB89EA1E79A3C3D3C26EE0DE097F850" />
+            <ComponentRef Id="cmp4A9DBED873D8681ADC6A3E84F4CF5FAD" />
+            <ComponentRef Id="cmp6E43B45FF4684FAEC4B05676D183406A" />
+            <ComponentRef Id="cmpD648AC6401161276A2AC6D7D0E521C39" />
+            <ComponentRef Id="cmpB5AC3620B1ECA19D145209C72024BD9F" />
+            <ComponentRef Id="cmpE5C36E9DB879A2BF9A67CC00ADAFD09C" />
+            <ComponentRef Id="cmp997BA67BA26C1CF587A648A807A51484" />
+            <ComponentRef Id="cmp998DC1851DFB2C8499CA4964D4F1111D" />
+            <ComponentRef Id="cmp7DE8E46582CF2C3BB91C4A92AD3D250B" />
+            <ComponentRef Id="cmp5FD7371B38F9DEE8B465C87137101CD2" />
+            <ComponentRef Id="cmp6B7D3EDEB0C1702317054520D3BC35B1" />
+            <ComponentRef Id="cmp37EF895B74F20BA725F6B430306F6C75" />
+            <ComponentRef Id="cmpFE2F6B77695AC917245D631116C12665" />
+            <ComponentRef Id="cmp4B8029D11A842DC55A1EE822B8F77B29" />
+            <ComponentRef Id="cmp2E5F36A26ED68E7463269EEBB90B735C" />
+            <ComponentRef Id="cmpB7494469870D17647C966D8EE9369EA6" />
+            <ComponentRef Id="cmp77BFF49AF8D4C80B0FFF165AA52D48A7" />
+            <ComponentRef Id="cmpF86D3C8A3192453A6132E05F4B723C4A" />
+            <ComponentRef Id="cmp5B7957E7D628B9083024D892BC7FD615" />
+            <ComponentRef Id="cmpB472187C539544115BDF37036295ED74" />
+            <ComponentRef Id="cmpBBCDCB7730D0C4A57B3B4C2BBF634443" />
+            <ComponentRef Id="cmp148EF7E0FDCD3610AFA9BCD1B550DA88" />
+            <ComponentRef Id="cmp60AE858C1140D340BB1372FF564648E9" />
+            <ComponentRef Id="cmp309A93E8CDFE31294313DD5E871ABAAA" />
+            <ComponentRef Id="cmp7B53ABD8868D56FD7FC5A21DADA5F3C0" />
+            <ComponentRef Id="cmp6CB859B905F476D2C644C1A040F2FF70" />
+            <ComponentRef Id="cmp58D16AF5BEE22DE87176DA965952B6E1" />
+            <ComponentRef Id="cmpF330266D7B42255C979CB43363FC6A72" />
+            <ComponentRef Id="cmpD24FB3A0FBCF364B3B9966FA5B946853" />
+            <ComponentRef Id="cmpA4DF95E7EE98816ED5CFD8B50F599F09" />
+            <ComponentRef Id="cmp161B9CF8AE197FCA0005A713B468B5ED" />
+            <ComponentRef Id="cmpC78E9A7833A1A5B2809E25F70A86F517" />
+            <ComponentRef Id="cmp15A1154ABD1E4B00365E8CFC92A488F0" />
+            <ComponentRef Id="cmp2B1EEDF8022263963295176192891464" />
+            <ComponentRef Id="cmp7A6955317830E50C359B6294730CDDD5" />
+            <ComponentRef Id="cmpDB5070B453403894797C445D20A7AA14" />
+            <ComponentRef Id="cmpC78DFD1604115C0486E0B2D4EC6DC454" />
+            <ComponentRef Id="cmp98EE44697E857AA172D138D475DB99F8" />
+            <ComponentRef Id="cmp7D6B5D93427A39C2D03DB9916DADCEB7" />
+            <ComponentRef Id="cmp4D961649486FA6E68D4C9A251CD63CBE" />
+            <ComponentRef Id="cmpEC2ED2310895823D03CE9F4845DD0133" />
+            <ComponentRef Id="cmpD0F3DA2D3DB480EEDEC0C39044549E72" />
+            <ComponentRef Id="cmpF53B2915F2380291E1DB36FD6C8D9026" />
+            <ComponentRef Id="cmpA363427AA3143E81A6F6F67544264350" />
+            <ComponentRef Id="cmp9B938AA0BD3CF1351D6589684E721165" />
+            <ComponentRef Id="cmpEE901057B905CDD062F506B8303B11B0" />
+            <ComponentRef Id="cmpA3DC1B625342D673B1F1A7ABC78CB512" />
+            <ComponentRef Id="cmp44F2DE47461C1A4385BAD8ED07F2EFDF" />
+            <ComponentRef Id="cmp04F78C845534C37C8B4986414A452378" />
+            <ComponentRef Id="cmpFC3E341B801C8165B456283FFB3D0575" />
+            <ComponentRef Id="cmp39BA4748D0705EFB00364E7B36266902" />
+            <ComponentRef Id="cmp39B08C5E8D2C5E90A2A558B3D54CD2B0" />
+            <ComponentRef Id="cmp7B3DD5F8E5E127C6238815FADC8ADCB5" />
+            <ComponentRef Id="cmp9F3A22ED0858447F2DFD87784C096B59" />
+            <ComponentRef Id="cmp1ED6F7BF35F3029AA9A6E85E4E501B72" />
+            <ComponentRef Id="cmpAD586B1E6129CF1CC6339804384A879C" />
+            <ComponentRef Id="cmpE13A00D1F9FA62E862FB1B795E6C7F87" />
+            <ComponentRef Id="cmp0370289F71BE95AA46CF42D5D734D180" />
+            <ComponentRef Id="cmp36EB0D36523B7C80FAD79081CA0E87DD" />
+            <ComponentRef Id="cmp235888156269C83525A319C04F84F6AC" />
+            <ComponentRef Id="cmp842E10FC32FD4470C11F89E3C6F5111C" />
+            <ComponentRef Id="cmp2B0807FBA6524D485783AC81F9399CA1" />
+            <ComponentRef Id="cmp593AFF90ECD16C70070EB3A19B0676ED" />
+            <ComponentRef Id="cmpDD5E8E9C5DE898B4E18C19681E437714" />
+            <ComponentRef Id="cmpCC54D1C2A513D938BB2D020B1CA48D81" />
+            <ComponentRef Id="cmp51515C4CD94791FF4BCC9B2FF35E43B5" />
+            <ComponentRef Id="cmp398A24E3C0285797E0A7F5B956FB59D0" />
+            <ComponentRef Id="cmp226A959F798A4F4EE9905F5DF8F98E68" />
+            <ComponentRef Id="cmpB95CD59460DFFAAF3CE808B1E4C989F8" />
+            <ComponentRef Id="cmpD1847E40D059B6FCF9479DEAAB79A0E1" />
+            <ComponentRef Id="cmpCD6B347681B0598B8DF6D102C0CE960F" />
+            <ComponentRef Id="cmp7F809A64F0A2FB84ECF82D38C65AB991" />
+            <ComponentRef Id="cmpAB5343FFB4E2C403314E5F99A39ACFD3" />
+            <ComponentRef Id="cmp38383645CE695DEECD73EC27AA8A1C4E" />
+            <ComponentRef Id="cmp76EEB29544738987ABA2C08BE33DCEC8" />
+            <ComponentRef Id="cmp217FC7206437139B61954D4FA665D2ED" />
+            <ComponentRef Id="cmpF50394EA3FB88F5AF5D89C05783AB625" />
+            <ComponentRef Id="cmpA8258971993682777AB976586EECCBA5" />
+            <ComponentRef Id="cmp606437CEEE3C9DEBAF3840B2819F2D1C" />
+            <ComponentRef Id="cmp99E6EC07D76FF320677C7E301A600A74" />
+            <ComponentRef Id="cmpE978CA9FD23A226B44DC75558C411FDE" />
+            <ComponentRef Id="cmp7F1FB245D4EA43035D75B59DAA7D4631" />
+            <ComponentRef Id="cmp34089831A7DA7647CCD632CCDD2E96CB" />
+            <ComponentRef Id="cmp030F22F658B00F3C5C92DAF423A043F1" />
+            <ComponentRef Id="cmpABB4956EA4568058579D54205F417246" />
+            <ComponentRef Id="cmp9A19C6BFFB499CE80072A9086DCD9DA0" />
+            <ComponentRef Id="cmp4131AA057B7D5A775690186FDF2F5C9B" />
+            <ComponentRef Id="cmpE279E1F38C9CF5A5C8A0B979DFB92A68" />
+            <ComponentRef Id="cmp37EF49242B9729E64FC52A479285F0CD" />
+            <ComponentRef Id="cmpED52B0ADB526C08B3C0318BD8A9D1EF4" />
+            <ComponentRef Id="cmp9B487BCDE3757E22A65B2EC829AB8F20" />
+            <ComponentRef Id="cmpAD7C519D7337B3C544239BE5D501C83B" />
+            <ComponentRef Id="cmpCE9E0282D3D11DA4BB308BBB9A35AAD6" />
+            <ComponentRef Id="cmp1FB72D3D1DC55C89D6895FD7CB39CABC" />
+            <ComponentRef Id="cmp562BCA10E4193F629A38791288B1B9D4" />
+            <ComponentRef Id="cmpF8756B8B84DAA35F45B3DF392E63FFC6" />
+            <ComponentRef Id="cmp462ED2D97C176F6746E9DDC7010E7F83" />
+            <ComponentRef Id="cmp0D930E6C23481D3D550E9678EC29C30C" />
+            <ComponentRef Id="cmp0DC92095529198FA6FDDD664767CE536" />
+            <ComponentRef Id="cmp433C0D21B214126F220BF105DC9CF608" />
+            <ComponentRef Id="cmp9ECE1F86578B539C38DEDEC8CF50D199" />
+            <ComponentRef Id="cmp1EA3484FF503591A781F35376671D3CC" />
+            <ComponentRef Id="cmp38CCBC365D1C19CF3814222EF4AD489F" />
+            <ComponentRef Id="cmp5895DEFB4C98ED0E7EFD77A553056424" />
+        </ComponentGroup>
+    </Fragment>
+</Wix>

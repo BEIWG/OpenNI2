@@ -10,7 +10,7 @@ extern bool bStreamColorRun;
 
 OzImageStream::OzImageStream()
 {
-	m_videoMode.pixelFormat = ONI_PIXEL_FORMAT_YUYV;
+	m_videoMode.pixelFormat = ONI_PIXEL_FORMAT_RGB888;
 	m_videoMode.fps = DEFAULT_FPS;
 	m_videoMode.resolutionX = IMAGE_RESOLUTION_X;
 	m_videoMode.resolutionY = IMAGE_RESOLUTION_Y;		
@@ -95,7 +95,7 @@ void OzImageStream::Mainloop()
 		{	
 			gColorDataUpdate = false;
 			GetColorFromStream(gStreamBuffer, (char*)pFrame->data);	
-		    
+
 		    #ifdef _MSC_VER	    
 			finish = GetTickCount();
 			duration =1000/m_videoMode.fps;

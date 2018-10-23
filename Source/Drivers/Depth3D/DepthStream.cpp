@@ -42,7 +42,7 @@ OniStatus OzDepthStream::GetVideoMode(OniVideoMode* pVideoMode)
 
 OniStatus OzDepthStream::convertDepthToColorCoordinates(StreamBase* colorStream, int depthX, int depthY, OniDepthPixel depthZ, int* pColorX, int* pColorY)
 { 
-	return ONI_STATUS_NOT_SUPPORTED;
+	return ONI_STATUS_OK;
 }
 
 void OzDepthStream::Mainloop()
@@ -103,6 +103,7 @@ void OzDepthStream::Mainloop()
 			gDepthDataUpdate = false;
 			
 			GetDepthFromStream(gStreamBuffer, (char*)pFrame->data);
+                        
 			if (gSoftFilterEnable)
 				DepthfilterSpeckles((unsigned char*)pFrame->data, pFrame->width, pFrame->height, (dMin - 1) * 16.0, 400, diff * 16.0);
 			
