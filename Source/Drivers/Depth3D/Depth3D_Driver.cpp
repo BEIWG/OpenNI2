@@ -36,14 +36,13 @@ uvc_device_handle_t *devh;
 uvc_stream_ctrl_t ctrl;
 
 int gDropFrame = 3;
-char *DataCacheBuffer = NULL;
 
 void uvc_cb(uvc_frame_t *uvc_frame, void *ptr) 
 {
 	uvc_frame_t *bgr;
 	uvc_error_t ret;
 
-	if (DataCacheBuffer == NULL) 
+	if (gStreamBuffer == NULL) 
 	{
 		if (gDropFrame--)
 			return;
@@ -214,8 +213,8 @@ void OzDriver::shutdown() {
 	uvc_unref_device(dev);
 	uvc_exit(ctx);	
 
-	if (DataCacheBuffer != NULL)
-		free(DataCacheBuffer);	
+	if (gStreamBuffer != NULL)
+		free(gStreamBuffer);	
 	#endif	
 		
 	if (gStreamBuffer)

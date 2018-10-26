@@ -6,7 +6,11 @@ INC_DIRS = \
 	include \
 	uvc \
 	../../../Include \
-	../../../ThirdParty/PSCommon/XnLib/Include 
+	../../../ThirdParty/PSCommon/XnLib/Include \
+	../PS1080 \
+	../PS1080/Include \
+	../PS1080/Sensor
+	
 
 SRC_FILES = \
 	Depth3D_Device.cpp \
@@ -16,7 +20,8 @@ SRC_FILES = \
 	IRStream.cpp \
 	ColorStream.cpp \
 	SensorStreamProcessor.cpp \
-	uvc/uvc.cpp
+	uvc/uvc.cpp \
+	Bayer.cpp
 
 ifeq ("$(OSTYPE)","Darwin")
 	INC_DIRS += /opt/local/include
