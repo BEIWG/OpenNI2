@@ -115,6 +115,5 @@ OniStatus OzDevice::tryManualTrigger()
 
 OniBool OzDevice::isImageRegistrationModeSupported(OniImageRegistrationMode mode)
 {
-	//return (mode == ONI_IMAGE_REGISTRATION_DEPTH_TO_COLOR || mode == ONI_IMAGE_REGISTRATION_OFF);
-	return (mode == ONI_IMAGE_REGISTRATION_OFF);
+	return (mode == ONI_IMAGE_REGISTRATION_DEPTH_TO_COLOR || mode == ONI_IMAGE_REGISTRATION_OFF);
 }

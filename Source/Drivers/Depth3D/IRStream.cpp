@@ -93,9 +93,9 @@ void OzIRStream::Mainloop()
 		if (gIRDataUpdate)
 		{	
 			gIRDataUpdate = false;
-			GetColorFromStream(gStreamBuffer, (char*)pFrame->data);	
+                        GetIRFromStream(gStreamBuffer, (char*)pFrame->data);
 		    
-		    #ifdef _MSC_VER	    
+                        #ifdef _MSC_VER	    
 			finish = GetTickCount();
 			duration =1000/m_videoMode.fps;
 			if (duration > (finish - start))

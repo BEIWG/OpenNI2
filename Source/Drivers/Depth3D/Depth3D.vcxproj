@@ -145,7 +145,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>XnLib.lib;strmiids.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>XnLib.lib;strmiids.lib;mf.lib;mfplat.lib;mfplay.lib;mfuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Bin\$(Platform)-$(Configuration)\</AdditionalLibraryDirectories>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
     </Link>
@@ -176,7 +176,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>XnLib.lib;strmiids.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>XnLib.lib;strmiids.lib;mf.lib;mfplat.lib;Mfreadwrite.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Bin\$(Platform)-$(Configuration)\</AdditionalLibraryDirectories>
       <TreatLinkerWarningAsErrors>false</TreatLinkerWarningAsErrors>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
@@ -199,6 +199,10 @@
     <ClCompile Include="Depth3D_Driver.cpp" />
     <ClCompile Include="DepthStream.cpp" />
     <ClCompile Include="DirectShow\CameraDS.cpp" />
+    <ClCompile Include="DirectShow\ext\CamDrv.cpp" />
+    <ClCompile Include="DirectShow\ext\sensor.cpp" />
+    <ClCompile Include="DirectShow\ext\SVCeuctl.cpp" />
+    <ClCompile Include="DirectShow\ext\UVCExtensionUnit.cpp" />
     <ClCompile Include="DirectShow\usb_camera.cpp" />
     <ClCompile Include="IRStream.cpp" />
     <ClCompile Include="SensorStreamProcessor.cpp" />
@@ -216,6 +220,11 @@
     <ClInclude Include="DepthStream.h" />
     <ClInclude Include="DirectShow/qedit.h" />
     <ClInclude Include="DirectShow\CameraDS.h" />
+    <ClInclude Include="DirectShow\ext\CamDrv.h" />
+    <ClInclude Include="DirectShow\ext\sensor.h" />
+    <ClInclude Include="DirectShow\ext\sl1000py_defs.h" />
+    <ClInclude Include="DirectShow\ext\SVCeuctl.h" />
+    <ClInclude Include="DirectShow\ext\UVCExtensionUnit.h" />
     <ClInclude Include="DirectShow\usb_camera.hpp" />
     <ClInclude Include="IRStream.h" />
     <ClInclude Include="SensorStreamProcessor.h" />

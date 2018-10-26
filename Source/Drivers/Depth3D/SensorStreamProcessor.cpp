@@ -64,7 +64,7 @@ int GetColorFromStream(char* stream, char* color)
 	}
 
 	unsigned short *p = (unsigned short*)tmp;
-        char *pbayer = bayer;
+	char *pbayer = bayer;
 	for (i = 0; i < IMAGE_RESOLUTION_Y; i++)
 	{
 		for (j = 0; j < IMAGE_RESOLUTION_X; j++)
@@ -72,8 +72,8 @@ int GetColorFromStream(char* stream, char* color)
 			*pbayer++ = *p++ & 0xff;
 		}	
 	}
-
-        Bayer2RGB888((XnUInt8*)bayer, (XnUInt8*)color, IMAGE_RESOLUTION_X, IMAGE_RESOLUTION_Y, 1);
+	
+	Bayer2RGB888((XnUInt8*)bayer, (XnUInt8*)color, IMAGE_RESOLUTION_X, IMAGE_RESOLUTION_Y, 1);
 
 	free(tmp);
 	free(bayer);
@@ -109,18 +109,36 @@ int GetDepthFromStream(char* stream, char* depth)
 
 int GetIRFromStream(char* stream, char* IR)
 {
-	int i;
+	int i, j;
 	char *pIR = IR;
+        char *pstream = stream;
 	
 	if (!stream || !IR) return -1;
 
+        char *tmp = (char*)malloc(IMAGE_RESOLUTION_X*IMAGE_RESOLUTION_Y*2);
+        if (!tmp)
+        {
+            printf("GetIRFromStream malloc failed!\n");
+            return -1;
+        }
+        
+        char *ptmp = tmp;
 	for (i = 0; i < IMAGE_RESOLUTION_Y; i++)
 	{
-		xnOSMemCopy(pIR, stream, IMAGE_RESOLUTION_X);
-		stream += IMAGE_RESOLUTION_X;
-		pIR += IMAGE_RESOLUTION_X;			
+                xnOSMemCopy(ptmp, pstream, IMAGE_RESOLUTION_X * 2);
+                pstream += IMAGE_RESOLUTION_X * 4;
+                ptmp += IMAGE_RESOLUTION_X * 2;
 	}
-	
+
+        short *p = (short*)tmp;
+        for (i = 0; i < IMAGE_RESOLUTION_Y; i++)
+        {
+            for (j = 0; j < IMAGE_RESOLUTION_X; j++)
+            {
+                *pIR++ = *p++ & 0xff;
+            }
+        }
+
 	return 0;
 }
 

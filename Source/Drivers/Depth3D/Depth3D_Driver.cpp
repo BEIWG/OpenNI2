@@ -5,6 +5,7 @@
 #ifdef _MSC_VER
 #include "CameraDS.h"
 #include "usb_camera.hpp"  
+#include "ext\CamDrv.h"
 #else
 #include "uvc.h"
 
@@ -74,9 +75,15 @@ void uvc_cb(uvc_frame_t *uvc_frame, void *ptr)
 #ifdef _MSC_VER
 static XN_THREAD_PROC threadStream(XN_THREAD_PARAM pThreadParam)
 {
+        static const GUID xuGuidAN75779 =
+        { 0x1B9EE0C6, 0xAFEF, 0x4531, { 0x89, 0x25, 0x88, 0xA0, 0xAC, 0xD6, 0xDE, 0x27 } };
+        SVCeuctl m_EUctl;
 	char szCamName[20] = { 0 };
 	long recv = 0;
 	int openflag = 0;
+        #define STREAM_IR   1
+        #define STREAM_DEPTH    2
+        int stream_type = 0;
     
 	CCameraDS m_CamDS;
 	int m_iCamCount = CCameraDS::CameraCount();
@@ -98,7 +105,14 @@ static XN_THREAD_PROC threadStream(XN_THREAD_PARAM pThreadParam)
 		printf("ColorStream: open camera failed....\n");
 		return 0;
 	}
-	
+
+        if (m_EUctl.Open("FX3 UVC", xuGuidAN75779, 2) != S_OK)
+        {
+            printf("(m_EUctl->Open FAIL \n");
+            return FALSE;
+        }
+        camdrv_init(&m_EUctl);
+
 	gStreamBuffer = (char*)malloc(IMAGE_RESOLUTION_X*IMAGE_RESOLUTION_Y*4);
 	if (!gStreamBuffer) 
 	{
@@ -112,7 +126,24 @@ static XN_THREAD_PROC threadStream(XN_THREAD_PARAM pThreadParam)
 	while(bStreamThreadRun)
 	{
 		if (!bStreamDepthRun && !bStreamColorRun && !bStreamIRRun) break;
-		
+
+                if (bStreamDepthRun)
+                {
+                    if (stream_type != STREAM_DEPTH)
+                    {
+                        StreamSwitchToDepth();
+                        stream_type = STREAM_DEPTH;
+                    }
+                }
+                else if (bStreamIRRun)
+                {
+                    if (stream_type != STREAM_IR)
+                    {
+                        StreamSwitchToIR();
+                        stream_type = STREAM_IR;
+                    }
+                }
+
 		recv = m_CamDS.QueryFrame(gStreamBuffer);
 		if (recv == IMAGE_RESOLUTION_X*IMAGE_RESOLUTION_Y*4)
 		{	
