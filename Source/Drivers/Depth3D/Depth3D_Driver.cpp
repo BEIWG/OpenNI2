@@ -111,6 +111,7 @@ static XN_THREAD_PROC threadStream(XN_THREAD_PARAM pThreadParam)
             return FALSE;
         }
         camdrv_init(&m_EUctl);
+        SVDPUGetThenSet(0x200, 0x1 << 29, 0x1 << 29);//power down LED
 
 	gStreamBuffer = (char*)malloc(IMAGE_RESOLUTION_X*IMAGE_RESOLUTION_Y*4);
 	if (!gStreamBuffer) 
@@ -161,6 +162,7 @@ static XN_THREAD_PROC threadStream(XN_THREAD_PARAM pThreadParam)
 		}	
 	}
 	
+        SVDPUGetThenSet(0x200 + (12 << 2), 0x0 << 29, 0x1 << 29);//power down LED
 	free(gStreamBuffer);
 	gStreamBuffer = NULL;
 	XN_THREAD_PROC_RETURN(XN_STATUS_OK);

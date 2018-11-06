@@ -23,7 +23,12 @@ LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/../../../Include \
 	$(LOCAL_PATH) \
 	$(LOCAL_PATH)/include \
-	$(LOCAL_PATH)/uvc
+	$(LOCAL_PATH)/uvc	\
+	$(LOCAL_PATH)/../PS1080/Core \
+	$(LOCAL_PATH)/../PS1080/Include \
+	$(LOCAL_PATH)/../PS1080/DriverImpl \
+	$(LOCAL_PATH)/../PS1080/	\
+	$(LOCAL_PATH)/../PS1080/Sensor
 
 LOCAL_STATIC_LIBRARIES := XnLib
 LOCAL_SHARED_LIBRARIES := libusb 
