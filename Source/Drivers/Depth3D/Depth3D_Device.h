@@ -20,6 +20,7 @@ public:
 
 	void destroyStream(oni::driver::StreamBase* pStream);
 
+        OniStatus setProperty(int propertyId, const void* data, int dataSize);
 	OniStatus  getProperty(int propertyId, void* data, int* pDataSize);
 
 	OniBool isCommandSupported(int commandId);

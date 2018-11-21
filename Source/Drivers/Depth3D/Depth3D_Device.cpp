@@ -76,6 +76,45 @@ void OzDevice::destroyStream(oni::driver::StreamBase* pStream)
 	//XN_DELETE(pStream);
 }
 
+OniStatus OzDevice::setProperty(int propertyId, const void* data, int dataSize)
+{
+    switch (propertyId)
+    {
+        case ONI_DEVICE_PROPERTY_IMAGE_REGISTRATION:
+        {
+            if (dataSize == sizeof(OniImageRegistrationMode))
+            {
+                printf("ONI_DEVICE_PROPERTY_IMAGE_REGISTRATION.........\n");
+                OniImageRegistrationMode* mode = (OniImageRegistrationMode*)data;
+
+                // Find the depth stream in the sensor.
+                //XnDeviceStream* pDepth = NULL;
+                //XnStatus xnrc = m_sensor.GetStream(XN_STREAM_NAME_DEPTH, &pDepth);
+                //if (xnrc != XN_STATUS_OK)
+                //{
+                //    return ONI_STATUS_BAD_PARAMETER;
+                //}
+
+                // Set the mode in the depth stream.
+                XnUInt64 val = (*mode == ONI_IMAGE_REGISTRATION_DEPTH_TO_COLOR) ? 1 : 0;
+                //xnrc = pDepth->SetProperty(XN_STREAM_PROPERTY_REGISTRATION, val);
+                //if (xnrc != XN_STATUS_OK)
+                //{
+                //    return ONI_STATUS_ERROR;
+                //}
+            }
+            else
+            {
+                m_driverServices.errorLoggerAppend("Unexpected size: %d != %d\n", dataSize, sizeof(OniImageRegistrationMode));
+                return ONI_STATUS_ERROR;
+            }
+        }
+        break;
+    }
+
+    return ONI_STATUS_OK;
+}
+
 OniStatus  OzDevice::getProperty(int propertyId, void* data, int* pDataSize)
 {
 	OniStatus rc = ONI_STATUS_OK;
@@ -115,5 +154,8 @@ OniStatus OzDevice::tryManualTrigger()
 
 OniBool OzDevice::isImageRegistrationModeSupported(OniImageRegistrationMode mode)
 {
-	return (mode == ONI_IMAGE_REGISTRATION_DEPTH_TO_COLOR || mode == ONI_IMAGE_REGISTRATION_OFF);
+    OniBool value =  (mode == ONI_IMAGE_REGISTRATION_DEPTH_TO_COLOR || mode == ONI_IMAGE_REGISTRATION_OFF);
+    printf("isImageRegistrationModeSupported: %d ,support %d\n", mode, value);
+    return value;
+       
 }

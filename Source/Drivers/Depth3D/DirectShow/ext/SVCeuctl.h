@@ -18,6 +18,8 @@ public:
 	~SVCeuctl();
 	HRESULT Open(CHAR * VideoDevName,GUID xuGuid, DWORD dwExtensionNode);
 	void SVCRelease();
+	int eu_set_ctrl(UINT8 ctrl, void *data, int len);
+	int eu_get_ctrl(UINT8 ctrl, void *data, int len);
 	UINT8 XferSend(UINT8 cmd, UINT8 subaddrsize, UINT32 subaddr, UINT8 *data, UINT8 len);
 	UINT8 XferRecv(UINT8 cmd, UINT8 subaddrsize, UINT32 subaddr, UINT8 *data, UINT8 len);
 	UINT8 FPGASet(UINT8 addr, UINT8 data);
@@ -26,6 +28,12 @@ public:
 	UINT8 FPGAGet(UINT8 addr, UINT8 *data);
 	UINT8 SensorSet(UINT16 addr, UINT16 *data, UINT8 len);
 	UINT8 SensorGet(UINT16 addr, UINT16 *data, UINT8 len);
+
+	HRESULT SME_FlashErase(UINT8 mode, UINT32 flashaddr);
+
+	HRESULT SME_FlashWRConfig(UINT8 cmd, UINT32 flashaddr, UINT16 len);
+	HRESULT SME_FlashReadData(UINT8 *buf, UINT16 len);
+	HRESULT SME_FlashWriteData(UINT8 *buf, UINT16 len);
 private:
 
     //Function to get UVC video devices
@@ -40,10 +48,10 @@ private:
 	HRESULT SVCeuctl::InitEUctl(DWORD dwExtensionNode);
     //Function to set/get parameters of UVC extension unit
 	HRESULT SetGetExtensionUnit(GUID xuGuid, DWORD dwExtensionNode, IKsControl * ks_control, ULONG xuPropertyId, ULONG flags, void *data, int len, ULONG *readCount);
- 
 	HRESULT XferConfigSet(UINT8 cmd, UINT8 subaddrsize, UINT32 subaddr, UINT8 datacount);
 	HRESULT XferConfigGet(UINT8 *cmd, UINT8 *subaddrsize, UINT32 *subaddr, UINT8 *datacount, UINT8 *status);
 	HRESULT XferData(UINT8 flag, UINT8 *data, UINT8 datacount);
+
 
     CHAR            UVCDevName[MAX_PATH];
     GUID            mxuGuid;

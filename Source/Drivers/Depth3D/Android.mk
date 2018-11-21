@@ -9,7 +9,14 @@ MY_PREFIX := $(LOCAL_PATH)
 
 # list all source files
 MY_SRC_FILES := \
-	$(MY_PREFIX)/*.cpp \
+	$(MY_PREFIX)/Bayer.cpp \
+	$(MY_PREFIX)/ColorStream.cpp \
+	$(MY_PREFIX)/Depth3D_Device.cpp \
+	$(MY_PREFIX)/Depth3D_Driver.cpp \
+	$(MY_PREFIX)/DepthStream.cpp \
+	$(MY_PREFIX)/IRStream.cpp \
+	$(MY_PREFIX)/SensorStreamProcessor.cpp \
+	$(MY_PREFIX)/StreamBase.cpp \
 	$(MY_PREFIX)/uvc/*.c \
 	$(MY_PREFIX)/uvc/*.cpp
 

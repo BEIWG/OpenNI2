@@ -24,7 +24,9 @@ public:
 	OniBool isPropertySupported(int propertyId);
 	OniStatus getProperty(int propertyId, void* data, int* pDataSize);
 	OniStatus setProperty(int propertyId, const void* data, int dataSize);
-
+	OniStatus convertDepthToColorCoordinates(oni::driver::StreamBase* colorStream, 
+								int depthX, int depthY, OniDepthPixel depthZ, int* pColorX, int* pColorY);
+								
 	virtual void Mainloop() = 0;
 	
 protected:

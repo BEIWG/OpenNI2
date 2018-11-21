@@ -199,7 +199,7 @@
     <ClCompile Include="Depth3D_Driver.cpp" />
     <ClCompile Include="DepthStream.cpp" />
     <ClCompile Include="DirectShow\CameraDS.cpp" />
-    <ClCompile Include="DirectShow\ext\CamDrv.cpp" />
+    <ClCompile Include="DirectShow\ext\DCamDrv.cpp" />
     <ClCompile Include="DirectShow\ext\sensor.cpp" />
     <ClCompile Include="DirectShow\ext\SVCeuctl.cpp" />
     <ClCompile Include="DirectShow\ext\UVCExtensionUnit.cpp" />
@@ -220,7 +220,7 @@
     <ClInclude Include="DepthStream.h" />
     <ClInclude Include="DirectShow/qedit.h" />
     <ClInclude Include="DirectShow\CameraDS.h" />
-    <ClInclude Include="DirectShow\ext\CamDrv.h" />
+    <ClInclude Include="DirectShow\ext\DCamDrv.h" />
     <ClInclude Include="DirectShow\ext\sensor.h" />
     <ClInclude Include="DirectShow\ext\sl1000py_defs.h" />
     <ClInclude Include="DirectShow\ext\SVCeuctl.h" />

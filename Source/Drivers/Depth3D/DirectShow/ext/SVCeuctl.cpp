@@ -1,10 +1,14 @@
 // UVCExtensionApp.cpp : Defines the entry point for the console application.
 //
-//#include "stdafx.h"
 #include "SVCeuctl.h"
 
 #define EU_CS_XFER_CONFIG       (0x01)
 #define EU_CS_XFER_DATA         (0x02)
+
+#define EU_CS_FLASH_ERASE		(0x03)
+#define EU_CS_FLASH_RWCONFIG    (0x04)
+#define EU_CS_FLASH_DATA        (0x05)
+
 #define EU_SET_CUR              (KSPROPERTY_TYPE_SET | KSPROPERTY_TYPE_TOPOLOGY)
 #define EU_GET_CUR              (KSPROPERTY_TYPE_GET | KSPROPERTY_TYPE_TOPOLOGY)
 #define EU_XFER_DATA_GET		(0x01)
@@ -39,7 +43,7 @@ HRESULT SVCeuctl::GetVideoDevices(UINT32 *noOfVideoDevices)
 	// Enumerate devices.	
 	hr = MFEnumDeviceSources(mpVideoConfig, &mppVideoDevices, noOfVideoDevices);
 
-	printf("ppVideoDevices[0] = 0x%x \n", mppVideoDevices[0]);
+	//printf("ppVideoDevices[0] = 0x%x \n", mppVideoDevices[0]);
 
 	if (hr != S_OK)
     {
@@ -187,10 +191,10 @@ HRESULT SVCeuctl::Open(CHAR * VideoDevName,GUID xuGuid, DWORD dwExtensionNode)
 		DEGPRINT(hr,"GetVideoDevices()\n");
 		return hr;
     }
-	printf("mnoOfVideoDevices:%x\n", mnoOfVideoDevices);
-	printf("Video Devices connected:\n");
+	//printf("mnoOfVideoDevices:%x\n", mnoOfVideoDevices);
+	//printf("Video Devices connected:\n");
 
-	printf("mppVideoDevices[0] = 0x%x \n", mppVideoDevices[0]);
+	//printf("mppVideoDevices[0] = 0x%x \n", mppVideoDevices[0]);
 	for (UINT32 i = 0; i < mnoOfVideoDevices; i++)
 	{
 		//Get the device names
@@ -269,6 +273,38 @@ SVCeuctl::~SVCeuctl()
     SVCRelease();
 }
 
+int SVCeuctl::eu_set_ctrl(UINT8 ctrl, void *data, int len)
+{
+	ULONG readCount;
+	HRESULT hr = S_OK;
+	hr = SetGetExtensionUnit(mxuGuid, mdwExtensionNode, mks_control, ctrl, EU_SET_CUR, (void *)data, len, &readCount);
+
+	if (hr != S_OK)
+	{
+		DEGPRINT(hr, "SetGetExtensionUnit()");
+	}
+	else
+	{
+		readCount = len;
+	}
+	//printf("readCount:%d\r\n", readCount);
+	return readCount;
+}
+
+int SVCeuctl::eu_get_ctrl(UINT8 ctrl, void *data, int len)
+{
+	ULONG readCount;
+	HRESULT hr = S_OK;
+	hr = SetGetExtensionUnit(mxuGuid, mdwExtensionNode, mks_control, ctrl, EU_GET_CUR, (void *)data, len, &readCount);
+	//printf("readCount:%d\r\n", readCount);
+	if (hr != S_OK)
+	{
+		DEGPRINT(hr, "SetGetExtensionUnit()");
+	}
+
+	return readCount;
+}
+
 HRESULT SVCeuctl::XferConfigSet(UINT8 cmd, UINT8 subaddrsize, UINT32 subaddr, UINT8 datacount)
 {	
 	UINT8 data[8];
@@ -289,6 +325,141 @@ HRESULT SVCeuctl::XferConfigSet(UINT8 cmd, UINT8 subaddrsize, UINT32 subaddr, UI
 	{
 		DEGPRINT(hr, "XferConfigSet()");
 	}
+	return hr;
+}
+
+HRESULT SVCeuctl::SME_FlashErase(UINT8 mode, UINT32 flashaddr)
+{
+	UINT8 data[8];
+	ULONG readCount;
+	HRESULT hr = S_OK;
+	data[0] = mode;
+	data[1] = (flashaddr >> 0 ) & 0x000000ff;
+	data[2] = (flashaddr >> 8 ) & 0x000000ff;
+	data[3] = (flashaddr >> 16) & 0x000000ff;
+	data[4] = (flashaddr >> 24) & 0x000000ff;
+	data[5] = 0x00;
+
+	hr = SetGetExtensionUnit(mxuGuid, mdwExtensionNode, mks_control, EU_CS_FLASH_ERASE, EU_SET_CUR, (void *)data, 6, &readCount);
+
+	if (hr != S_OK)
+	{
+		DEGPRINT(hr, "SME_FlashErase()");
+	}
+	return hr;
+}
+
+HRESULT SVCeuctl::SME_FlashWRConfig(UINT8 cmd,UINT32 flashaddr, UINT16 len)
+{
+	UINT8 data[8];
+	ULONG readCount;
+	HRESULT hr = S_OK;
+
+	data[0] = (flashaddr >> 0) & 0x000000ff;
+	data[1] = (flashaddr >> 8) & 0x000000ff;
+	data[2] = (flashaddr >> 16) & 0x000000ff;
+	data[3] = (flashaddr >> 24) & 0x000000ff;
+
+	if (len > 256)
+	{
+		data[4] = 255;
+		DEGPRINT(hr, "SME_FlashWRConfig() len must <= 256 ");
+
+	}
+	else
+	{
+		data[4] = len-1;
+	}
+	
+	data[5] = cmd;
+
+	hr = SetGetExtensionUnit(mxuGuid, mdwExtensionNode, mks_control, EU_CS_FLASH_RWCONFIG, EU_SET_CUR, (void *)data, 6, &readCount);
+
+	if (hr != S_OK)
+	{
+		DEGPRINT(hr, "SME_FlashWRConfig()");
+	}
+	return hr;
+}
+
+HRESULT SVCeuctl::SME_FlashWriteData(UINT8 *buf, UINT16 len)
+{
+
+	UINT8 data[256];
+	ULONG readCount;
+	HRESULT hr = S_OK;
+	int repeat_t = 0;
+
+	if (len > 256)
+	{
+		len = 256;
+		DEGPRINT(hr, "SME_FlashWriteData() len must be less than 256");
+		//return S_FALSE;
+	}
+
+	memset(data,255,256);
+	memcpy(data, buf, len);
+
+	if ((len % 64) != 0)
+	{
+		repeat_t = (len / 64) + 1;
+	}
+	else
+	{
+		repeat_t = (len / 64);
+	}
+
+	for(int i = 0; i < repeat_t; i++)
+	{
+		hr = SetGetExtensionUnit(mxuGuid, mdwExtensionNode, mks_control, EU_CS_FLASH_DATA, EU_SET_CUR, (void *)(data+i*64), 64, &readCount);
+	}
+
+
+	if (hr != S_OK)
+	{
+		DEGPRINT(hr, "SME_FlashWRConfig()");
+	}
+	return hr;
+}
+
+HRESULT SVCeuctl::SME_FlashReadData(UINT8 *buf, UINT16 len)
+{
+
+	UINT8 data[256];
+	ULONG readCount;
+	HRESULT hr = S_OK;
+	int repeat_t = 0;
+	memset(data, 0, 256);
+
+	if (len > 256)
+	{
+		len = 256;
+		DEGPRINT(hr, "SME_FlashReadData() len must be less than 256");
+		//return S_FALSE;
+	}
+
+	if ((len % 64) != 0)
+	{
+		repeat_t = (len / 64) + 1;
+	}
+	else
+	{
+		repeat_t = (len / 64);
+	}
+
+	for (int i = 0; i < repeat_t; i++)
+	{
+		hr = SetGetExtensionUnit(mxuGuid, mdwExtensionNode, mks_control, EU_CS_FLASH_DATA, EU_GET_CUR, (void *)(&data[i * 64]), 64, &readCount);
+		//printf("read from %x \r\n", (void *)(data + i * 64));
+	}
+
+	if (hr != S_OK)
+	{
+		DEGPRINT(hr, "SME_FlashReadData()");
+	}
+
+	memcpy(buf, data, len);
+
 	return hr;
 }
 
@@ -324,21 +495,24 @@ HRESULT SVCeuctl::XferData(UINT8 flag, UINT8 *data, UINT8 datacount)
 	ULONG readCount;
 	HRESULT hr = S_OK;
 	ULONG euflags = 0;
+	UINT8 tmp_data[64];
 
 	if (flag == EU_XFER_DATA_SET)
 	{
-		euflags = EU_SET_CUR;
+		memcpy(tmp_data, data, datacount);
+		hr = SetGetExtensionUnit(mxuGuid, mdwExtensionNode, mks_control, EU_CS_XFER_DATA, EU_SET_CUR, (void *)tmp_data, 64, &readCount);
 	}
 	else if (flag == EU_XFER_DATA_GET)
 	{
-		euflags = EU_GET_CUR;
+		hr = SetGetExtensionUnit(mxuGuid, mdwExtensionNode, mks_control, EU_CS_XFER_DATA, EU_GET_CUR, (void *)tmp_data, 64, &readCount);
+		memcpy(data,tmp_data,datacount);
 	}
 	else
 	{
 		return S_FALSE;
 	}
 
-	hr = SetGetExtensionUnit(mxuGuid, mdwExtensionNode, mks_control, EU_CS_XFER_DATA, euflags, (void *)data, datacount, &readCount);
+	
 
 	if (hr != S_OK)
 	{

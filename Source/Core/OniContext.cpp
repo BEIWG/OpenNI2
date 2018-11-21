@@ -898,44 +898,44 @@ OniStatus Context::enableFrameSync(OniStreamHandle* pStreams, int numStreams, On
 
 OniStatus Context::enableFrameSyncEx(VideoStream** pStreams, int numStreams, DeviceDriver* pDeviceDriver, OniFrameSyncHandle* pFrameSyncHandle)
 {
-	// Make sure the device driver is valid.
-	if (pDeviceDriver == NULL)
-	{
-		return ONI_STATUS_ERROR;
-	}
+	//// Make sure the device driver is valid.
+	//if (pDeviceDriver == NULL)
+	//{
+	//	return ONI_STATUS_ERROR;
+	//}
 
-	// Create the new frame sync group (it will link all the streams).
-	SyncedStreamsFrameHolder* pSyncedStreamsFrameHolder = XN_NEW(SyncedStreamsFrameHolder, 
-																	m_frameManager, pStreams, numStreams);
-	XN_VALIDATE_PTR(pSyncedStreamsFrameHolder, ONI_STATUS_ERROR);
+	//// Create the new frame sync group (it will link all the streams).
+	//SyncedStreamsFrameHolder* pSyncedStreamsFrameHolder = XN_NEW(SyncedStreamsFrameHolder, 
+	//																m_frameManager, pStreams, numStreams);
+	//XN_VALIDATE_PTR(pSyncedStreamsFrameHolder, ONI_STATUS_ERROR);
 
-	// Configure frame-sync group in driver.
-	void* driverHandle = pDeviceDriver->enableFrameSync(pStreams, numStreams);
-	XN_VALIDATE_PTR(driverHandle, ONI_STATUS_ERROR);
+	//// Configure frame-sync group in driver.
+	//void* driverHandle = pDeviceDriver->enableFrameSync(pStreams, numStreams);
+	//XN_VALIDATE_PTR(driverHandle, ONI_STATUS_ERROR);
 
-	// Return the frame sync handle.
-	*pFrameSyncHandle = XN_NEW(_OniFrameSync);
-	if (*pFrameSyncHandle == NULL)
-	{
-		m_errorLogger.Append("Couldn't allocate memory for FrameSyncHandle");
-		return ONI_STATUS_ERROR;
-	}
-	(*pFrameSyncHandle)->pSyncedStreamsFrameHolder = pSyncedStreamsFrameHolder;
-	(*pFrameSyncHandle)->pDeviceDriver = pDeviceDriver;
-	(*pFrameSyncHandle)->pFrameSyncHandle = driverHandle;
+	//// Return the frame sync handle.
+	//*pFrameSyncHandle = XN_NEW(_OniFrameSync);
+	//if (*pFrameSyncHandle == NULL)
+	//{
+	//	m_errorLogger.Append("Couldn't allocate memory for FrameSyncHandle");
+	//	return ONI_STATUS_ERROR;
+	//}
+	//(*pFrameSyncHandle)->pSyncedStreamsFrameHolder = pSyncedStreamsFrameHolder;
+	//(*pFrameSyncHandle)->pDeviceDriver = pDeviceDriver;
+	//(*pFrameSyncHandle)->pFrameSyncHandle = driverHandle;
 
-	// Update the frame holders of all the streams.
-	pSyncedStreamsFrameHolder->lock();
-	for (int j = 0; j < numStreams; ++j)
-	{
-		FrameHolder* pOldFrameHolder = pStreams[j]->getFrameHolder();
-		pOldFrameHolder->lock();
-		pOldFrameHolder->setStreamEnabled(pStreams[j], FALSE);
-		pStreams[j]->setFrameHolder(pSyncedStreamsFrameHolder);
-		pOldFrameHolder->unlock();
-		XN_DELETE(pOldFrameHolder);
-	}
-	pSyncedStreamsFrameHolder->unlock();
+	//// Update the frame holders of all the streams.
+	//pSyncedStreamsFrameHolder->lock();
+	//for (int j = 0; j < numStreams; ++j)
+	//{
+	//	FrameHolder* pOldFrameHolder = pStreams[j]->getFrameHolder();
+	//	pOldFrameHolder->lock();
+	//	pOldFrameHolder->setStreamEnabled(pStreams[j], FALSE);
+	//	pStreams[j]->setFrameHolder(pSyncedStreamsFrameHolder);
+	//	pOldFrameHolder->unlock();
+	//	XN_DELETE(pOldFrameHolder);
+	//}
+	//pSyncedStreamsFrameHolder->unlock();
 
 	return ONI_STATUS_OK;
 

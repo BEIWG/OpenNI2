@@ -126,3 +126,11 @@ OniStatus OzStream::setProperty(int propertyId, const void* data, int dataSize)
 	return ONI_STATUS_NOT_IMPLEMENTED;
 }
 
+OniStatus OzStream::convertDepthToColorCoordinates(oni::driver::StreamBase* colorStream, 
+								int depthX, int depthY, OniDepthPixel depthZ, int* pColorX, int* pColorY)
+{
+	*pColorX = depthX;
+	*pColorY = depthY;
+	
+	return ONI_STATUS_OK;
+}

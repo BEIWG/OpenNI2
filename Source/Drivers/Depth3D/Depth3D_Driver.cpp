@@ -1,17 +1,39 @@
 #include "Depth3D_Driver.h"
 #include "Depth3D_Device.h"
+#include "StreamBase.h"
 #include "DefaultParameters.h"
 
 #ifdef _MSC_VER
 #include "CameraDS.h"
-#include "usb_camera.hpp"  
-#include "ext\CamDrv.h"
+#include "usb_camera.hpp"   
+#include "ext\DCamDrv.h"
+#include "ext\SVCeuctl.h"
 #else
 #include "uvc.h"
+#include "DCamDrv.h"
+
+#ifdef ANDROID
+#include <android/log.h>
+#endif
+
+#define DEBUG 1
+
+#if DEBUG && defined(ANDROID)
+#include <android/log.h>
+#  define  LOGD(x...)  __android_log_print(ANDROID_LOG_INFO,"Depth3D",x)
+#  define  LOGE(x...)  __android_log_print(ANDROID_LOG_ERROR,"Depth3D",x)
+#else
+#  define  LOGD(...)
+#  define  LOGE(...)
+#endif
 
 #endif
 
 using namespace depth3d;
+
+#define STREAM_IR   1
+#define STREAM_DEPTH    2
+	
 char *gStreamBuffer = NULL;
 bool bStreamThreadRun  = false;
 bool gColorDataUpdate = false;
@@ -23,12 +45,7 @@ bool bStreamIRRun = false;
 
 XN_THREAD_HANDLE m_Handle;
 
-#ifdef _MSC_VER
-#include "CameraDS.h"
-#include "usb_camera.hpp"  
-#else
-#include "uvc.h"
-
+#ifndef _MSC_VER
 uvc_context_t *ctx;
 uvc_error_t res;
 uvc_device_t *dev;
@@ -39,6 +56,7 @@ int gDropFrame = 3;
 
 void uvc_cb(uvc_frame_t *uvc_frame, void *ptr) 
 {
+	int stream_type = 0;
 	uvc_frame_t *bgr;
 	uvc_error_t ret;
 
@@ -54,16 +72,36 @@ void uvc_cb(uvc_frame_t *uvc_frame, void *ptr)
 			return;
 		}
 	} else {
+		
 		memcpy((unsigned char*)gStreamBuffer, (unsigned char*)uvc_frame->data, uvc_frame->data_bytes);
+
 		if (bStreamColorRun)
 			gColorDataUpdate = true;
 				
 		if (bStreamDepthRun)
 		{
+			if (stream_type != STREAM_DEPTH)
+			{
+				SME_Projection_Set(0);
+				SME_DispDepth_En(1);
+				SME_Depth_Sel(1);
+				SME_InPhase_Set(2510*818);
+				stream_type = STREAM_DEPTH;
+			}		
+				
 			gDepthDataUpdate = true;
 			gIRDataUpdate = false;
 		} else if (bStreamIRRun) 
-		{
+		{		
+			if (stream_type != STREAM_IR)
+			{
+				SME_Projection_Set(0);
+				SME_DispDepth_En(0);
+				SME_Depth_Sel(0);
+				SME_InPhase_Set(2510 * 15);
+				stream_type = STREAM_IR;
+			}	
+					
 			gIRDataUpdate = true;	
 			gDepthDataUpdate = false;
 		}	
@@ -74,15 +112,13 @@ void uvc_cb(uvc_frame_t *uvc_frame, void *ptr)
 #ifdef _MSC_VER
 static XN_THREAD_PROC threadStream(XN_THREAD_PARAM pThreadParam)
 {
-        static const GUID xuGuidAN75779 =
-        { 0x1B9EE0C6, 0xAFEF, 0x4531, { 0x89, 0x25, 0x88, 0xA0, 0xAC, 0xD6, 0xDE, 0x27 } };
-        SVCeuctl m_EUctl;
+	static const GUID xuGuidAN75779 =
+	{ 0x1B9EE0C6, 0xAFEF, 0x4531, { 0x89, 0x25, 0x88, 0xA0, 0xAC, 0xD6, 0xDE, 0x27 } };
+	SVCeuctl m_EUctl;
 	char szCamName[20] = { 0 };
 	long recv = 0;
 	int openflag = 0;
-        #define STREAM_IR   1
-        #define STREAM_DEPTH    2
-        int stream_type = 0;
+	int stream_type = 0;
     
 	CCameraDS m_CamDS;
 	int m_iCamCount = CCameraDS::CameraCount();
@@ -105,13 +141,13 @@ static XN_THREAD_PROC threadStream(XN_THREAD_PARAM pThreadParam)
 		return 0;
 	}
 
-        if (m_EUctl.Open("FX3 UVC", xuGuidAN75779, 2) != S_OK)
-        {
-            printf("(m_EUctl->Open FAIL \n");
-            return FALSE;
-        }
-        camdrv_init(&m_EUctl);
-        SVDPUGetThenSet(0x200, 0x1 << 29, 0x1 << 29);//power down LED
+	if (m_EUctl.Open("FX3 UVC", xuGuidAN75779, 2) != S_OK)
+	{
+		printf("(m_EUctl->Open FAIL \n");
+		return FALSE;
+	}
+
+	DCAM_DRV_Init(&m_EUctl);
 
 	gStreamBuffer = (char*)malloc(IMAGE_RESOLUTION_X*IMAGE_RESOLUTION_Y*4);
 	if (!gStreamBuffer) 
@@ -131,7 +167,10 @@ static XN_THREAD_PROC threadStream(XN_THREAD_PARAM pThreadParam)
                 {
                     if (stream_type != STREAM_DEPTH)
                     {
-                        StreamSwitchToDepth();
+                        SME_Projection_Set(1);
+                        SME_DispDepth_En(1);
+                        SME_Depth_Sel(1);
+                        SME_InPhase_Set(2510*818);
                         stream_type = STREAM_DEPTH;
                     }
                 }
@@ -139,7 +178,10 @@ static XN_THREAD_PROC threadStream(XN_THREAD_PARAM pThreadParam)
                 {
                     if (stream_type != STREAM_IR)
                     {
-                        StreamSwitchToIR();
+                        SME_Projection_Set(1);
+                        SME_DispDepth_En(0);
+                        SME_Depth_Sel(0);
+                        SME_InPhase_Set(2510 * 15);
                         stream_type = STREAM_IR;
                     }
                 }
@@ -162,7 +204,8 @@ static XN_THREAD_PROC threadStream(XN_THREAD_PARAM pThreadParam)
 		}	
 	}
 	
-        SVDPUGetThenSet(0x200 + (12 << 2), 0x0 << 29, 0x1 << 29);//power down LED
+        //POWER DOWN LED
+	SME_Projection_Set(0);
 	free(gStreamBuffer);
 	gStreamBuffer = NULL;
 	XN_THREAD_PROC_RETURN(XN_STATUS_OK);
@@ -187,6 +230,8 @@ OniStatus OzDriver::initialize(oni::driver::DeviceConnectedCallback deviceConnec
 		printf("Init Sensor Driver Failed...\n");
 		return ONI_STATUS_NO_DEVICE;	
 	}
+	
+	DCAM_DRV_Init(devh);
 	#endif
 	
 	DriverBase::initialize(deviceConnectedCallback, deviceDisconnectedCallback, deviceStateChangedCallback, pCookie);
@@ -203,6 +248,15 @@ OniStatus OzDriver::initialize(oni::driver::DeviceConnectedCallback deviceConnec
 	#endif
 	
 	return ONI_STATUS_OK;
+}
+
+void* OzDriver::enableFrameSync(oni::driver::StreamBase** pStreams, int streamCount)
+{
+    return NULL;
+}
+
+void OzDriver::disableFrameSync(void* frameSyncGroup)
+{	
 }
 
 void OzDriver::shutdown() {
@@ -224,6 +278,9 @@ void OzDriver::shutdown() {
 		free(gStreamBuffer);
 		gStreamBuffer = NULL;
 	}
+	
+	//power down led
+	SME_Projection_Set(0);
 }
 
 ONI_EXPORT_DRIVER(OzDriver);

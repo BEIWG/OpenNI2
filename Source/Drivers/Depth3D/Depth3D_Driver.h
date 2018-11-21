@@ -80,7 +80,14 @@ public:
 
 	void shutdown();
 
+	virtual void* enableFrameSync(oni::driver::StreamBase** pStreams, int streamCount);
+	virtual void disableFrameSync(void* frameSyncGroup);
+	
 protected:
+        typedef struct
+        {
+            OzDevice* pDevice;
+        } FrameSyncGroup;
 
 	XN_THREAD_HANDLE m_threadHandle;
 
